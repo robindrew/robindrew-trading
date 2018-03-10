@@ -26,7 +26,7 @@ I have provided both push and pull mechanisms for reading and writing price cand
 * **IPriceCandleListSink** - event driven interface for handling a batch of candles
 * **IPriceCandleListSource** - event driven interface for retrieving a batch of candles
 
-#### Reading Candles from Files
+### Reading Candles from Files
 
 The **PriceCandleDirectoryStreamSource** is the primary method for reading candles from one or more text files.
 It is very common to receive historic data in an Excel friendly CSV one-candle-per-line format.
@@ -39,7 +39,7 @@ The source requires that a parser is supplied to transform each line in the file
      IPriceCandStreamSource source = new PriceCandleDirectoryStreamSource(directory, parser, filter);
 
 
-#### Filtering & Transforming
+### Filtering & Transforming
 
 The **PriceCandleIntervalStreamSource** allows you to transform candles from a more fine-grained time interval to a more course one.
 This is the most frequently used sink as it is used to aggregate the source tick candles in to 5 Minute or 1 Day candles for example.
@@ -62,7 +62,7 @@ This is most often used to filter within a given date range.
     source = new PriceCandleLoggedStreamSource(source, 100);
 
 
-#### Processing Candles
+### Processing Candles
 
 The **IPriceCandleStreamSink** is an event driven interface to handle price candles.
 For live price handling, this interface will be driven directly by the price stream implementation for your provider.
