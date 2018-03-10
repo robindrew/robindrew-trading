@@ -65,8 +65,11 @@ This is most often used to filter within a given date range.
 ### Processing Candles
 
 The **IPriceCandleStreamSink** is an event driven interface to handle price candles.
-For live price handling, this interface will be driven directly by the price stream implementation for your provider.
-For backtesting, this interface will be driven from a **IPriceCandStreamSource** streaming data from local files or a database.
+This can be anything from a file to which the candles are to be written, to an implementation of **ITradingStrategy** that is to be applied to the candles. 
+
+For live price handling, this interface will be driven directly by the price stream implementation for your provider. See the foot of this page for available providers.
+
+For backtesting, this interface will be driven from a **IPriceCandStreamSource** streaming historic candles from local files or a database.
 
 
     // For backtesting we firstly create a source of candles from historic data files 
