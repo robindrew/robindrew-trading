@@ -2,9 +2,8 @@ package com.robindrew.trading.strategy;
 
 import com.robindrew.common.util.Check;
 import com.robindrew.trading.platform.ITradingPlatform;
-import com.robindrew.trading.price.candle.io.stream.sink.IPriceCandleStreamSink;
 
-public abstract class AbstractTradingStrategy implements IPriceCandleStreamSink {
+public abstract class AbstractTradingStrategy implements ITradingStrategy {
 
 	private final String name;
 	private final ITradingPlatform platform;
@@ -19,6 +18,7 @@ public abstract class AbstractTradingStrategy implements IPriceCandleStreamSink 
 		return name;
 	}
 
+	@Override
 	public ITradingPlatform getPlatform() {
 		return platform;
 	}
