@@ -1,6 +1,8 @@
 # robindrew-trading
 Algorithmic trading core library for Java
 
+* [Introduction to Trading](https://github.com/robindrew/robindrew-trading/wiki/Introduction-to-Trading)
+
 ## Price Candles
 
 Price candles are represented by the **IPriceCandle** class. A price candle consists of:
