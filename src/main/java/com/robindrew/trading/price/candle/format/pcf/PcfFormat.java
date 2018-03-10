@@ -10,18 +10,20 @@ import java.time.temporal.ChronoField;
 
 import com.google.common.io.PatternFilenameFilter;
 import com.robindrew.trading.price.candle.IPriceCandle;
+import com.robindrew.trading.price.candle.format.pif.PifFormat;
 import com.robindrew.trading.price.candle.interval.IPriceCandleInterval;
 import com.robindrew.trading.price.candle.interval.PriceCandleIntervals;
 
 /**
  * The PCF (PriceCandleFormat) file format is much faster to read than traditional text formats. The file size is
- * similar to or better than the compressed line format, but candles are deserialized directly without decompression. As
- * a binary format however it is not human readable.
+ * similar to or better than the compressed line format, but candles are deserialized directly without decompression.
+ * Read and write times are also very fast, however as a binary format it is not human readable.
  * <ul>
  * <li>Candles are minute-level accuracy.</li>
  * <li>Candle times are in UTC.</li>
  * <li>Files are monthly.</li>
  * </ul>
+ * @see PifFormat
  */
 public final class PcfFormat {
 

@@ -5,7 +5,7 @@ import static com.robindrew.common.date.Dates.toLocalDateTime;
 import org.junit.runner.notification.RunListener.ThreadSafe;
 
 @ThreadSafe
-public class PriceCandleInstant extends AbstractPriceCandle {
+public class PriceCandleInstant extends AbstractPriceCandle implements IPriceCandleInstant {
 
 	private final int price;
 	private final long instant;
@@ -76,5 +76,15 @@ public class PriceCandleInstant extends AbstractPriceCandle {
 	@Override
 	public int getDecimalPlaces() {
 		return decimalPlaces;
+	}
+
+	@Override
+	public int getMidPrice() {
+		return price;
+	}
+
+	@Override
+	public long getTimestamp() {
+		return instant;
 	}
 }
