@@ -2,7 +2,9 @@
 Algorithmic trading core library for Java
 
 ## Articles
+Before you dive in to the API itself, please take a quick look at the following articles:
 * [Introduction to Trading](https://github.com/robindrew/robindrew-trading/wiki/Introduction-to-Trading)
+* [My Approach to Trading](https://github.com/robindrew/robindrew-trading/wiki/My-Approach-to-Trading)
 
 ## Coding
 Please read the [Wiki](https://github.com/robindrew/robindrew-trading/wiki) to get started writing code.
