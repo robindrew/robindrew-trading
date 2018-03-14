@@ -76,13 +76,17 @@ public class HistDataDownloader {
 		String path = year + "/" + instrument;
 		for (FTPFile file : client.listFiles(path)) {
 			String filename = file.getName();
-			if (filename.startsWith(ASCII_FILE_PREFIX + instrument + TICK) && filename.endsWith(".zip")) {
+			if (filename.startsWith(ASCII_FILE_PREFIX + instrument + TICK)) {
 
 				// Local File
-				File localFile = new File(rootDirectory + instrument + "\\" + filename);
-				if (localFile.exists()) {
+				File localFile = new File(rootDirectory + "/" + instrument + "/" + filename);
+				long localFileSize = localFile.length();
+				long remoteFileSize = file.getSize();
+				if (localFile.exists() && localFileSize == remoteFileSize) {
+					log.info("Skipping {} (file already downloaded)", filename);
 					continue;
 				}
+				localFile.delete();
 
 				// Remote File
 				String remoteFilename = path + "/" + filename;
@@ -91,7 +95,7 @@ public class HistDataDownloader {
 						continue;
 					}
 
-					log.info("Downloading {}", remoteFilename);
+					log.info("Downloading {} to {}", remoteFilename, localFile.getAbsolutePath());
 					Stopwatch timer = Stopwatch.createStarted();
 					localFile.getParentFile().mkdirs();
 					try (FileOutputStream localFileOutput = new FileOutputStream(localFile)) {
