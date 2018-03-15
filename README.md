@@ -15,3 +15,9 @@ This library requires the [robindrew-common](https://github.com/robindrew/robind
 
 ## Data
 PCF formatted data for the major FX pairs is available in the [robindrew-trading-data](https://github.com/robindrew/robindrew-trading-data) project.
+
+## Providers
+The following providers are available for the API:
+* [IG Index Provider](https://github.com/robindrew/robindrew-trading-igindex)
+* [Active Tick Provider](https://github.com/robindrew/robindrew-trading-activetick)
+
