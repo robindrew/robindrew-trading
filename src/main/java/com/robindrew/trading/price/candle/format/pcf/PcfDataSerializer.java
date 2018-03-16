@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.robindrew.common.io.data.IDataReader;
 import com.robindrew.common.io.data.IDataSerializer;
 import com.robindrew.common.io.data.IDataWriter;
@@ -11,6 +14,8 @@ import com.robindrew.trading.price.candle.IPriceCandle;
 import com.robindrew.trading.price.candle.PriceCandle;
 
 public class PcfDataSerializer implements IDataSerializer<List<IPriceCandle>> {
+
+	private static final Logger log = LoggerFactory.getLogger(PcfDataSerializer.class);
 
 	@Override
 	public List<IPriceCandle> readObject(IDataReader reader) throws IOException {
@@ -72,6 +77,11 @@ public class PcfDataSerializer implements IDataSerializer<List<IPriceCandle>> {
 				int high = candle.getHighPrice();
 				int low = candle.getLowPrice();
 				int close = candle.getClosePrice();
+
+				if (openTime < baseTime) {
+					log.warn("Skipping non-sequential candle: {}", candle);
+					continue;
+				}
 
 				writer.writePositiveLong(openTime - baseTime);
 				writer.writePositiveLong(closeTime - openTime);
