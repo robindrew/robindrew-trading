@@ -12,15 +12,31 @@ public class PriceCandleMerger {
 			throw new IllegalArgumentException("Unable to merge candles with different precision");
 		}
 
-		long openTime = Math.min(candle1.getOpenTime(), candle2.getOpenTime());
-		long closeTime = Math.max(candle1.getCloseTime(), candle2.getCloseTime());
+		long openTime;
+		int openPrice;
+		if (candle1.getOpenTime() <= candle2.getOpenTime()) {
+			openTime = candle1.getOpenTime();
+			openPrice = candle1.getOpenPrice();
+		} else {
+			openTime = candle2.getOpenTime();
+			openPrice = candle2.getOpenPrice();
+		}
 
-		int openPrice = candle1.getOpenTime() <= candle2.getOpenTime() ? candle1.getOpenPrice() : candle2.getOpenPrice();
-		int closePrice = candle1.getCloseTime() >= candle2.getCloseTime() ? candle1.getClosePrice() : candle2.getClosePrice();
+		long closeTime;
+		int closePrice;
+		if (candle1.getCloseTime() >= candle2.getCloseTime()) {
+			closeTime = candle1.getCloseTime();
+			closePrice = candle1.getClosePrice();
+		} else {
+			closeTime = candle2.getCloseTime();
+			closePrice = candle2.getClosePrice();
+		}
+
 		int highPrice = Math.max(candle1.getHighPrice(), candle2.getHighPrice());
 		int lowPrice = Math.min(candle1.getLowPrice(), candle2.getLowPrice());
 
-		return new PriceCandle(openPrice, highPrice, lowPrice, closePrice, openTime, closeTime, candle1.getDecimalPlaces());
+		PriceCandle merged = new PriceCandle(openPrice, highPrice, lowPrice, closePrice, openTime, closeTime, candle1.getDecimalPlaces());
+		return merged;
 	}
 
 	public IPriceCandle merge(Collection<? extends IPriceCandle> candles) {
