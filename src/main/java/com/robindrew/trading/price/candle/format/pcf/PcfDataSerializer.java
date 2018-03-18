@@ -67,6 +67,7 @@ public class PcfDataSerializer implements IDataSerializer<List<IPriceCandle>> {
 		writer.writePositiveLong(baseTime);
 		writer.writePositiveInt(decimalPlaces);
 
+		IPriceCandle previous = null;
 		for (IPriceCandle candle : candles) {
 			try {
 
@@ -77,11 +78,6 @@ public class PcfDataSerializer implements IDataSerializer<List<IPriceCandle>> {
 				int high = candle.getHighPrice();
 				int low = candle.getLowPrice();
 				int close = candle.getClosePrice();
-
-				if (openTime < baseTime) {
-					log.warn("Skipping non-sequential candle: {}", candle);
-					continue;
-				}
 
 				writer.writePositiveLong(openTime - baseTime);
 				writer.writePositiveLong(closeTime - openTime);
@@ -94,8 +90,9 @@ public class PcfDataSerializer implements IDataSerializer<List<IPriceCandle>> {
 				basePrice = close;
 				baseTime = closeTime;
 
+				previous = candle;
 			} catch (Exception e) {
-				throw new IOException("Failed to serialize candle: " + candle, e);
+				throw new IOException("Failed to serialize candle: " + candle + " (previous=" + previous + ")", e);
 			}
 		}
 	}

@@ -6,7 +6,7 @@ import com.robindrew.trading.IInstrument;
 
 public interface IHistoryService {
 
-	Set<IInstrument> getInstruments();
+	Set<? extends IInstrument> getInstruments();
 
 	IInstrumentPriceHistory getPriceHistory(IInstrument instrument);
 

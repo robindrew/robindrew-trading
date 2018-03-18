@@ -4,7 +4,10 @@ import static java.util.Collections.emptyList;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.io.File;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.DateAxis;
@@ -14,10 +17,26 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.CandlestickRenderer;
 import org.jfree.data.xy.DefaultOHLCDataset;
 
+import com.robindrew.common.image.ImageFormat;
+import com.robindrew.common.io.Files;
 import com.robindrew.trading.IInstrument;
+import com.robindrew.trading.Instruments;
 import com.robindrew.trading.price.candle.IPriceCandle;
+import com.robindrew.trading.price.candle.PriceCandles;
 import com.robindrew.trading.price.candle.charts.IPriceCandleChart;
 import com.robindrew.trading.price.candle.charts.IPriceCandleChartBuilder;
+import com.robindrew.trading.price.candle.format.pcf.source.IPcfSource;
+import com.robindrew.trading.price.candle.format.pcf.source.IPcfSourceManager;
+import com.robindrew.trading.price.candle.format.pcf.source.IPcfSourceSet;
+import com.robindrew.trading.price.candle.format.pcf.source.file.PcfFileManager;
+import com.robindrew.trading.price.candle.interval.PriceCandleIntervals;
+import com.robindrew.trading.price.candle.io.stream.source.IPriceCandleStreamSource;
+import com.robindrew.trading.price.candle.io.stream.source.PriceCandleIntervalStreamSource;
+import com.robindrew.trading.price.candle.io.stream.source.PriceCandleStreamSourceBuilder;
+import com.robindrew.trading.provider.ITradeDataProvider;
+import com.robindrew.trading.provider.ITradeDataProviderSet;
+import com.robindrew.trading.provider.TradeDataProvider;
+import com.robindrew.trading.provider.TradeDataProviderSet;
 
 public class JFreePriceCandleChartBuilder implements IPriceCandleChartBuilder {
 
@@ -107,5 +126,28 @@ public class JFreePriceCandleChartBuilder implements IPriceCandleChartBuilder {
 		// Now create the chart and chart panel
 		JFreeChart chart = new JFreeChart(instrument.getName(), font, plot, false);
 		return new JFreePriceCandleChart(chart, width, height);
+	}
+
+	public static void main(String[] args) {
+		IInstrument instrument = Instruments.GBP_USD;
+		ITradeDataProvider provider = TradeDataProvider.ACTIVETICK;
+
+		File directory = new File("C:\\development\\repository\\git\\robindrew-public\\robindrew-trading-data\\data\\pcf");
+		ITradeDataProviderSet providers = TradeDataProviderSet.of(provider);
+		IPcfSourceManager source = new PcfFileManager(directory, providers);
+		IPcfSourceSet set = source.getSourceSet(instrument);
+		LocalDateTime from = LocalDateTime.of(2018, 02, 01, 0, 0);
+		LocalDateTime to = LocalDateTime.of(2018, 02, 28, 23, 59);
+		Set<? extends IPcfSource> sources = set.getSources(from, to);
+		IPriceCandleStreamSource stream = new PriceCandleStreamSourceBuilder().setPcfSources(sources).get();
+		stream = new PriceCandleIntervalStreamSource(stream, PriceCandleIntervals.DAILY);
+		List<IPriceCandle> list = PriceCandles.drainToList(stream);
+
+		JFreePriceCandleChartBuilder builder = new JFreePriceCandleChartBuilder();
+		builder.setCandles(list);
+		builder.setDimensions(1024, 768);
+		builder.setInstrument(instrument);
+		IPriceCandleChart chart = builder.get();
+		chart.writeTo(Files.asByteSink(new File("C:\\temp\\chart\\chart.png")), ImageFormat.PNG);
 	}
 }
