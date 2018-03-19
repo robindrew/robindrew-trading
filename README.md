@@ -15,8 +15,8 @@ This library requires the [robindrew-common](https://github.com/robindrew/robind
 
 ## Data
 PCF formatted data for the major FX pairs is available:
-* [HistData PCF Files](https://github.com/robindrew/robindrew-trading-histdata-data) project.
-* [ActiveTick PCF Files](https://github.com/robindrew/robindrew-trading-activetick-data) project.
+* [HistData PCF Files](https://github.com/robindrew/robindrew-trading-histdata-data)
+* [ActiveTick PCF Files](https://github.com/robindrew/robindrew-trading-activetick-data)
 
 ## Providers
 The following providers are available for the API:
