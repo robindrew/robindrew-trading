@@ -136,7 +136,7 @@ public class Instruments {
 	public static final IInstrument CAC_40 = new Instrument("CAC40", INDICES);
 	/** DAX. */
 	public static final IInstrument DAX = new Instrument("DAX", INDICES);
-	/** S&P 500. */
+	/** S&amp;P 500. */
 	public static final IInstrument SP_500 = new Instrument("SP500", INDICES);
 	/** DOW JONES. */
 	public static final IInstrument DOW_JONES = new Instrument("DOWJONES", INDICES);
