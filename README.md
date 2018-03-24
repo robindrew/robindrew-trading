@@ -23,3 +23,8 @@ The following providers are available for the API:
 * [IG Index Provider](https://github.com/robindrew/robindrew-trading-igindex)
 * [Active Tick Provider](https://github.com/robindrew/robindrew-trading-activetick)
 
+## Feeds
+The following projects provide access to the live data feed for the given provider. Each includes asynchronous file output, writing the individual price ticks in a text format. In addition the feeds provide a web interface to view and manage the price feeds.
+* [IG Index Feed](https://github.com/robindrew/robindrew-trading-igindex-feed)
+* [Active Tick Feed](https://github.com/robindrew/robindrew-trading-activetick-feed)
+

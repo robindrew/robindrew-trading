@@ -1,5 +1,6 @@
 package com.robindrew.trading;
 
+import static com.robindrew.trading.InstrumentType.COMMODITIES;
 import static com.robindrew.trading.InstrumentType.CURRENCIES;
 import static com.robindrew.trading.InstrumentType.INDICES;
 
@@ -153,9 +154,16 @@ public class Instruments {
 	public static final IInstrument US_DOLLAR_INDEX = new Instrument("USDOLLARINDEX", INDICES);
 
 	/** BRENT CRUDE OIL (Brent Crude). */
-	public static final IInstrument BRENT_CRUDE_OIL = new Instrument("BRENTCRUDEOIL", INDICES);
+	public static final IInstrument BRENT_CRUDE_OIL = new Instrument("BRENTCRUDEOIL", COMMODITIES);
 	/** US CRUDE OIL (West Texas Intermediate). */
-	public static final IInstrument US_CRUDE_OIL = new Instrument("USCRUDEOIL", INDICES);
+	public static final IInstrument US_CRUDE_OIL = new Instrument("USCRUDEOIL", COMMODITIES);
+
+	/** GOLD. */
+	public static final IInstrument GOLD = new Instrument("GOLD", COMMODITIES);
+	/** SILVER. */
+	public static final IInstrument SILVER = new Instrument("SILVER", COMMODITIES);
+	/** PLATINUM. */
+	public static final IInstrument PLATINUM = new Instrument("PLATINUM", COMMODITIES);
 
 	public static IInstrument valueOf(String name) {
 		switch (name) {
