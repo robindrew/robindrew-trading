@@ -3,12 +3,12 @@ Algorithmic trading core library for Java
 
 ## Articles
 Before you dive in to the API itself, please take a quick look at the following articles:
-* [Introduction to Trading](https://github.com/robindrew/robindrew-trading/wiki/Introduction-to-Trading)
-* [My Approach to Trading](https://github.com/robindrew/robindrew-trading/wiki/My-Approach-to-Trading)
+* [Introduction to Trading](https://github.com/robindrew/robindrew-trading/wiki/Article:-Introduction-to-Trading)
+* [My Approach to Trading](https://github.com/robindrew/robindrew-trading/wiki/Article:-My-Approach-to-Trading)
 
 ## Coding
 Please read the [Wiki](https://github.com/robindrew/robindrew-trading/wiki) to get started writing code.
-There is also [Javadoc](https://htmlpreview.github.io/?https://raw.githubusercontent.com/robindrew/robindrew-javadoc/master/index.html?overview-summary.html) available for all my projects.
+There is also [Javadoc](https://htmlpreview.github.io/?https://raw.githubusercontent.com/robindrew/robindrew-javadoc/master/docs/index.html?overview-summary.html) available for all my projects.
 
 ## Dependencies
 This library requires the [robindrew-common](https://github.com/robindrew/robindrew-common) project.
