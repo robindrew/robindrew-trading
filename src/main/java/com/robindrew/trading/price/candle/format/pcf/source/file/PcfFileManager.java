@@ -95,4 +95,5 @@ public class PcfFileManager implements IPcfSourceManager {
 	public IPcfSourceSet getSourceSet(IInstrument instrument, ITradeDataProvider provider) {
 		return new PcfFileSet(instrument, rootDirectory, TradeDataProviderSet.of(provider));
 	}
+
 }

@@ -27,7 +27,7 @@ public class FloatingPoint {
 	}
 
 	public static BigDecimal toBigDecimal(int value, int decimalPlaces) {
-		return new BigDecimal(toString(value, decimalPlaces));
+		return new BigDecimal(toString(value, decimalPlaces)).stripTrailingZeros();
 	}
 
 	public static int getDecimalPlaces(double value) {

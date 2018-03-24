@@ -6,8 +6,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import com.robindrew.common.util.Check;
 import com.robindrew.trading.IInstrument;
-import com.robindrew.trading.price.history.IInstrumentPriceHistory;
 import com.robindrew.trading.price.history.IHistoryService;
+import com.robindrew.trading.price.history.IInstrumentPriceHistory;
 
 public class PcfSourceHistoryService implements IHistoryService {
 
