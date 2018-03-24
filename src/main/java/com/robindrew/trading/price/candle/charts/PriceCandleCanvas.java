@@ -10,6 +10,10 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.google.common.base.Stopwatch;
 import com.robindrew.common.image.Images;
 import com.robindrew.trading.Instruments;
 import com.robindrew.trading.price.candle.IPriceCandle;
@@ -25,6 +29,8 @@ import com.robindrew.trading.provider.TradeDataProviderSet;
 
 public class PriceCandleCanvas {
 
+	private static final Logger log = LoggerFactory.getLogger(PriceCandleCanvas.class);
+
 	public static void main(String[] args) throws Throwable {
 
 		String directory = "C:\\development\\repository\\git\\robindrew-public\\robindrew-trading-histdata-data\\data\\pcf";
@@ -33,18 +39,20 @@ public class PriceCandleCanvas {
 
 		IPcfSource source = set.getSource(LocalDate.of(2017, 6, 01));
 		List<IPriceCandle> candles = source.read();
-		candles = candles.subList(0, 220);
-		candles.remove(22);
-		candles.remove(22);
+		candles = candles.subList(0, 180);
 
 		IPriceCandleInterval interval = PriceCandleIntervals.MINUTELY;
 
-		int width = 1120;
-		int height = 700;
+		int width = 900;
+		int height = 600;
 
 		PriceCandleCanvas canvas = new PriceCandleCanvas(width, height);
 		canvas.renderCandles(candles, interval);
-		canvas.writeAsGif("c:/temp/pcg.gif");
+		canvas.toPng();
+		canvas.toPng();
+		canvas.toPng();
+		canvas.toPng();
+		canvas.writeAsPng("c:/temp/pcg.png");
 	}
 
 	// Immutable
@@ -115,7 +123,7 @@ public class PriceCandleCanvas {
 		graphics.drawLine(x, y1, x, y2);
 
 		String openText = toText(merged.getOpenPrice(), merged.getDecimalPlaces());
-		graphics.drawString(openText, x - getPixelLength(openText) - 8, y2-xAxisOffset);
+		graphics.drawString(openText, x - getPixelLength(openText) - 8, y2 - xAxisOffset);
 
 		String closeText = toText(merged.getClosePrice(), merged.getDecimalPlaces());
 		graphics.drawString(closeText, x - getPixelLength(closeText) - 8, y1);
@@ -246,12 +254,34 @@ public class PriceCandleCanvas {
 		return (double) points / (double) pixels;
 	}
 
+	public byte[] toGif() {
+		Stopwatch timer = Stopwatch.createStarted();
+		byte[] bytes = Images.toGif(image);
+		timer.stop();
+		log.info("Serialized to {} bytes GIF in {}", bytes.length, timer);
+		return bytes;
+	}
+
+	public byte[] toPng() {
+		Stopwatch timer = Stopwatch.createStarted();
+		byte[] bytes = Images.toPng(image);
+		timer.stop();
+		log.info("Serialized to {} bytes PNG in {}", bytes.length, timer);
+		return bytes;
+	}
+
 	public void writeAsGif(String filename) {
+		Stopwatch timer = Stopwatch.createStarted();
 		Images.writeAsGif(image, new File(filename));
+		timer.stop();
+		log.info("Wrote {} in {}", filename, timer);
 	}
 
 	public void writeAsPng(String filename) throws IOException {
+		Stopwatch timer = Stopwatch.createStarted();
 		Images.writeAsPng(image, new File(filename));
+		timer.stop();
+		log.info("Wrote {} in {}", filename, timer);
 	}
 
 }
