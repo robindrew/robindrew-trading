@@ -16,9 +16,7 @@ import com.robindrew.trading.price.candle.format.pcf.source.IPcfSourceManager;
 import com.robindrew.trading.price.candle.format.pcf.source.file.PcfFileManager;
 import com.robindrew.trading.price.candle.line.filter.ILineFilter;
 import com.robindrew.trading.price.candle.line.parser.IPriceCandleLineParser;
-import com.robindrew.trading.provider.ITradeDataProviderSet;
 import com.robindrew.trading.provider.TradeDataProvider;
-import com.robindrew.trading.provider.TradeDataProviderSet;
 import com.robindrew.trading.provider.histdata.HistDataInstrument;
 import com.robindrew.trading.provider.histdata.HistDataPcfLineConverter;
 import com.robindrew.trading.provider.histdata.line.HistDataFormat;
@@ -36,8 +34,7 @@ public class HistDataPcfConverterTool implements Runnable {
 		HistDataFormat format = args.getEnum("-f", HistDataFormat.class, TICK);
 		TradeDataProvider provider = args.getEnum("-p", TradeDataProvider.class, HISTDATA);
 
-		ITradeDataProviderSet set = TradeDataProviderSet.of(provider);
-		IPcfSourceManager manager = new PcfFileManager(outputDir, set);
+		IPcfSourceManager manager = new PcfFileManager(outputDir, provider);
 
 		new HistDataPcfConverterTool(inputDir, manager, format).run();;
 	}

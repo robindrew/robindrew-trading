@@ -34,9 +34,7 @@ import com.robindrew.trading.price.candle.io.stream.source.IPriceCandleStreamSou
 import com.robindrew.trading.price.candle.io.stream.source.PriceCandleIntervalStreamSource;
 import com.robindrew.trading.price.candle.io.stream.source.PriceCandleStreamSourceBuilder;
 import com.robindrew.trading.provider.ITradeDataProvider;
-import com.robindrew.trading.provider.ITradeDataProviderSet;
 import com.robindrew.trading.provider.TradeDataProvider;
-import com.robindrew.trading.provider.TradeDataProviderSet;
 
 public class JFreePriceCandleChartBuilder implements IPriceCandleChartBuilder {
 
@@ -133,8 +131,7 @@ public class JFreePriceCandleChartBuilder implements IPriceCandleChartBuilder {
 		ITradeDataProvider provider = TradeDataProvider.ACTIVETICK;
 
 		File directory = new File("C:\\development\\repository\\git\\robindrew-public\\robindrew-trading-data\\data\\pcf");
-		ITradeDataProviderSet providers = TradeDataProviderSet.of(provider);
-		IPcfSourceManager source = new PcfFileManager(directory, providers);
+		IPcfSourceManager source = new PcfFileManager(directory, provider);
 		IPcfSourceSet set = source.getSourceSet(instrument);
 		LocalDateTime from = LocalDateTime.of(2018, 02, 01, 0, 0);
 		LocalDateTime to = LocalDateTime.of(2018, 02, 28, 23, 59);

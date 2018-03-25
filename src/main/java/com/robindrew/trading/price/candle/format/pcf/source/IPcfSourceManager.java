@@ -4,16 +4,17 @@ import java.util.Set;
 
 import com.robindrew.trading.IInstrument;
 import com.robindrew.trading.provider.ITradeDataProvider;
-import com.robindrew.trading.provider.ITradeDataProviderSet;
 
 public interface IPcfSourceManager {
 
 	Set<IInstrument> getInstruments();
 
-	ITradeDataProviderSet getProviderSet();
+	Set<IInstrument> getInstruments(ITradeDataProvider provider);
+
+	Set<ITradeDataProvider> getProviders();
 
 	IPcfSourceSet getSourceSet(IInstrument instrument);
 
 	IPcfSourceSet getSourceSet(IInstrument instrument, ITradeDataProvider provider);
-	
+
 }

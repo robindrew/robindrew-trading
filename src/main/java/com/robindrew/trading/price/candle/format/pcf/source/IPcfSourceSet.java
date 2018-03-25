@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.Set;
 
 import com.robindrew.trading.IInstrument;
+import com.robindrew.trading.price.candle.io.stream.source.IPriceCandleStreamSource;
 
 public interface IPcfSourceSet {
 
@@ -42,5 +43,7 @@ public interface IPcfSourceSet {
 	 * @return the source.
 	 */
 	IPcfSource getSource(LocalDate month, boolean create);
+
+	IPriceCandleStreamSource asStreamSource(LocalDateTime from, LocalDateTime to);
 
 }

@@ -1,6 +1,9 @@
 package com.robindrew.trading.price.candle.format.pcf.source.file;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -9,6 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.collect.ImmutableSet;
 import com.robindrew.common.io.Files;
 import com.robindrew.common.util.Check;
 import com.robindrew.trading.IInstrument;
@@ -17,8 +21,7 @@ import com.robindrew.trading.InstrumentType;
 import com.robindrew.trading.price.candle.format.pcf.source.IPcfSourceManager;
 import com.robindrew.trading.price.candle.format.pcf.source.IPcfSourceSet;
 import com.robindrew.trading.provider.ITradeDataProvider;
-import com.robindrew.trading.provider.ITradeDataProviderSet;
-import com.robindrew.trading.provider.TradeDataProviderSet;
+import com.robindrew.trading.provider.TradeDataProvider;
 
 public class PcfFileManager implements IPcfSourceManager {
 
@@ -32,11 +35,19 @@ public class PcfFileManager implements IPcfSourceManager {
 
 	private final File rootDirectory;
 	private final Map<IInstrument, IPcfFileSet> instrumentMap = new ConcurrentHashMap<>();
-	private final ITradeDataProviderSet providers;
+	private final Set<ITradeDataProvider> providers;
 
-	public PcfFileManager(File directory, ITradeDataProviderSet providers) {
+	public PcfFileManager(File directory) {
+		this(directory, Collections.emptySet());
+	}
+
+	public PcfFileManager(File directory, ITradeDataProvider... providers) {
+		this(directory, new LinkedHashSet<>(Arrays.asList(providers)));
+	}
+
+	public PcfFileManager(File directory, Set<? extends ITradeDataProvider> providers) {
 		this.rootDirectory = Check.notNull("directory", directory);
-		this.providers = Check.notNull("providers", providers);
+		this.providers = ImmutableSet.copyOf(providers);
 
 		for (ITradeDataProvider provider : providers) {
 			File providerDir = new File(rootDirectory, provider.name());
@@ -87,13 +98,46 @@ public class PcfFileManager implements IPcfSourceManager {
 	}
 
 	@Override
-	public ITradeDataProviderSet getProviderSet() {
-		return providers;
+	public Set<ITradeDataProvider> getProviders() {
+		Set<ITradeDataProvider> set = new LinkedHashSet<>();
+		if (providers.isEmpty()) {
+			for (File providerDir : Files.listFiles(rootDirectory, false)) {
+				if (providerDir.isDirectory()) {
+					String name = providerDir.getName();
+					TradeDataProvider provider = TradeDataProvider.valueOf(name);
+					set.add(provider);
+				}
+			}
+		} else {
+			for (ITradeDataProvider provider : providers) {
+				File providerDir = new File(rootDirectory, provider.name());
+				if (providerDir.exists()) {
+					set.add(provider);
+				}
+			}
+		}
+		return set;
 	}
 
 	@Override
 	public IPcfSourceSet getSourceSet(IInstrument instrument, ITradeDataProvider provider) {
-		return new PcfFileSet(instrument, rootDirectory, TradeDataProviderSet.of(provider));
+		return new PcfFileSet(instrument, rootDirectory, ImmutableSet.of(provider));
+	}
+
+	@Override
+	public Set<IInstrument> getInstruments(ITradeDataProvider provider) {
+		Set<IInstrument> set = new TreeSet<>();
+		File providerDir = new File(rootDirectory, provider.name());
+		if (providerDir.exists()) {
+			for (File typeDir : Files.listFiles(providerDir, false)) {
+				InstrumentType type = InstrumentType.valueOf(typeDir.getName());
+				for (File instrumentDir : Files.listFiles(typeDir, false)) {
+					IInstrument instrument = new Instrument(instrumentDir.getName(), type);
+					set.add(instrument);
+				}
+			}
+		}
+		return set;
 	}
 
 }

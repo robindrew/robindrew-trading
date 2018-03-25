@@ -25,7 +25,6 @@ import com.robindrew.trading.price.candle.format.pcf.source.IPcfSourceSet;
 import com.robindrew.trading.price.candle.format.pcf.source.file.PcfFileManager;
 import com.robindrew.trading.price.candle.interval.IPriceCandleInterval;
 import com.robindrew.trading.price.candle.interval.PriceCandleIntervals;
-import com.robindrew.trading.provider.TradeDataProviderSet;
 
 public class PriceCandleCanvas {
 
@@ -34,7 +33,7 @@ public class PriceCandleCanvas {
 	public static void main(String[] args) throws Throwable {
 
 		String directory = "C:\\development\\repository\\git\\robindrew-public\\robindrew-trading-histdata-data\\data\\pcf";
-		IPcfSourceManager manager = new PcfFileManager(new File(directory), TradeDataProviderSet.defaultProviders());
+		IPcfSourceManager manager = new PcfFileManager(new File(directory));
 		IPcfSourceSet set = manager.getSourceSet(Instruments.USD_JPY);
 
 		IPcfSource source = set.getSource(LocalDate.of(2017, 6, 01));

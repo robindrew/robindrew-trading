@@ -1,7 +1,5 @@
 package com.robindrew.trading.backtest;
 
-import static com.robindrew.trading.provider.TradeDataProviderSet.defaultProviders;
-
 import java.io.File;
 
 import org.junit.Test;
@@ -14,7 +12,6 @@ import com.robindrew.trading.price.candle.format.pcf.source.IPcfSourceManager;
 import com.robindrew.trading.price.candle.format.pcf.source.file.PcfFileManager;
 import com.robindrew.trading.price.history.IInstrumentPriceHistory;
 import com.robindrew.trading.price.precision.PricePrecision;
-import com.robindrew.trading.provider.TradeDataProviderSet;
 import com.robindrew.trading.trade.funds.AccountFunds;
 import com.robindrew.trading.trade.funds.Cash;
 
@@ -40,9 +37,8 @@ public class BacktestTests {
 
 		AccountFunds funds = new AccountFunds(new Cash(10000));
 		File directory = new File(PCF_DATA_DIR);
-		TradeDataProviderSet providers = defaultProviders();
 
-		IPcfSourceManager manager = new PcfFileManager(directory, providers);
+		IPcfSourceManager manager = new PcfFileManager(directory);
 		BacktestHistoryService history = new BacktestHistoryService(manager);
 
 		BacktestStreamingService streaming = new BacktestStreamingService();

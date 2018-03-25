@@ -18,7 +18,6 @@ import com.robindrew.trading.price.candle.io.stream.source.IPriceCandleStreamSou
 import com.robindrew.trading.price.candle.io.stream.source.PriceCandleLoggedStreamSource;
 import com.robindrew.trading.price.candle.io.stream.source.PriceCandleStreamSourceBuilder;
 import com.robindrew.trading.provider.TradeDataProvider;
-import com.robindrew.trading.provider.TradeDataProviderSet;
 
 public class VolatilityAnalysisTest {
 
@@ -29,7 +28,7 @@ public class VolatilityAnalysisTest {
 		TradeDataProvider provider = TradeDataProvider.valueOf(SystemProperties.get("provider", false));
 		IInstrument instrument = Instruments.valueOf(SystemProperties.get("instrument", false));
 
-		IPcfSourceManager manager = new PcfFileManager(directory, TradeDataProviderSet.of(provider));
+		IPcfSourceManager manager = new PcfFileManager(directory, provider);
 		try (VolatilityAnalysis analysis = new VolatilityAnalysis(instrument)) {
 
 			IPcfSourceSet sourceSet = manager.getSourceSet(instrument);
