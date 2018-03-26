@@ -67,7 +67,9 @@ public class PcfSourcesStreamSource implements IPriceCandleStreamSource {
 
 			// Next file
 			IPcfSource source = sources.removeFirst();
-			log.debug("Source: {} ({})", source, bytes(source.size()));
+			if (log.isDebugEnabled()) {
+				log.debug("Source: {} ({})", source, bytes(source.size()));
+			}
 
 			List<IPriceCandle> candles = source.read();
 			if (reverse) {
