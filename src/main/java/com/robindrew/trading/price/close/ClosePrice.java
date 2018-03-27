@@ -1,19 +1,16 @@
 package com.robindrew.trading.price.close;
 
-public class ClosePrice implements IClosePrice {
+import com.robindrew.trading.price.decimal.Decimal;
 
-	private final int price;
+public class ClosePrice extends Decimal implements IClosePrice {
 
-	public ClosePrice(int price) {
-		if (price <= 0) {
-			throw new IllegalArgumentException("price=" + price);
-		}
-		this.price = price;
+	public ClosePrice(int price, int decimalPlaces) {
+		super(price, decimalPlaces);
 	}
 
 	@Override
 	public int getClosePrice() {
-		return price;
+		return getValue();
 	}
 
 }

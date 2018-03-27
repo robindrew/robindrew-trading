@@ -4,4 +4,6 @@ public interface IClosePrice {
 
 	int getClosePrice();
 
+	int getDecimalPlaces();
+	
 }

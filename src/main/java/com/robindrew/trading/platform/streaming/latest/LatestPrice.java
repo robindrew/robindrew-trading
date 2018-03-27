@@ -36,7 +36,11 @@ public class LatestPrice implements ILatestPrice {
 		return count.get();
 	}
 
-	public void update(long timestamp, IPriceCandle next) {
+	public void update(IPriceCandle next) {
+		update(next, next.getCloseTime());
+	}
+
+	public void update(IPriceCandle next, long timestamp) {
 		time.set(timestamp);
 		IPriceCandle previous = price.getAndSet(next);
 		if (previous != null && previous.getClosePrice() > next.getClosePrice()) {

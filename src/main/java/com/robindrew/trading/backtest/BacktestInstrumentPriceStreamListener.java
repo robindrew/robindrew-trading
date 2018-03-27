@@ -42,7 +42,7 @@ public class BacktestInstrumentPriceStreamListener extends PriceCandleSubscriber
 			if (candle == null) {
 				break;
 			}
-			latest.update(candle.getCloseTime(), candle);
+			latest.update(candle);
 			putNextCandle(candle);
 		}
 		log.info("[Finished Streaming Prices] {}", getInstrument());
