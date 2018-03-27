@@ -8,10 +8,10 @@ import org.junit.runner.notification.RunListener.ThreadSafe;
 public class PriceCandleInstant extends AbstractPriceCandle implements IPriceCandleInstant {
 
 	private final int price;
-	private final long instant;
+	private final long timestamp;
 	private final byte decimalPlaces;
 
-	public PriceCandleInstant(int price, long instant, int decimalPlaces) {
+	public PriceCandleInstant(int price, long timestamp, int decimalPlaces) {
 		if (price <= 0) {
 			throw new IllegalArgumentException("price=" + price);
 		}
@@ -20,7 +20,7 @@ public class PriceCandleInstant extends AbstractPriceCandle implements IPriceCan
 		}
 
 		this.price = price;
-		this.instant = instant;
+		this.timestamp = timestamp;
 		this.decimalPlaces = (byte) decimalPlaces;
 	}
 
@@ -46,12 +46,12 @@ public class PriceCandleInstant extends AbstractPriceCandle implements IPriceCan
 
 	@Override
 	public long getOpenTime() {
-		return instant;
+		return timestamp;
 	}
 
 	@Override
 	public long getCloseTime() {
-		return instant;
+		return timestamp;
 	}
 
 	@Override
@@ -85,6 +85,6 @@ public class PriceCandleInstant extends AbstractPriceCandle implements IPriceCan
 
 	@Override
 	public long getTimestamp() {
-		return instant;
+		return timestamp;
 	}
 }

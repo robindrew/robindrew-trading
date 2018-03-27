@@ -9,4 +9,6 @@ public interface IInstrument extends Comparable<IInstrument> {
 	IInstrument getUnderlying();
 
 	IInstrument getUnderlying(boolean recursive);
+
+	boolean matches(IInstrument instrument);
 }

@@ -78,4 +78,15 @@ public class Instrument implements IInstrument {
 		return compare.toComparison();
 	}
 
+	@Override
+	public boolean matches(IInstrument instrument) {
+		if (this.equals(instrument)) {
+			return true;
+		}
+		if (underlying != null) {
+			return underlying.matches(instrument);
+		}
+		return false;
+	}
+
 }
