@@ -17,12 +17,13 @@ import com.robindrew.common.util.Check;
 import com.robindrew.trading.IInstrument;
 import com.robindrew.trading.platform.TradingPlatform;
 import com.robindrew.trading.platform.streaming.IStreamingService;
-import com.robindrew.trading.platform.streaming.latest.ILatestPrice;
+import com.robindrew.trading.platform.streaming.latest.IStreamingPrice;
 import com.robindrew.trading.position.IPosition;
 import com.robindrew.trading.position.PositionBuilder;
 import com.robindrew.trading.position.closed.ClosedPosition;
 import com.robindrew.trading.position.closed.IClosedPosition;
 import com.robindrew.trading.position.order.IPositionOrder;
+import com.robindrew.trading.price.candle.IPriceCandle;
 import com.robindrew.trading.price.history.IHistoryService;
 import com.robindrew.trading.price.precision.IPricePrecision;
 import com.robindrew.trading.trade.funds.AccountFunds;
@@ -92,10 +93,11 @@ public class BacktestTradingPlatform extends TradingPlatform {
 		IPricePrecision precision = getPrecision(instrument);
 
 		BacktestInstrumentPriceStream stream = getPriceStream(instrument);
-		ILatestPrice price = stream.getLatestPrice();
+		IStreamingPrice price = stream.getPrice();
 
-		BigDecimal closePrice = precision.toBigDecimal(price.getPrice().getClosePrice());
-		IClosedPosition closed = new ClosedPosition(position, price.getPrice().getCloseDate(), closePrice);
+		IPriceCandle latest = price.getSnapshot().getLatest();
+		BigDecimal closePrice = precision.toBigDecimal(latest.getClosePrice());
+		IClosedPosition closed = new ClosedPosition(position, latest.getCloseDate(), closePrice);
 		if (closed.isProfit()) {
 			funds.addFunds(new Cash(closed.getProfit(), true));
 			log.info("Profit: {} ({})", closed.getProfit(), position);
@@ -125,16 +127,17 @@ public class BacktestTradingPlatform extends TradingPlatform {
 		IPricePrecision precision = getPrecision(instrument);
 
 		BacktestInstrumentPriceStream stream = getPriceStream(instrument);
-		ILatestPrice price = stream.getLatestPrice();
+		IStreamingPrice price = stream.getPrice();
 
 		String id = getNextId();
-		BigDecimal openPrice = precision.toBigDecimal(price.getPrice().getClosePrice());
+		IPriceCandle latest = price.getSnapshot().getLatest();
+		BigDecimal openPrice = precision.toBigDecimal(latest.getClosePrice());
 
 		PositionBuilder builder = new PositionBuilder();
 		builder.setId(id);
 		builder.setInstrument(order.getInstrument());
 		builder.setDirection(order.getDirection());
-		builder.setOpenDate(price.getPrice().getCloseDate());
+		builder.setOpenDate(latest.getCloseDate());
 		builder.setCurrency(order.getTradeCurrency());
 		builder.setOpenPrice(openPrice);
 		builder.setTradeSize(order.getTradeSize());

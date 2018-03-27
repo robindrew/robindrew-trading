@@ -7,7 +7,8 @@ import org.slf4j.LoggerFactory;
 
 import com.robindrew.trading.IInstrument;
 import com.robindrew.trading.platform.ITradingPlatform;
-import com.robindrew.trading.platform.streaming.latest.LatestPrice;
+import com.robindrew.trading.platform.streaming.latest.PriceSnapshot;
+import com.robindrew.trading.platform.streaming.latest.StreamingPrice;
 import com.robindrew.trading.price.candle.IPriceCandle;
 import com.robindrew.trading.strategy.SingleInstrumentStrategy;
 
@@ -16,7 +17,7 @@ public class TriangleBreakoutTradingStrategy extends SingleInstrumentStrategy im
 	private static final Logger log = LoggerFactory.getLogger(TriangleBreakoutTradingStrategy.class);
 
 	private final TriangleBreakoutParameters parameters;
-	private final LatestPrice latest = new LatestPrice();
+	private final StreamingPrice price = new StreamingPrice();
 	private final AtomicBoolean closed = new AtomicBoolean(false);
 	private long sleepTimeMillis = 10;
 
@@ -31,7 +32,7 @@ public class TriangleBreakoutTradingStrategy extends SingleInstrumentStrategy im
 
 	@Override
 	public void putNextCandle(IPriceCandle candle) {
-		latest.update(candle);
+		price.update(candle);
 	}
 
 	@Override
@@ -40,10 +41,12 @@ public class TriangleBreakoutTradingStrategy extends SingleInstrumentStrategy im
 
 		try {
 			while (!isClosed()) {
-				long time = latest.getUpdateTime();
+				PriceSnapshot update = price.getSnapshot();
+
+				long time = update.getTimestamp();
 				if (previousTime < time) {
 					previousTime = time;
-					handleLatest(latest.getPrice());
+					handleLatest(update.getLatest());
 				} else {
 					Thread.sleep(sleepTimeMillis);
 				}

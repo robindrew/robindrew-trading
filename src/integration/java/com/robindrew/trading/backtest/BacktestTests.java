@@ -27,10 +27,9 @@ public class BacktestTests {
 
 		IInstrument instrument = Instruments.GBP_USD;
 		platform.setPrecision(instrument, new PricePrecision(1, 1, 2));
-		BacktestInstrumentPriceStream stream = (BacktestInstrumentPriceStream) platform.getStreamingService().getPriceStream(instrument);
-		BacktestInstrumentPriceStreamListener listener = stream.getListener();
-		listener.register(new SimpleVolatilityStrategy(platform, instrument));
-		listener.run();
+		BacktestInstrumentPriceStream priceStream = (BacktestInstrumentPriceStream) platform.getStreamingService().getPriceStream(instrument);
+		priceStream.register(new SimpleVolatilityStrategy(platform, instrument));
+		priceStream.run();
 	}
 
 	private BacktestTradingPlatform getPlatform() {
@@ -47,8 +46,7 @@ public class BacktestTests {
 		for (IInstrument instrument : history.getInstruments()) {
 			log.info("Registering Instrument: {}", instrument);
 			IInstrumentPriceHistory priceHistory = history.getPriceHistory(instrument);
-			BacktestInstrumentPriceStreamListener listener = new BacktestInstrumentPriceStreamListener(priceHistory);
-			BacktestInstrumentPriceStream stream = new BacktestInstrumentPriceStream(listener);
+			BacktestInstrumentPriceStream stream = new BacktestInstrumentPriceStream(priceHistory);
 			streaming.register(stream);
 		}
 

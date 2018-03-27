@@ -1,20 +1,41 @@
 package com.robindrew.trading.backtest;
 
-import com.robindrew.common.util.Check;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.robindrew.trading.platform.streaming.InstrumentPriceStream;
+import com.robindrew.trading.price.candle.IPriceCandle;
+import com.robindrew.trading.price.candle.io.stream.source.IPriceCandleStreamSource;
+import com.robindrew.trading.price.history.IInstrumentPriceHistory;
 
-public class BacktestInstrumentPriceStream extends InstrumentPriceStream {
+public class BacktestInstrumentPriceStream extends InstrumentPriceStream implements Runnable {
 
-	private final BacktestInstrumentPriceStreamListener listener;
+	private static final Logger log = LoggerFactory.getLogger(BacktestInstrumentPriceStream.class);
 
-	public BacktestInstrumentPriceStream(BacktestInstrumentPriceStreamListener listener) {
-		super(listener.getInstrument(), listener.getLatestPrice());
-		this.listener = Check.notNull("listener", listener);
+	private final IInstrumentPriceHistory history;
+
+	public BacktestInstrumentPriceStream(IInstrumentPriceHistory history) {
+		super(history.getInstrument());
+		this.history = history;
 	}
 
 	@Override
-	public BacktestInstrumentPriceStreamListener getListener() {
-		return listener;
+	public void run() {
+		IPriceCandleStreamSource source = history.getStreamSource();
+		log.info("[Started Streaming Prices] {}", getInstrument());
+		while (true) {
+			IPriceCandle candle = source.getNextCandle();
+			if (candle == null) {
+				break;
+			}
+			putNextCandle(candle);
+		}
+		log.info("[Finished Streaming Prices] {}", getInstrument());
+	}
+
+	@Override
+	public String getName() {
+		return "BacktestInstrumentPriceStreamListener[" + getInstrument() + "]";
 	}
 
 	@Override
