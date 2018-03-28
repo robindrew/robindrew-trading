@@ -5,6 +5,7 @@ import static com.robindrew.trading.trade.TradeDirection.SELL;
 
 import java.util.Optional;
 
+import com.robindrew.common.util.Check;
 import com.robindrew.trading.price.candle.IPriceCandle;
 import com.robindrew.trading.trade.TradeDirection;
 
@@ -19,15 +20,15 @@ public class PriceSnapshot implements IPriceSnapshot {
 	}
 
 	public PriceSnapshot(IPriceCandle latest, long timestamp) {
-		this.latest = latest;
-		this.previous = null;
+		this.latest = Check.notNull("latest", latest);
 		this.timestamp = timestamp;
+		this.previous = null;
 	}
 
 	public PriceSnapshot(IPriceCandle latest, long timestamp, IPriceCandle previous) {
-		this.latest = latest;
-		this.previous = previous;
+		this.latest = Check.notNull("latest", latest);
 		this.timestamp = timestamp;
+		this.previous = Check.notNull("previous", previous);
 	}
 
 	public long getTimestamp() {
