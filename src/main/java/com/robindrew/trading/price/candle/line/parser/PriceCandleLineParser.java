@@ -37,9 +37,10 @@ public class PriceCandleLineParser implements IPriceCandleLineParser {
 		if (line.indexOf(',') == line.lastIndexOf(',')) {
 
 			LocalDateTime date = LocalDateTime.parse(tokenizer.next(false));
-			int price = Integer.parseInt(tokenizer.next(false));
+			int bidPrice = Integer.parseInt(tokenizer.next(false));
+			int askPrice = Integer.parseInt(tokenizer.next(false));
 
-			return new PriceCandleInstant(price, toMillis(date), decimalPlaces);
+			return new PriceCandleInstant(bidPrice, askPrice, toMillis(date), decimalPlaces);
 		}
 
 		// Standard candle ...

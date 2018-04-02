@@ -9,7 +9,5 @@ public interface IPriceTick {
 	BigDecimal getBid();
 	
 	BigDecimal getAsk();
-	
-	BigDecimal getMid();
 
 }

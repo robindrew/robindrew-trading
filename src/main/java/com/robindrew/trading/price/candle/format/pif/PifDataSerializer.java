@@ -27,12 +27,13 @@ public class PifDataSerializer implements IDataSerializer<List<IPriceCandleInsta
 
 			instantTime += baseTime;
 
-			int price = reader.readDynamicInt() + basePrice;
+			int bidPrice = reader.readDynamicInt() + basePrice;
+			int askPrice = reader.readDynamicInt() + basePrice;
 
-			IPriceCandleInstant instant = new PriceCandleInstant(price, instantTime, decimalPlaces);
+			IPriceCandleInstant instant = new PriceCandleInstant(bidPrice, askPrice, instantTime, decimalPlaces);
 			list.add(instant);
 
-			basePrice = price;
+			basePrice = bidPrice;
 			baseTime = instantTime;
 		}
 
@@ -48,7 +49,7 @@ public class PifDataSerializer implements IDataSerializer<List<IPriceCandleInsta
 		IPriceCandleInstant firstCandle = instants.get(0);
 
 		int count = instants.size();
-		int basePrice = firstCandle.getMidPrice();
+		int basePrice = firstCandle.getBidPrice();
 		long baseTime = firstCandle.getTimestamp();
 		int decimalPlaces = firstCandle.getDecimalPlaces();
 
@@ -62,13 +63,15 @@ public class PifDataSerializer implements IDataSerializer<List<IPriceCandleInsta
 
 				long timestamp = candle.getTimestamp();
 
-				int price = candle.getMidPrice();
+				int bidPrice = candle.getBidPrice();
+				int askPrice = candle.getAskPrice();
 
 				writer.writePositiveLong(timestamp - baseTime);
 
-				writer.writeDynamicInt(price - basePrice);
+				writer.writeDynamicInt(bidPrice - basePrice);
+				writer.writeDynamicInt(askPrice - basePrice);
 
-				basePrice = price;
+				basePrice = bidPrice;
 				baseTime = timestamp;
 
 			} catch (Exception e) {

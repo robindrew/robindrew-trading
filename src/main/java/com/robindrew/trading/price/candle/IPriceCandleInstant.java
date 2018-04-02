@@ -1,6 +1,10 @@
 package com.robindrew.trading.price.candle;
 
-public interface IPriceCandleInstant {
+public interface IPriceCandleInstant extends IPriceCandle {
+
+	int getBidPrice();
+
+	int getAskPrice();
 
 	int getMidPrice();
 

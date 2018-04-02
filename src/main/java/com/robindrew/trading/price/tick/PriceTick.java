@@ -3,7 +3,6 @@ package com.robindrew.trading.price.tick;
 import java.math.BigDecimal;
 
 import com.robindrew.common.text.Strings;
-import com.robindrew.trading.price.Mid;
 
 public class PriceTick implements IPriceTick {
 
@@ -38,11 +37,6 @@ public class PriceTick implements IPriceTick {
 	@Override
 	public String toString() {
 		return Strings.toString(this);
-	}
-
-	@Override
-	public BigDecimal getMid() {
-		return Mid.getMid(bid, ask);
 	}
 
 }
