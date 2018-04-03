@@ -5,50 +5,62 @@ import java.math.BigDecimal;
 public class Mid {
 
 	private static final BigDecimal TWO = new BigDecimal(2);
-	
-	public static final float getMid(float bid, float ask) {
 
-		// It is expected that ask will be more than bid ...
-		if (ask > bid) {
-			return ((ask - bid) / 2) + bid;
+	public static final long getMid(long bid, long ask) {
+		if (bid == ask) {
+			return bid;
 		}
+		if (bid < ask) {
+			return bid + ((ask - bid) / 2);
+		} else {
+			return ask + ((bid - ask) / 2);
+		}
+	}
 
-		// but just in case!
-		else {
-			return ((bid - ask) / 2) + ask;
+	public static final int getMid(int bid, int ask) {
+		if (bid == ask) {
+			return bid;
+		}
+		if (bid < ask) {
+			return bid + ((ask - bid) / 2);
+		} else {
+			return ask + ((bid - ask) / 2);
+		}
+	}
+
+	public static final float getMid(float bid, float ask) {
+		if (bid == ask) {
+			return bid;
+		}
+		if (bid < ask) {
+			return bid + ((ask - bid) / 2);
+		} else {
+			return ask + ((bid - ask) / 2);
+		}
+	}
+
+	public static final double getMid(double bid, double ask) {
+		if (bid == ask) {
+			return bid;
+		}
+		if (bid < ask) {
+			return bid + ((ask - bid) / 2);
+		} else {
+			return ask + ((bid - ask) / 2);
 		}
 	}
 
 	public static final BigDecimal getMid(BigDecimal bid, BigDecimal ask) {
-
-		// It is expected that ask will be more than bid ...
-		if (ask.doubleValue() > bid.doubleValue()) {
-			return ask.subtract(bid).divide(TWO).add(bid);
+		if (bid.equals(ask)) {
+			return bid;
 		}
-
-		// but just in case!
-		else {
+		if (bid.compareTo(ask) < 0) {
+			return ask.subtract(bid).divide(TWO).add(bid);
+		} else {
 			return bid.subtract(ask).divide(TWO).add(ask);
 		}
 	}
 
-	private final long timestamp;
-	private final float price;
-
-	public Mid(float price, long timestamp) {
-		if (price <= 0.0) {
-			throw new IllegalArgumentException("price=" + price);
-		}
-		this.price = price;
-		this.timestamp = timestamp;
+	private Mid() {
 	}
-
-	public long getTimestamp() {
-		return timestamp;
-	}
-
-	public float getPrice() {
-		return price;
-	}
-
 }

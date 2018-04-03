@@ -2,6 +2,7 @@ package com.robindrew.trading.price.tick;
 
 import static com.robindrew.common.date.Dates.toLocalDateTime;
 
+import com.robindrew.trading.price.Mid;
 import com.robindrew.trading.price.candle.AbstractPriceCandle;
 import com.robindrew.trading.price.decimal.Decimal;
 import com.robindrew.trading.price.decimal.IDecimal;
@@ -10,17 +11,7 @@ public abstract class AbstractPriceTick extends AbstractPriceCandle implements I
 
 	@Override
 	public int getMidPrice() {
-		int bid = getBidPrice();
-		int ask = getAskPrice();
-		if (bid == ask) {
-			return bid;
-		} else {
-			if (bid < ask) {
-				return bid + ((ask - bid) / 2);
-			} else {
-				return ask + ((bid - ask) / 2);
-			}
-		}
+		return Mid.getMid(getBidPrice(), getAskPrice());
 	}
 
 	@Override
@@ -81,6 +72,11 @@ public abstract class AbstractPriceTick extends AbstractPriceCandle implements I
 	@Override
 	public IDecimal getAsk() {
 		return new Decimal(getAskPrice(), getDecimalPlaces());
+	}
+
+	@Override
+	public IDecimal getMid() {
+		return new Decimal(getMidPrice(), getDecimalPlaces());
 	}
 
 }

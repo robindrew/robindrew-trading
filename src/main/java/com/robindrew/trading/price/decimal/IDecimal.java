@@ -12,6 +12,8 @@ public interface IDecimal {
 
 	float floatValue();
 
+	IDecimal setDecimalPlaces(int decimalPlaces);
+
 	BigDecimal toBigDecimal();
 
 }

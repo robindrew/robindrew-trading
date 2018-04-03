@@ -19,4 +19,6 @@ public interface IPriceTick extends IPriceCandle {
 
 	IDecimal getAsk();
 
+	IDecimal getMid();
+
 }
