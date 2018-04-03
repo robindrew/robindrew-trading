@@ -29,7 +29,7 @@ import com.robindrew.trading.price.candle.format.pcf.source.IPcfSource;
 import com.robindrew.trading.price.candle.format.pcf.source.IPcfSourceManager;
 import com.robindrew.trading.price.candle.format.pcf.source.IPcfSourceSet;
 import com.robindrew.trading.price.candle.format.pcf.source.file.PcfFileManager;
-import com.robindrew.trading.price.candle.interval.PriceCandleIntervals;
+import com.robindrew.trading.price.candle.interval.PriceIntervals;
 import com.robindrew.trading.price.candle.io.stream.source.IPriceCandleStreamSource;
 import com.robindrew.trading.price.candle.io.stream.source.PriceCandleIntervalStreamSource;
 import com.robindrew.trading.price.candle.io.stream.source.PriceCandleStreamSourceBuilder;
@@ -137,7 +137,7 @@ public class JFreePriceCandleChartBuilder implements IPriceCandleChartBuilder {
 		LocalDateTime to = LocalDateTime.of(2018, 02, 28, 23, 59);
 		Set<? extends IPcfSource> sources = set.getSources(from, to);
 		IPriceCandleStreamSource stream = new PriceCandleStreamSourceBuilder().setPcfSources(sources).get();
-		stream = new PriceCandleIntervalStreamSource(stream, PriceCandleIntervals.DAILY);
+		stream = new PriceCandleIntervalStreamSource(stream, PriceIntervals.DAILY);
 		List<IPriceCandle> list = PriceCandles.drainToList(stream);
 
 		JFreePriceCandleChartBuilder builder = new JFreePriceCandleChartBuilder();

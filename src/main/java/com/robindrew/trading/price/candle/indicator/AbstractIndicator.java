@@ -10,12 +10,12 @@ import com.google.common.collect.ImmutableList;
 import com.robindrew.common.util.Check;
 import com.robindrew.trading.price.candle.IPriceCandle;
 import com.robindrew.trading.price.candle.PriceCandles;
-import com.robindrew.trading.price.candle.interval.IPriceCandleInterval;
+import com.robindrew.trading.price.candle.interval.IPriceInterval;
 
 public abstract class AbstractIndicator implements IIndicator {
 
 	private final String name;
-	private final IPriceCandleInterval interval;
+	private final IPriceInterval interval;
 	private final Deque<IPriceCandle> intervalList = new LinkedList<>();
 	private final List<IPriceCandle> bufferList = new ArrayList<>();
 	private final int capacity;
@@ -24,7 +24,7 @@ public abstract class AbstractIndicator implements IIndicator {
 	private IPriceCandle previousCandle;
 	private long previousPeriod;
 
-	protected AbstractIndicator(String name, IPriceCandleInterval interval, int capacity) {
+	protected AbstractIndicator(String name, IPriceInterval interval, int capacity) {
 		this.name = Check.notEmpty("name", name);
 		this.interval = interval;
 		this.capacity = capacity;
@@ -35,7 +35,7 @@ public abstract class AbstractIndicator implements IIndicator {
 		return name;
 	}
 
-	public IPriceCandleInterval getInterval() {
+	public IPriceInterval getInterval() {
 		return interval;
 	}
 

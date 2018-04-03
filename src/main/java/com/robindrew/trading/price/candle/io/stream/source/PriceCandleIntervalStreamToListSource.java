@@ -7,18 +7,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.robindrew.trading.price.candle.IPriceCandle;
-import com.robindrew.trading.price.candle.interval.IPriceCandleInterval;
+import com.robindrew.trading.price.candle.interval.IPriceInterval;
 import com.robindrew.trading.price.candle.io.list.source.IPriceCandleListSource;
 
 public class PriceCandleIntervalStreamToListSource implements IPriceCandleListSource {
 
 	private final IPriceCandleStreamSource source;
-	private final IPriceCandleInterval interval;
+	private final IPriceInterval interval;
 
 	private boolean finished = false;
 	private IPriceCandle next = null;
 
-	public PriceCandleIntervalStreamToListSource(IPriceCandleStreamSource source, IPriceCandleInterval interval) {
+	public PriceCandleIntervalStreamToListSource(IPriceCandleStreamSource source, IPriceInterval interval) {
 		if (source == null) {
 			throw new NullPointerException("source");
 		}

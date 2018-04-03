@@ -8,7 +8,7 @@ import com.robindrew.common.text.tokenizer.CharDelimiters;
 import com.robindrew.common.text.tokenizer.CharTokenizer;
 import com.robindrew.trading.price.candle.IPriceCandle;
 import com.robindrew.trading.price.candle.PriceCandle;
-import com.robindrew.trading.price.candle.PriceCandleInstant;
+import com.robindrew.trading.price.tick.PriceTick;
 
 public class PriceCandleLineParser implements IPriceCandleLineParser {
 
@@ -40,7 +40,7 @@ public class PriceCandleLineParser implements IPriceCandleLineParser {
 			int bidPrice = Integer.parseInt(tokenizer.next(false));
 			int askPrice = Integer.parseInt(tokenizer.next(false));
 
-			return new PriceCandleInstant(bidPrice, askPrice, toMillis(date), decimalPlaces);
+			return new PriceTick(bidPrice, askPrice, toMillis(date), decimalPlaces);
 		}
 
 		// Standard candle ...

@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.robindrew.trading.price.candle.IPriceCandle;
 import com.robindrew.trading.price.candle.indicator.ValueIndicator;
-import com.robindrew.trading.price.candle.interval.IPriceCandleInterval;
+import com.robindrew.trading.price.candle.interval.IPriceInterval;
 
 /**
  * Simple Moving Average (SMA).
@@ -14,7 +14,7 @@ import com.robindrew.trading.price.candle.interval.IPriceCandleInterval;
  */
 public class SmaIndicator extends ValueIndicator {
 
-	public SmaIndicator(String name, IPriceCandleInterval interval, int capacity) {
+	public SmaIndicator(String name, IPriceInterval interval, int capacity) {
 		super(name, interval, capacity);
 	}
 

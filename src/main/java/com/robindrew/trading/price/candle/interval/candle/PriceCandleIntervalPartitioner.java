@@ -1,4 +1,4 @@
-package com.robindrew.trading.price.candle.interval;
+package com.robindrew.trading.price.candle.interval.candle;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -6,19 +6,20 @@ import java.util.List;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ListMultimap;
 import com.robindrew.trading.price.candle.IPriceCandle;
+import com.robindrew.trading.price.candle.interval.IPriceInterval;
 
 public class PriceCandleIntervalPartitioner implements IPriceCandleLocalDatePartitioner {
 
-	private final IPriceCandleInterval interval;
+	private final IPriceInterval interval;
 
-	public PriceCandleIntervalPartitioner(IPriceCandleInterval interval) {
+	public PriceCandleIntervalPartitioner(IPriceInterval interval) {
 		if (interval == null) {
 			throw new NullPointerException("interval");
 		}
 		this.interval = interval;
 	}
 
-	public IPriceCandleInterval getInterval() {
+	public IPriceInterval getInterval() {
 		return interval;
 	}
 

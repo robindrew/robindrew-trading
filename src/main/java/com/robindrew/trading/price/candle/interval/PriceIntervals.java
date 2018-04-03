@@ -3,17 +3,17 @@ package com.robindrew.trading.price.candle.interval;
 import java.time.temporal.ChronoUnit;
 import java.util.concurrent.TimeUnit;
 
-public class PriceCandleIntervals {
+public class PriceIntervals {
 
-	public static final IPriceCandleInterval SECONDLY = interval(1, ChronoUnit.SECONDS);
-	public static final IPriceCandleInterval MINUTELY = interval(1, ChronoUnit.MINUTES);
-	public static final IPriceCandleInterval HOURLY = interval(1, ChronoUnit.HOURS);
-	public static final IPriceCandleInterval DAILY = interval(1, ChronoUnit.DAYS);
-	public static final IPriceCandleInterval WEEKLY = interval(1, ChronoUnit.WEEKS);
-	public static final IPriceCandleInterval MONTHLY = interval(1, ChronoUnit.MONTHS);
-	public static final IPriceCandleInterval YEARLY = interval(1, ChronoUnit.YEARS);
+	public static final IPriceInterval SECONDLY = interval(1, ChronoUnit.SECONDS);
+	public static final IPriceInterval MINUTELY = interval(1, ChronoUnit.MINUTES);
+	public static final IPriceInterval HOURLY = interval(1, ChronoUnit.HOURS);
+	public static final IPriceInterval DAILY = interval(1, ChronoUnit.DAYS);
+	public static final IPriceInterval WEEKLY = interval(1, ChronoUnit.WEEKS);
+	public static final IPriceInterval MONTHLY = interval(1, ChronoUnit.MONTHS);
+	public static final IPriceInterval YEARLY = interval(1, ChronoUnit.YEARS);
 
-	public static IPriceCandleInterval interval(long amount, ChronoUnit unit) {
+	public static IPriceInterval interval(long amount, ChronoUnit unit) {
 		switch (unit) {
 			case NANOS:
 				return new TimeUnitInterval(amount, TimeUnit.NANOSECONDS);

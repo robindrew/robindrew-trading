@@ -8,7 +8,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import com.robindrew.trading.price.candle.IPriceCandle;
 import com.robindrew.trading.price.candle.indicator.AbstractIndicator;
-import com.robindrew.trading.price.candle.interval.IPriceCandleInterval;
+import com.robindrew.trading.price.candle.interval.IPriceInterval;
 import com.robindrew.trading.trade.TradeDirection;
 
 public class DirectionIndicator extends AbstractIndicator {
@@ -16,7 +16,7 @@ public class DirectionIndicator extends AbstractIndicator {
 	private final AtomicLong averageBuy = new AtomicLong(0);
 	private final AtomicLong averageSell = new AtomicLong(0);
 
-	public DirectionIndicator(String name, IPriceCandleInterval interval, int capacity) {
+	public DirectionIndicator(String name, IPriceInterval interval, int capacity) {
 		super(name, interval, capacity);
 	}
 

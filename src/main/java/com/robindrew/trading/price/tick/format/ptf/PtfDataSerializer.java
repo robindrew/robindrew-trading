@@ -1,4 +1,4 @@
-package com.robindrew.trading.price.candle.format.pif;
+package com.robindrew.trading.price.tick.format.ptf;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -7,14 +7,14 @@ import java.util.List;
 import com.robindrew.common.io.data.IDataReader;
 import com.robindrew.common.io.data.IDataSerializer;
 import com.robindrew.common.io.data.IDataWriter;
-import com.robindrew.trading.price.candle.IPriceCandleInstant;
-import com.robindrew.trading.price.candle.PriceCandleInstant;
+import com.robindrew.trading.price.tick.IPriceTick;
+import com.robindrew.trading.price.tick.PriceTick;
 
-public class PifDataSerializer implements IDataSerializer<List<IPriceCandleInstant>> {
+public class PtfDataSerializer implements IDataSerializer<List<IPriceTick>> {
 
 	@Override
-	public List<IPriceCandleInstant> readObject(IDataReader reader) throws IOException {
-		List<IPriceCandleInstant> list = new ArrayList<>();
+	public List<IPriceTick> readObject(IDataReader reader) throws IOException {
+		List<IPriceTick> list = new ArrayList<>();
 
 		int count = reader.readPositiveInt();
 		int basePrice = reader.readPositiveInt();
@@ -30,7 +30,7 @@ public class PifDataSerializer implements IDataSerializer<List<IPriceCandleInsta
 			int bidPrice = reader.readDynamicInt() + basePrice;
 			int askPrice = reader.readDynamicInt() + basePrice;
 
-			IPriceCandleInstant instant = new PriceCandleInstant(bidPrice, askPrice, instantTime, decimalPlaces);
+			IPriceTick instant = new PriceTick(bidPrice, askPrice, instantTime, decimalPlaces);
 			list.add(instant);
 
 			basePrice = bidPrice;
@@ -41,12 +41,12 @@ public class PifDataSerializer implements IDataSerializer<List<IPriceCandleInsta
 	}
 
 	@Override
-	public void writeObject(IDataWriter writer, List<IPriceCandleInstant> instants) throws IOException {
+	public void writeObject(IDataWriter writer, List<IPriceTick> instants) throws IOException {
 		if (instants.isEmpty()) {
 			throw new IllegalArgumentException("candles is empty");
 		}
 
-		IPriceCandleInstant firstCandle = instants.get(0);
+		IPriceTick firstCandle = instants.get(0);
 
 		int count = instants.size();
 		int basePrice = firstCandle.getBidPrice();
@@ -58,7 +58,7 @@ public class PifDataSerializer implements IDataSerializer<List<IPriceCandleInsta
 		writer.writePositiveLong(baseTime);
 		writer.writePositiveInt(decimalPlaces);
 
-		for (IPriceCandleInstant candle : instants) {
+		for (IPriceTick candle : instants) {
 			try {
 
 				long timestamp = candle.getTimestamp();

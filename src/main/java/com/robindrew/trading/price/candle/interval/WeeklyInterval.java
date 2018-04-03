@@ -14,11 +14,12 @@ import com.robindrew.common.date.Dates;
 import com.robindrew.common.date.UnitChrono;
 import com.robindrew.common.util.Check;
 import com.robindrew.trading.price.candle.IPriceCandle;
+import com.robindrew.trading.price.tick.IPriceTick;
 
 /**
  * The weekly interval, by default starting on a SUNDAY.
  */
-public class WeeklyInterval implements IPriceCandleInterval {
+public class WeeklyInterval implements IPriceInterval {
 
 	private static final long intervalInMillis = days(7).toMillis();
 
@@ -86,6 +87,11 @@ public class WeeklyInterval implements IPriceCandleInterval {
 	}
 
 	@Override
+	public long getTimePeriod(IPriceTick tick) {
+		return Dates.toMillis(getDateTime(tick.getTimestamp()));
+	}
+
+	@Override
 	public long getTimePeriod(long timeInMillis) {
 		return Dates.toMillis(getDateTime(timeInMillis));
 	}
@@ -93,6 +99,11 @@ public class WeeklyInterval implements IPriceCandleInterval {
 	@Override
 	public LocalDateTime getDateTime(IPriceCandle candle) {
 		return getDateTime(candle.getOpenTime());
+	}
+
+	@Override
+	public LocalDateTime getDateTime(IPriceTick tick) {
+		return getDateTime(tick.getTimestamp());
 	}
 
 	@Override

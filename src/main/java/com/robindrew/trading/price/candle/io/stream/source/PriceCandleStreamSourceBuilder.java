@@ -23,7 +23,7 @@ import com.robindrew.trading.price.candle.format.pcf.source.IPcfSource;
 import com.robindrew.trading.price.candle.format.pcf.source.PcfSourcesStreamSource;
 import com.robindrew.trading.price.candle.format.pcf.source.file.IPcfFile;
 import com.robindrew.trading.price.candle.format.pcf.source.file.PcfFile;
-import com.robindrew.trading.price.candle.interval.IPriceCandleInterval;
+import com.robindrew.trading.price.candle.interval.IPriceInterval;
 import com.robindrew.trading.price.candle.io.list.source.IPriceCandleListSourceBuilder;
 import com.robindrew.trading.price.candle.io.list.source.PriceCandleListSourceBuilder;
 import com.robindrew.trading.price.candle.line.filter.ILineFilter;
@@ -39,7 +39,7 @@ import com.robindrew.trading.provider.histdata.line.HistDataTickLineParser;
 public class PriceCandleStreamSourceBuilder implements IPriceCandleStreamSourceBuilder {
 
 	private IPriceCandleStreamSource base;
-	private IPriceCandleInterval candleInterval;
+	private IPriceInterval candleInterval;
 	private final Set<IPriceCandleFilter> filterSet = new LinkedHashSet<>();
 	private final Set<IPriceCandleChecker> checkerSet = new LinkedHashSet<>();
 	private final Set<IPriceCandleModifier> modifierSet = new LinkedHashSet<>();
@@ -159,7 +159,7 @@ public class PriceCandleStreamSourceBuilder implements IPriceCandleStreamSourceB
 	}
 
 	@Override
-	public IPriceCandleStreamSourceBuilder setInterval(IPriceCandleInterval interval) {
+	public IPriceCandleStreamSourceBuilder setInterval(IPriceInterval interval) {
 		if (interval == null) {
 			throw new NullPointerException("interval");
 		}

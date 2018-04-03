@@ -1,22 +1,35 @@
 package com.robindrew.trading.price.tick;
 
-import java.math.BigDecimal;
+import org.junit.runner.notification.RunListener.ThreadSafe;
 
-import com.robindrew.common.text.Strings;
+@ThreadSafe
+public class PriceTick extends AbstractPriceTick {
 
-public class PriceTick implements IPriceTick {
-
+	private final int bidPrice;
+	private final int askPrice;
 	private final long timestamp;
-	private final BigDecimal ask;
-	private final BigDecimal bid;
+	private final byte decimalPlaces;
 
-	public PriceTick(long timestamp, BigDecimal bid, BigDecimal ask) {
-		if (timestamp <= 0) {
-			throw new IllegalArgumentException("timestamp=" + timestamp);
+	public PriceTick(int bidPrice, int askPrice, long timestamp, int decimalPlaces) {
+		if (bidPrice <= 0) {
+			throw new IllegalArgumentException("bidPrice=" + bidPrice);
 		}
+		if (askPrice <= 0) {
+			throw new IllegalArgumentException("askPrice=" + askPrice);
+		}
+		if (decimalPlaces < 0 || decimalPlaces > 8) {
+			throw new IllegalArgumentException("decimalPlaces=" + decimalPlaces);
+		}
+
+		this.bidPrice = bidPrice;
+		this.askPrice = askPrice;
 		this.timestamp = timestamp;
-		this.bid = bid;
-		this.ask = ask;
+		this.decimalPlaces = (byte) decimalPlaces;
+	}
+
+	@Override
+	public int getDecimalPlaces() {
+		return decimalPlaces;
 	}
 
 	@Override
@@ -25,18 +38,13 @@ public class PriceTick implements IPriceTick {
 	}
 
 	@Override
-	public BigDecimal getBid() {
-		return bid;
+	public int getBidPrice() {
+		return bidPrice;
 	}
 
 	@Override
-	public BigDecimal getAsk() {
-		return ask;
-	}
-
-	@Override
-	public String toString() {
-		return Strings.toString(this);
+	public int getAskPrice() {
+		return askPrice;
 	}
 
 }

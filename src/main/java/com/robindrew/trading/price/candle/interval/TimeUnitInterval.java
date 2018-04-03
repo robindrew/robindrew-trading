@@ -16,8 +16,9 @@ import com.robindrew.common.date.UnitChrono;
 import com.robindrew.common.date.UnitTime;
 import com.robindrew.common.util.Check;
 import com.robindrew.trading.price.candle.IPriceCandle;
+import com.robindrew.trading.price.tick.IPriceTick;
 
-public class TimeUnitInterval implements IPriceCandleInterval {
+public class TimeUnitInterval implements IPriceInterval {
 
 	public static final TimeUnitInterval ONE_SECOND = new TimeUnitInterval(1, SECONDS);
 	public static final TimeUnitInterval ONE_MINUTE = new TimeUnitInterval(1, MINUTES);
@@ -95,6 +96,17 @@ public class TimeUnitInterval implements IPriceCandleInterval {
 	@Override
 	public LocalDateTime getDateTime(IPriceCandle candle) {
 		long timePeriod = getTimePeriod(candle);
+		return Dates.toLocalDateTime(timePeriod);
+	}
+
+	@Override
+	public long getTimePeriod(IPriceTick tick) {
+		return getTimePeriod(tick.getTimestamp());
+	}
+
+	@Override
+	public LocalDateTime getDateTime(IPriceTick tick) {
+		long timePeriod = getTimePeriod(tick);
 		return Dates.toLocalDateTime(timePeriod);
 	}
 

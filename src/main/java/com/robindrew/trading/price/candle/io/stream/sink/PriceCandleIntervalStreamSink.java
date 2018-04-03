@@ -1,7 +1,7 @@
 package com.robindrew.trading.price.candle.io.stream.sink;
 
 import com.robindrew.trading.price.candle.IPriceCandle;
-import com.robindrew.trading.price.candle.interval.IPriceCandleInterval;
+import com.robindrew.trading.price.candle.interval.IPriceInterval;
 
 /**
  * Note that this does NOT support monthly intervals or above, as months have different lengths, and years are subject
@@ -10,12 +10,12 @@ import com.robindrew.trading.price.candle.interval.IPriceCandleInterval;
 public class PriceCandleIntervalStreamSink implements IPriceCandleStreamSink {
 
 	private final IPriceCandleStreamSink sink;
-	private final IPriceCandleInterval interval;
+	private final IPriceInterval interval;
 
 	private IPriceCandle merged = null;
 	private long mergedTimePeriod;
 
-	public PriceCandleIntervalStreamSink(IPriceCandleStreamSink sink, IPriceCandleInterval interval) {
+	public PriceCandleIntervalStreamSink(IPriceCandleStreamSink sink, IPriceInterval interval) {
 		if (sink == null) {
 			throw new NullPointerException("sink");
 		}
@@ -26,7 +26,7 @@ public class PriceCandleIntervalStreamSink implements IPriceCandleStreamSink {
 		this.interval = interval;
 	}
 
-	public IPriceCandleInterval getInterval() {
+	public IPriceInterval getInterval() {
 		return interval;
 	}
 

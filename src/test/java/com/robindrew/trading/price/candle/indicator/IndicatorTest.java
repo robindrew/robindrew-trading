@@ -1,7 +1,7 @@
 package com.robindrew.trading.price.candle.indicator;
 
-import static com.robindrew.trading.price.candle.interval.PriceCandleIntervals.DAILY;
-import static com.robindrew.trading.price.candle.interval.PriceCandleIntervals.HOURLY;
+import static com.robindrew.trading.price.candle.interval.PriceIntervals.DAILY;
+import static com.robindrew.trading.price.candle.interval.PriceIntervals.HOURLY;
 
 import java.util.List;
 

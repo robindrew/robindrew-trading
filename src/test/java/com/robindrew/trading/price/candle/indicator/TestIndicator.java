@@ -4,13 +4,13 @@ import java.util.Collections;
 import java.util.List;
 
 import com.robindrew.trading.price.candle.IPriceCandle;
-import com.robindrew.trading.price.candle.interval.IPriceCandleInterval;
+import com.robindrew.trading.price.candle.interval.IPriceInterval;
 
 public class TestIndicator extends AbstractIndicator {
 
 	private List<IPriceCandle> latest = Collections.emptyList();
 
-	public TestIndicator(IPriceCandleInterval interval, int capacity) {
+	public TestIndicator(IPriceInterval interval, int capacity) {
 		super("TestIndicator", interval, capacity);
 	}
 

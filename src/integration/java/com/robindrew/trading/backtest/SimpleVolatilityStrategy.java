@@ -1,6 +1,6 @@
 package com.robindrew.trading.backtest;
 
-import static com.robindrew.trading.price.candle.interval.PriceCandleIntervals.MINUTELY;
+import static com.robindrew.trading.price.candle.interval.PriceIntervals.MINUTELY;
 
 import java.math.BigDecimal;
 

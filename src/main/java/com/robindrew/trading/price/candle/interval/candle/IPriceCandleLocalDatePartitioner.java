@@ -1,4 +1,4 @@
-package com.robindrew.trading.price.candle.interval;
+package com.robindrew.trading.price.candle.interval.candle;
 
 import java.time.LocalDateTime;
 import java.util.List;

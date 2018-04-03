@@ -4,7 +4,7 @@ import static com.robindrew.trading.price.candle.PriceCandles.merge;
 
 import com.robindrew.common.util.Check;
 import com.robindrew.trading.price.candle.IPriceCandle;
-import com.robindrew.trading.price.candle.interval.IPriceCandleInterval;
+import com.robindrew.trading.price.candle.interval.IPriceInterval;
 
 /**
  * Note that this does NOT support monthly intervals or above, as months have different lengths, and years are subject
@@ -13,17 +13,17 @@ import com.robindrew.trading.price.candle.interval.IPriceCandleInterval;
 public class PriceCandleIntervalStreamSource implements IPriceCandleStreamSource {
 
 	private final IPriceCandleStreamSource source;
-	private final IPriceCandleInterval interval;
+	private final IPriceInterval interval;
 
 	private IPriceCandle current = null;
 	private boolean finished = false;
 
-	public PriceCandleIntervalStreamSource(IPriceCandleStreamSource source, IPriceCandleInterval interval) {
+	public PriceCandleIntervalStreamSource(IPriceCandleStreamSource source, IPriceInterval interval) {
 		this.source = Check.notNull("source", source);
 		this.interval = Check.notNull("interval", interval);
 	}
 
-	public IPriceCandleInterval getInterval() {
+	public IPriceInterval getInterval() {
 		return interval;
 	}
 

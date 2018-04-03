@@ -4,8 +4,9 @@ import java.time.LocalDateTime;
 
 import com.robindrew.common.date.UnitChrono;
 import com.robindrew.trading.price.candle.IPriceCandle;
+import com.robindrew.trading.price.tick.IPriceTick;
 
-public interface IPriceCandleInterval {
+public interface IPriceInterval {
 
 	UnitChrono getUnitChrono();
 
@@ -13,9 +14,13 @@ public interface IPriceCandleInterval {
 
 	long getTimePeriod(IPriceCandle candle);
 
+	long getTimePeriod(IPriceTick tick);
+
 	long getTimePeriod(long timeInMillis);
 
 	LocalDateTime getDateTime(IPriceCandle candle);
+
+	LocalDateTime getDateTime(IPriceTick tick);
 
 	LocalDateTime getDateTime(long timeInMillis);
 

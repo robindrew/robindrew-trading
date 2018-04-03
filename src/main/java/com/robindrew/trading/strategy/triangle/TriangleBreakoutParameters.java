@@ -1,18 +1,18 @@
 package com.robindrew.trading.strategy.triangle;
 
 import com.robindrew.common.util.Check;
-import com.robindrew.trading.price.candle.IPriceCandleInstant;
-import com.robindrew.trading.price.candle.interval.IPriceCandleInterval;
+import com.robindrew.trading.price.candle.interval.IPriceInterval;
+import com.robindrew.trading.price.tick.IPriceTick;
 
 public class TriangleBreakoutParameters {
 
-	private final IPriceCandleInterval interval;
-	private final IPriceCandleInstant upper1;
-	private final IPriceCandleInstant upper2;
-	private final IPriceCandleInstant lower1;
-	private final IPriceCandleInstant lower2;
+	private final IPriceInterval interval;
+	private final IPriceTick upper1;
+	private final IPriceTick upper2;
+	private final IPriceTick lower1;
+	private final IPriceTick lower2;
 
-	public TriangleBreakoutParameters(IPriceCandleInterval interval, IPriceCandleInstant upper1, IPriceCandleInstant upper2, IPriceCandleInstant lower1, IPriceCandleInstant lower2) {
+	public TriangleBreakoutParameters(IPriceInterval interval, IPriceTick upper1, IPriceTick upper2, IPriceTick lower1, IPriceTick lower2) {
 		this.interval = Check.notNull("interval", interval);
 		this.upper1 = Check.notNull("upper1", upper1);
 		this.upper2 = Check.notNull("upper2", upper2);
@@ -28,23 +28,23 @@ public class TriangleBreakoutParameters {
 		}
 	}
 
-	public IPriceCandleInterval getInterval() {
+	public IPriceInterval getInterval() {
 		return interval;
 	}
 
-	public IPriceCandleInstant getUpper1() {
+	public IPriceTick getUpper1() {
 		return upper1;
 	}
 
-	public IPriceCandleInstant getUpper2() {
+	public IPriceTick getUpper2() {
 		return upper2;
 	}
 
-	public IPriceCandleInstant getLower1() {
+	public IPriceTick getLower1() {
 		return lower1;
 	}
 
-	public IPriceCandleInstant getLower2() {
+	public IPriceTick getLower2() {
 		return lower2;
 	}
 

@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.robindrew.trading.IInstrument;
 import com.robindrew.trading.price.candle.IPriceCandle;
-import com.robindrew.trading.price.candle.interval.IPriceCandleInterval;
+import com.robindrew.trading.price.candle.interval.IPriceInterval;
 import com.robindrew.trading.price.candle.io.stream.source.IPriceCandleStreamSource;
 
 public interface IInstrumentPriceHistory {
@@ -18,5 +18,5 @@ public interface IInstrumentPriceHistory {
 
 	IPriceCandleStreamSource getStreamSource();
 
-	List<IPriceCandle> getLatestPrices(IPriceCandleInterval interval, int count);
+	List<IPriceCandle> getLatestPrices(IPriceInterval interval, int count);
 }

@@ -1,13 +1,22 @@
 package com.robindrew.trading.price.tick;
 
-import java.math.BigDecimal;
+import com.robindrew.trading.price.candle.IPriceCandle;
+import com.robindrew.trading.price.decimal.IDecimal;
 
-public interface IPriceTick {
+public interface IPriceTick extends IPriceCandle {
+
+	int getBidPrice();
+
+	int getAskPrice();
+
+	int getMidPrice();
+
+	int getDecimalPlaces();
 
 	long getTimestamp();
-	
-	BigDecimal getBid();
-	
-	BigDecimal getAsk();
+
+	IDecimal getBid();
+
+	IDecimal getAsk();
 
 }

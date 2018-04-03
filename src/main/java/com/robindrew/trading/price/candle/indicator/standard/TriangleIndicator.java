@@ -4,14 +4,14 @@ import java.util.List;
 
 import com.robindrew.trading.price.candle.IPriceCandle;
 import com.robindrew.trading.price.candle.indicator.AbstractIndicator;
-import com.robindrew.trading.price.candle.interval.IPriceCandleInterval;
+import com.robindrew.trading.price.candle.interval.IPriceInterval;
 
 /**
  * An indicator that attempts to detect the formation of a Triangle pattern.
  */
 public class TriangleIndicator extends AbstractIndicator {
 
-	public TriangleIndicator(String name, IPriceCandleInterval interval, int capacity) {
+	public TriangleIndicator(String name, IPriceInterval interval, int capacity) {
 		super(name, interval, capacity);
 	}
 

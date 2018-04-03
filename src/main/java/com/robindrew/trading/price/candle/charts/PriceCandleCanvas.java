@@ -23,8 +23,8 @@ import com.robindrew.trading.price.candle.format.pcf.source.IPcfSource;
 import com.robindrew.trading.price.candle.format.pcf.source.IPcfSourceManager;
 import com.robindrew.trading.price.candle.format.pcf.source.IPcfSourceSet;
 import com.robindrew.trading.price.candle.format.pcf.source.file.PcfFileManager;
-import com.robindrew.trading.price.candle.interval.IPriceCandleInterval;
-import com.robindrew.trading.price.candle.interval.PriceCandleIntervals;
+import com.robindrew.trading.price.candle.interval.IPriceInterval;
+import com.robindrew.trading.price.candle.interval.PriceIntervals;
 
 public class PriceCandleCanvas {
 
@@ -40,7 +40,7 @@ public class PriceCandleCanvas {
 		List<IPriceCandle> candles = source.read();
 		candles = candles.subList(0, 180);
 
-		IPriceCandleInterval interval = PriceCandleIntervals.MINUTELY;
+		IPriceInterval interval = PriceIntervals.MINUTELY;
 
 		int width = 900;
 		int height = 600;
@@ -84,7 +84,7 @@ public class PriceCandleCanvas {
 		this.graphics = (Graphics2D) image.getGraphics();
 	}
 
-	public void renderCandles(List<IPriceCandle> candles, IPriceCandleInterval interval) {
+	public void renderCandles(List<IPriceCandle> candles, IPriceInterval interval) {
 
 		// Clear the canvas by rendering the background
 		graphics.setColor(background);
@@ -158,7 +158,7 @@ public class PriceCandleCanvas {
 		graphics.drawLine(x1, y, x2, y);
 	}
 
-	private int renderMissingCandle(IPriceCandle candle, IPriceCandleInterval interval, long previousOpen, int index, int candleWidth) {
+	private int renderMissingCandle(IPriceCandle candle, IPriceInterval interval, long previousOpen, int index, int candleWidth) {
 		if (index == 0) {
 			return 0;
 		}

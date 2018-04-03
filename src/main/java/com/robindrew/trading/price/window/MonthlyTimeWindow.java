@@ -1,4 +1,4 @@
-package com.robindrew.trading.price.candle.format.pcf;
+package com.robindrew.trading.price.window;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -6,9 +6,9 @@ import java.time.LocalDateTime;
 import com.robindrew.common.date.range.LocalDateRange;
 
 /**
- * A PCF time window is monthly. Days are always normalized to the first day of the month (1).
+ * A monthly time window. Days are always normalized to the first day of the month (1).
  */
-public class PcfTimeWindow extends LocalDateRange implements IPcfTimeWindow {
+public class MonthlyTimeWindow extends LocalDateRange implements ITimeWindow {
 
 	public static LocalDate normalize(LocalDate date) {
 		if (date.getDayOfMonth() == 1) {
@@ -25,15 +25,15 @@ public class PcfTimeWindow extends LocalDateRange implements IPcfTimeWindow {
 		return LocalDate.of(1990, 1, 1);
 	}
 
-	public PcfTimeWindow(LocalDate from, LocalDate to) {
+	public MonthlyTimeWindow(LocalDate from, LocalDate to) {
 		super(normalize(from), normalize(to));
 	}
 
-	public PcfTimeWindow(LocalDateTime from, LocalDateTime to) {
+	public MonthlyTimeWindow(LocalDateTime from, LocalDateTime to) {
 		this(from.toLocalDate(), to.toLocalDate());
 	}
 
-	public PcfTimeWindow() {
+	public MonthlyTimeWindow() {
 		this(monthPast(), monthNow());
 	}
 

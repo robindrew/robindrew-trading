@@ -18,15 +18,15 @@ import com.robindrew.trading.price.candle.io.stream.source.PriceCandleIntervalSt
 import com.robindrew.trading.price.candle.line.filter.ILineFilter;
 import com.robindrew.trading.price.candle.line.parser.IPriceCandleLineParser;
 
-public class PriceCandleIntervalConverter {
+public class PriceIntervalConverter {
 
-	private static final Logger log = LoggerFactory.getLogger(PriceCandleIntervalConverter.class);
+	private static final Logger log = LoggerFactory.getLogger(PriceIntervalConverter.class);
 
 	private final IPriceCandleLineParser parser;
 	private final ILineFilter filter;
-	private IPriceCandleInterval interval = PriceCandleIntervals.MINUTELY;
+	private IPriceInterval interval = PriceIntervals.MINUTELY;
 
-	public PriceCandleIntervalConverter(IPriceCandleLineParser parser, ILineFilter filter) {
+	public PriceIntervalConverter(IPriceCandleLineParser parser, ILineFilter filter) {
 		if (parser == null) {
 			throw new NullPointerException("parser");
 		}

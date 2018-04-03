@@ -8,20 +8,20 @@ import com.robindrew.common.date.Dates;
 import com.robindrew.common.lang.RandomElement;
 import com.robindrew.trading.price.candle.IPriceCandle;
 import com.robindrew.trading.price.candle.PriceCandle;
-import com.robindrew.trading.price.candle.interval.IPriceCandleInterval;
+import com.robindrew.trading.price.candle.interval.IPriceInterval;
 
 public class PriceCandleGenerator {
 
-	private final IPriceCandleInterval interval;
+	private final IPriceInterval interval;
 	private final RandomElement random;
 	private int decimalPlaces = 2;
 
-	public PriceCandleGenerator(IPriceCandleInterval interval, long randomSeed) {
+	public PriceCandleGenerator(IPriceInterval interval, long randomSeed) {
 		this.interval = interval;
 		this.random = new RandomElement(randomSeed);
 	}
 
-	public PriceCandleGenerator(IPriceCandleInterval interval) {
+	public PriceCandleGenerator(IPriceInterval interval) {
 		this(interval, interval.getLength());
 	}
 

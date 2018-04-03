@@ -36,16 +36,25 @@ public class Decimal implements IDecimal {
 
 	@Override
 	public double doubleValue() {
+		if (decimalPlaces == 0) {
+			return value;
+		}
 		return toBigDecimal().doubleValue();
 	}
 
 	@Override
 	public float floatValue() {
+		if (decimalPlaces == 0) {
+			return value;
+		}
 		return toBigDecimal().floatValue();
 	}
 
 	@Override
 	public BigDecimal toBigDecimal() {
+		if (decimalPlaces == 0) {
+			return new BigDecimal(value);
+		}
 		return FloatingPoint.toBigDecimal(value, decimalPlaces);
 	}
 

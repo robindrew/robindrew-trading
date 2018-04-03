@@ -11,7 +11,7 @@ import com.robindrew.trading.price.candle.IPriceCandle;
 import com.robindrew.trading.price.candle.checker.IPriceCandleChecker;
 import com.robindrew.trading.price.candle.filter.IPriceCandleFilter;
 import com.robindrew.trading.price.candle.format.pcf.source.IPcfSource;
-import com.robindrew.trading.price.candle.interval.IPriceCandleInterval;
+import com.robindrew.trading.price.candle.interval.IPriceInterval;
 import com.robindrew.trading.price.candle.io.list.source.IPriceCandleListSourceBuilder;
 import com.robindrew.trading.price.candle.modifier.IPriceCandleModifier;
 import com.robindrew.trading.provider.histdata.HistDataInstrument;
@@ -56,7 +56,7 @@ public interface IPriceCandleStreamSourceBuilder extends Supplier<IPriceCandleSt
 
 	IPriceCandleStreamSourceBuilder filterConsecutive(int logThreshold);
 
-	IPriceCandleStreamSourceBuilder setInterval(IPriceCandleInterval interval);
+	IPriceCandleStreamSourceBuilder setInterval(IPriceInterval interval);
 
 	IPriceCandleListSourceBuilder asListSourceBuilder();
 

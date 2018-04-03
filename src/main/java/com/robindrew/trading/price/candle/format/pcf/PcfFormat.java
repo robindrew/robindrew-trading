@@ -10,9 +10,9 @@ import java.time.temporal.ChronoField;
 
 import com.google.common.io.PatternFilenameFilter;
 import com.robindrew.trading.price.candle.IPriceCandle;
-import com.robindrew.trading.price.candle.format.pif.PifFormat;
-import com.robindrew.trading.price.candle.interval.IPriceCandleInterval;
-import com.robindrew.trading.price.candle.interval.PriceCandleIntervals;
+import com.robindrew.trading.price.candle.interval.IPriceInterval;
+import com.robindrew.trading.price.candle.interval.PriceIntervals;
+import com.robindrew.trading.price.tick.format.ptf.PtfFormat;
 
 /**
  * The PCF (PriceCandleFormat) file format is much faster to read than traditional text formats. The file size is
@@ -23,17 +23,17 @@ import com.robindrew.trading.price.candle.interval.PriceCandleIntervals;
  * <li>Candle times are in UTC.</li>
  * <li>Files are monthly.</li>
  * </ul>
- * @see PifFormat
+ * @see PtfFormat
  */
 public final class PcfFormat {
 
 	public static final FilenameFilter FILENAME_FILTER = new PatternFilenameFilter(".+\\.pcf");
-	public static final IPriceCandleInterval MONTHLY = PriceCandleIntervals.MONTHLY;
-	public static final DateTimeFormatter FORMATTER = buildDateTimeFormatter();
+	public static final IPriceInterval MONTHLY = PriceIntervals.MONTHLY;
+	public static final DateTimeFormatter MONTH_FORMATTER = buildDateTimeFormatter();
 	public static final String FILE_EXTENSION = ".pcf";
 
 	public static final String getFilename(LocalDate date) {
-		return date.format(FORMATTER) + FILE_EXTENSION;
+		return date.format(MONTH_FORMATTER) + FILE_EXTENSION;
 	}
 
 	public static boolean isPcfFile(File file) {
@@ -57,7 +57,7 @@ public final class PcfFormat {
 
 	public static final LocalDate getMonth(String filename) {
 		int index = filename.lastIndexOf(FILE_EXTENSION);
-		return LocalDate.parse(filename.substring(0, index), FORMATTER);
+		return LocalDate.parse(filename.substring(0, index), MONTH_FORMATTER);
 	}
 
 	public static final LocalDate getMonth(IPriceCandle candle) {

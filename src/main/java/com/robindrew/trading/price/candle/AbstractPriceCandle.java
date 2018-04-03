@@ -4,6 +4,9 @@ import static com.robindrew.common.date.Dates.toLocalDateTime;
 
 import java.time.LocalDateTime;
 
+import com.robindrew.trading.price.decimal.Decimal;
+import com.robindrew.trading.price.decimal.IDecimal;
+
 public abstract class AbstractPriceCandle implements IPriceCandle {
 
 	@Override
@@ -17,6 +20,26 @@ public abstract class AbstractPriceCandle implements IPriceCandle {
 		builder.append(getLowPrice()).append('|');
 		builder.append(getClosePrice()).append(']');
 		return builder.toString();
+	}
+
+	@Override
+	public IDecimal getOpen() {
+		return new Decimal(getOpenPrice(), getDecimalPlaces());
+	}
+
+	@Override
+	public IDecimal getHigh() {
+		return new Decimal(getHighPrice(), getDecimalPlaces());
+	}
+
+	@Override
+	public IDecimal getLow() {
+		return new Decimal(getLowPrice(), getDecimalPlaces());
+	}
+
+	@Override
+	public IDecimal getClose() {
+		return new Decimal(getClosePrice(), getDecimalPlaces());
 	}
 
 	@Override

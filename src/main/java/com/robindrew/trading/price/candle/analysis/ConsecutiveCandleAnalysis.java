@@ -10,9 +10,9 @@ import org.slf4j.LoggerFactory;
 import com.google.common.collect.ListMultimap;
 import com.robindrew.trading.IInstrument;
 import com.robindrew.trading.price.candle.IPriceCandle;
-import com.robindrew.trading.price.candle.interval.IPriceCandleInterval;
-import com.robindrew.trading.price.candle.interval.PriceCandleIntervalPartitioner;
-import com.robindrew.trading.price.candle.interval.PriceCandleIntervals;
+import com.robindrew.trading.price.candle.interval.IPriceInterval;
+import com.robindrew.trading.price.candle.interval.PriceIntervals;
+import com.robindrew.trading.price.candle.interval.candle.PriceCandleIntervalPartitioner;
 
 public class ConsecutiveCandleAnalysis implements IPriceCandleAnalysis {
 
@@ -20,7 +20,7 @@ public class ConsecutiveCandleAnalysis implements IPriceCandleAnalysis {
 
 	@Override
 	public void performAnalysis(IInstrument instrument, List<IPriceCandle> candles) {
-		IPriceCandleInterval interval = PriceCandleIntervals.HOURLY;
+		IPriceInterval interval = PriceIntervals.HOURLY;
 
 		ListMultimap<LocalDateTime, IPriceCandle> partitions = new PriceCandleIntervalPartitioner(interval).partition(candles);
 

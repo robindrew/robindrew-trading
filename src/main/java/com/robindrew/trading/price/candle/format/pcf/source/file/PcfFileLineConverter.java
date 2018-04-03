@@ -17,8 +17,8 @@ import com.robindrew.trading.price.candle.filter.PriceCandleConsecutiveFilter;
 import com.robindrew.trading.price.candle.format.pcf.PcfFormat;
 import com.robindrew.trading.price.candle.format.pcf.source.IPcfSource;
 import com.robindrew.trading.price.candle.format.pcf.source.IPcfSourceManager;
-import com.robindrew.trading.price.candle.interval.IPriceCandleInterval;
-import com.robindrew.trading.price.candle.interval.PriceCandleIntervals;
+import com.robindrew.trading.price.candle.interval.IPriceInterval;
+import com.robindrew.trading.price.candle.interval.PriceIntervals;
 import com.robindrew.trading.price.candle.io.list.filter.PriceCandleListDuplicateFilter;
 import com.robindrew.trading.price.candle.io.list.source.IPriceCandleListSource;
 import com.robindrew.trading.price.candle.io.stream.source.IPriceCandleStreamSource;
@@ -79,7 +79,7 @@ public class PcfFileLineConverter {
 	public void convert(IInstrument instrument, File fromDirectory) {
 		Check.existsDirectory("fromDirectory", fromDirectory);
 
-		IPriceCandleInterval interval = PriceCandleIntervals.MONTHLY;
+		IPriceInterval interval = PriceIntervals.MONTHLY;
 		try (IPriceCandleListSource source = createSource(fromDirectory, interval)) {
 			while (true) {
 
@@ -113,10 +113,10 @@ public class PcfFileLineConverter {
 		}
 	}
 
-	private PriceCandleIntervalStreamToListSource createSource(File fromDirectory, IPriceCandleInterval interval) {
+	private PriceCandleIntervalStreamToListSource createSource(File fromDirectory, IPriceInterval interval) {
 		IPriceCandleStreamSource source = new PriceCandleDirectoryStreamSource(fromDirectory, parser, filter);
 		source = new PriceCandleFilteredStreamSource(source, new PriceCandleConsecutiveFilter(1000));
-		source = new PriceCandleIntervalStreamSource(source, PriceCandleIntervals.MINUTELY);
+		source = new PriceCandleIntervalStreamSource(source, PriceIntervals.MINUTELY);
 		source = new PriceCandleModifierStreamSource(source, new PriceCandleMultiplyModifier(multiplier));
 		source = new PriceCandleLoggedStreamSource(source, loggingFrequency);
 		source = new PriceCandleCheckerStreamSource(source, new PriceCandleRangeChecker(minPrice, maxPrice));

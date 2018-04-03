@@ -10,8 +10,8 @@ import java.time.format.DateTimeFormatter;
 
 import com.robindrew.common.text.tokenizer.CharTokenizer;
 import com.robindrew.trading.price.candle.IPriceCandle;
-import com.robindrew.trading.price.candle.PriceCandleInstant;
 import com.robindrew.trading.price.candle.format.pcf.FloatingPoint;
+import com.robindrew.trading.price.tick.PriceTick;
 import com.robindrew.trading.provider.histdata.HistDataInstrument;
 
 public class HistDataTickLineParser extends HistDataLineParser {
@@ -45,7 +45,7 @@ public class HistDataTickLineParser extends HistDataLineParser {
 		int bidPrice = FloatingPoint.toBigInt(bid, decimalPlaces);
 		int askPrice = FloatingPoint.toBigInt(ask, decimalPlaces);
 		
-		return new PriceCandleInstant(bidPrice, askPrice, timestamp, decimalPlaces);
+		return new PriceTick(bidPrice, askPrice, timestamp, decimalPlaces);
 	}
 
 }

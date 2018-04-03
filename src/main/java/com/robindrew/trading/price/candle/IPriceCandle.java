@@ -3,6 +3,7 @@ package com.robindrew.trading.price.candle;
 import java.time.LocalDateTime;
 
 import com.robindrew.trading.price.close.IClosePrice;
+import com.robindrew.trading.price.decimal.IDecimal;
 
 public interface IPriceCandle extends IClosePrice {
 
@@ -14,6 +15,14 @@ public interface IPriceCandle extends IClosePrice {
 
 	@Override
 	int getClosePrice();
+
+	IDecimal getOpen();
+
+	IDecimal getHigh();
+
+	IDecimal getLow();
+
+	IDecimal getClose();
 
 	int getDecimalPlaces();
 
