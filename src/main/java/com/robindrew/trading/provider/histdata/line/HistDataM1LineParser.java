@@ -12,7 +12,7 @@ import com.robindrew.common.text.tokenizer.CharTokenizer;
 import com.robindrew.trading.price.PriceException;
 import com.robindrew.trading.price.candle.IPriceCandle;
 import com.robindrew.trading.price.candle.PriceCandle;
-import com.robindrew.trading.price.candle.format.pcf.FloatingPoint;
+import com.robindrew.trading.price.decimal.Decimals;
 import com.robindrew.trading.provider.histdata.HistDataInstrument;
 
 public class HistDataM1LineParser extends HistDataLineParser {
@@ -43,10 +43,10 @@ public class HistDataM1LineParser extends HistDataLineParser {
 			LocalDateTime closeDate = openDate.plus(1, MINUTES);
 
 			// Prices
-			int open = FloatingPoint.toBigInt(tokenizer.next(false), decimalPlaces);
-			int high = FloatingPoint.toBigInt(tokenizer.next(false), decimalPlaces);
-			int low = FloatingPoint.toBigInt(tokenizer.next(false), decimalPlaces);
-			int close = FloatingPoint.toBigInt(tokenizer.next(false), decimalPlaces);
+			int open = Decimals.toBigInt(tokenizer.next(false), decimalPlaces);
+			int high = Decimals.toBigInt(tokenizer.next(false), decimalPlaces);
+			int low = Decimals.toBigInt(tokenizer.next(false), decimalPlaces);
+			int close = Decimals.toBigInt(tokenizer.next(false), decimalPlaces);
 
 			return new PriceCandle(open, high, low, close, toMillis(openDate), toMillis(closeDate), decimalPlaces);
 		} catch (Exception e) {

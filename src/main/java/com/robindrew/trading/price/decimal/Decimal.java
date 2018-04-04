@@ -2,14 +2,12 @@ package com.robindrew.trading.price.decimal;
 
 import java.math.BigDecimal;
 
-import com.robindrew.trading.price.candle.format.pcf.FloatingPoint;
-
 public class Decimal implements IDecimal {
 
 	private static final int[] PLACES = new int[] { 1, 10, 100, 1000, 10000, 100000, 1000000, 10000000 };
 
 	public static Decimal valueOf(String text, int decimalPlaces) {
-		int value = FloatingPoint.toBigInt(text, decimalPlaces);
+		int value = Decimals.toBigInt(text, decimalPlaces);
 		return new Decimal(value, decimalPlaces);
 	}
 
@@ -63,7 +61,7 @@ public class Decimal implements IDecimal {
 	}
 
 	public Decimal(BigDecimal value, int decimalPlaces) {
-		this(FloatingPoint.toBigInt(value, decimalPlaces), decimalPlaces);
+		this(Decimals.toBigInt(value, decimalPlaces), decimalPlaces);
 	}
 
 	@Override
@@ -78,26 +76,21 @@ public class Decimal implements IDecimal {
 
 	@Override
 	public double doubleValue() {
-		if (decimalPlaces == 0) {
-			return value;
-		}
-		return toBigDecimal().doubleValue();
+		return Decimals.toDouble(value, decimalPlaces);
 	}
 
 	@Override
 	public float floatValue() {
-		if (decimalPlaces == 0) {
-			return value;
-		}
-		return toBigDecimal().floatValue();
+		return Decimals.toFloat(value, decimalPlaces);
 	}
 
 	@Override
 	public BigDecimal toBigDecimal() {
-		if (decimalPlaces == 0) {
-			return new BigDecimal(value);
-		}
-		return FloatingPoint.toBigDecimal(value, decimalPlaces);
+		return Decimals.toBigDecimal(value, decimalPlaces);
+	}
+
+	public String toString() {
+		return Decimals.toString(value, decimalPlaces);
 	}
 
 }

@@ -3,7 +3,7 @@ package com.robindrew.trading.price.precision;
 import java.math.BigDecimal;
 
 import com.robindrew.common.util.Check;
-import com.robindrew.trading.price.candle.format.pcf.FloatingPoint;
+import com.robindrew.trading.price.decimal.Decimals;
 
 public class PricePrecision implements IPricePrecision {
 
@@ -34,12 +34,12 @@ public class PricePrecision implements IPricePrecision {
 
 	@Override
 	public int toBigInt(BigDecimal price) {
-		return FloatingPoint.toBigInt(price, decimalPlaces);
+		return Decimals.toBigInt(price, decimalPlaces);
 	}
 
 	@Override
 	public BigDecimal toBigDecimal(int price) {
-		return FloatingPoint.toBigDecimal(price, decimalPlaces);
+		return Decimals.toBigDecimal(price, decimalPlaces);
 	}
 
 }

@@ -18,13 +18,13 @@ import com.robindrew.common.image.Images;
 import com.robindrew.trading.Instruments;
 import com.robindrew.trading.price.candle.IPriceCandle;
 import com.robindrew.trading.price.candle.PriceCandles;
-import com.robindrew.trading.price.candle.format.pcf.FloatingPoint;
 import com.robindrew.trading.price.candle.format.pcf.source.IPcfSource;
 import com.robindrew.trading.price.candle.format.pcf.source.IPcfSourceManager;
 import com.robindrew.trading.price.candle.format.pcf.source.IPcfSourceSet;
 import com.robindrew.trading.price.candle.format.pcf.source.file.PcfFileManager;
 import com.robindrew.trading.price.candle.interval.IPriceInterval;
 import com.robindrew.trading.price.candle.interval.PriceIntervals;
+import com.robindrew.trading.price.decimal.Decimals;
 
 public class PriceCandleCanvas {
 
@@ -145,7 +145,7 @@ public class PriceCandleCanvas {
 	}
 
 	private String toText(int price, int decimalPlaces) {
-		return FloatingPoint.toBigDecimal(price, decimalPlaces).toString();
+		return Decimals.toBigDecimal(price, decimalPlaces).toString();
 	}
 
 	private void renderXAxis(int index, int candleWidth) {

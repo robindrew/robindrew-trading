@@ -8,7 +8,7 @@ import com.robindrew.common.text.tokenizer.CharDelimiters;
 import com.robindrew.common.text.tokenizer.CharTokenizer;
 import com.robindrew.trading.price.candle.IPriceCandle;
 import com.robindrew.trading.price.candle.PriceCandle;
-import com.robindrew.trading.price.candle.format.pcf.FloatingPoint;
+import com.robindrew.trading.price.decimal.Decimals;
 import com.robindrew.trading.price.tick.PriceTick;
 
 public class PriceCandleLineDecimalParser implements IPriceCandleLineParser {
@@ -40,8 +40,8 @@ public class PriceCandleLineDecimalParser implements IPriceCandleLineParser {
 		if (line.indexOf(',') == line.lastIndexOf(',')) {
 
 			LocalDateTime date = LocalDateTime.parse(tokenizer.next(false));
-			int bidPrice = FloatingPoint.toInt(tokenizer.next(false), decimalPlaces, checkPlaces);
-			int askPrice = FloatingPoint.toInt(tokenizer.next(false), decimalPlaces, checkPlaces);
+			int bidPrice = Decimals.toInt(tokenizer.next(false), decimalPlaces, checkPlaces);
+			int askPrice = Decimals.toInt(tokenizer.next(false), decimalPlaces, checkPlaces);
 
 			return new PriceTick(bidPrice, askPrice, toMillis(date), decimalPlaces);
 		}
@@ -53,10 +53,10 @@ public class PriceCandleLineDecimalParser implements IPriceCandleLineParser {
 		LocalDateTime closeDate = LocalDateTime.parse(tokenizer.next(false));
 
 		// Prices
-		int open = FloatingPoint.toInt(tokenizer.next(false), decimalPlaces, checkPlaces);
-		int high = FloatingPoint.toInt(tokenizer.next(false), decimalPlaces, checkPlaces);
-		int low = FloatingPoint.toInt(tokenizer.next(false), decimalPlaces, checkPlaces);
-		int close = FloatingPoint.toInt(tokenizer.next(false), decimalPlaces, checkPlaces);
+		int open = Decimals.toInt(tokenizer.next(false), decimalPlaces, checkPlaces);
+		int high = Decimals.toInt(tokenizer.next(false), decimalPlaces, checkPlaces);
+		int low = Decimals.toInt(tokenizer.next(false), decimalPlaces, checkPlaces);
+		int close = Decimals.toInt(tokenizer.next(false), decimalPlaces, checkPlaces);
 
 		return new PriceCandle(open, high, low, close, toMillis(openDate), toMillis(closeDate), decimalPlaces);
 	}

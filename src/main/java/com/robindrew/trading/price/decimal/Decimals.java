@@ -1,8 +1,8 @@
-package com.robindrew.trading.price.candle.format.pcf;
+package com.robindrew.trading.price.decimal;
 
 import java.math.BigDecimal;
 
-public class FloatingPoint {
+public class Decimals {
 
 	private static final BigDecimal[] MULTIPLES = createMultiplyArray();
 
@@ -18,15 +18,62 @@ public class FloatingPoint {
 	}
 
 	public static String toString(int value, int decimalPlaces) {
-		if (decimalPlaces <= 0) {
+		if (value < 1) {
+			throw new IllegalArgumentException("value=" + value);
+		}
+		if (decimalPlaces < 0) {
+			throw new IllegalArgumentException("decimalPlaces=" + decimalPlaces);
+		}
+
+		// Shortcut
+		if (decimalPlaces == 0) {
 			return String.valueOf(value);
 		}
-		String text = String.valueOf(value);
-		int index = text.length() - decimalPlaces;
-		return text.substring(0, index) + "." + text.substring(index);
+
+		final int length = 12;
+		final char[] array = new char[length];
+
+		int places = decimalPlaces;
+		int latest = value;
+		int offset;
+		boolean first = true;
+		for (offset = length - 1; offset >= 0; offset--) {
+			int remainder = latest % 10;
+			latest /= 10;
+
+			// Special case - remove trailing zeros
+			if (first) {
+				if (places > 0 && remainder == 0) {
+					places--;
+					offset++;
+					continue;
+				}
+				first = false;
+			}
+
+			// Digit
+			array[offset] = (char) (48 + remainder);
+
+			// Handle decimal point
+			places--;
+			if (places == 0) {
+				offset--;
+				array[offset] = '.';
+			}
+
+			// Finished?
+			if (latest == 0 && places < 0) {
+				break;
+			}
+		}
+
+		return new String(array, offset, length - offset);
 	}
 
 	public static BigDecimal toBigDecimal(int value, int decimalPlaces) {
+		if (decimalPlaces == 0) {
+			return new BigDecimal(value);
+		}
 		return new BigDecimal(toString(value, decimalPlaces)).stripTrailingZeros();
 	}
 
@@ -119,6 +166,22 @@ public class FloatingPoint {
 			throw new IllegalArgumentException("value=" + value + ", decimalPlaces=" + decimalPlaces);
 		}
 		return roundedInt;
+	}
+
+	public static float toFloat(int value, int decimalPlaces) {
+		float floating = value;
+		for (int i = 0; i < decimalPlaces; i++) {
+			floating /= 10.0f;
+		}
+		return floating;
+	}
+
+	public static double toDouble(int value, int decimalPlaces) {
+		double floating = value;
+		for (int i = 0; i < decimalPlaces; i++) {
+			floating /= 10.0;
+		}
+		return floating;
 	}
 
 }
