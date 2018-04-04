@@ -2,9 +2,9 @@ package com.robindrew.trading.platform.streaming;
 
 import com.robindrew.trading.IInstrument;
 import com.robindrew.trading.platform.streaming.latest.IStreamingPrice;
-import com.robindrew.trading.price.candle.io.stream.sink.IPriceCandleStreamSink;
+import com.robindrew.trading.price.tick.io.stream.sink.IPriceTickStreamSink;
 
-public interface IInstrumentPriceStream extends IPriceCandleStreamSink {
+public interface IInstrumentPriceStream extends IPriceTickStreamSink {
 
 	/**
 	 * Returns the instrument for which this stream prices.
@@ -23,14 +23,14 @@ public interface IInstrumentPriceStream extends IPriceCandleStreamSink {
 	 * @param sink the sink to register.
 	 * @return true if successful.
 	 */
-	boolean register(IPriceCandleStreamSink sink);
+	boolean register(IPriceTickStreamSink sink);
 
 	/**
 	 * Unregister a listener to the streaming prices.
 	 * @param sink the sink to unregister.
 	 * @return true if successful.
 	 */
-	boolean unregister(IPriceCandleStreamSink sink);
+	boolean unregister(IPriceTickStreamSink sink);
 
 	/**
 	 * Close this stream of prices (unsubscribe the underlying price stream).

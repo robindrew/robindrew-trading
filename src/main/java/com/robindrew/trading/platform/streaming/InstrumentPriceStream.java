@@ -6,14 +6,14 @@ import java.util.concurrent.CopyOnWriteArraySet;
 import com.robindrew.common.util.Check;
 import com.robindrew.trading.IInstrument;
 import com.robindrew.trading.platform.streaming.latest.StreamingPrice;
-import com.robindrew.trading.price.candle.IPriceCandle;
-import com.robindrew.trading.price.candle.io.stream.sink.IPriceCandleStreamSink;
+import com.robindrew.trading.price.tick.IPriceTick;
+import com.robindrew.trading.price.tick.io.stream.sink.IPriceTickStreamSink;
 
 public abstract class InstrumentPriceStream implements IInstrumentPriceStream {
 
 	private final IInstrument instrument;
 	private final StreamingPrice price = new StreamingPrice();
-	private final Set<IPriceCandleStreamSink> subscriberSet = new CopyOnWriteArraySet<>();
+	private final Set<IPriceTickStreamSink> subscriberSet = new CopyOnWriteArraySet<>();
 
 	protected InstrumentPriceStream(IInstrument instrument) {
 		this.instrument = Check.notNull("instrument", instrument);
@@ -30,30 +30,30 @@ public abstract class InstrumentPriceStream implements IInstrumentPriceStream {
 	}
 
 	@Override
-	public void putNextCandle(IPriceCandle candle) {
+	public void putNextTick(IPriceTick candle) {
 
 		// Update the latest price
 		price.update(candle);
 
 		// Propagate the candle to each subscriber
-		for (IPriceCandleStreamSink subscriber : subscriberSet) {
-			subscriber.putNextCandle(candle);
+		for (IPriceTickStreamSink subscriber : subscriberSet) {
+			subscriber.putNextTick(candle);
 		}
 	}
 
 	@Override
-	public boolean register(IPriceCandleStreamSink sink) {
+	public boolean register(IPriceTickStreamSink sink) {
 		return subscriberSet.add(sink);
 	}
 
 	@Override
-	public boolean unregister(IPriceCandleStreamSink sink) {
+	public boolean unregister(IPriceTickStreamSink sink) {
 		return subscriberSet.remove(sink);
 	}
 
 	@Override
 	public void close() {
-		for (IPriceCandleStreamSink subscriber : subscriberSet) {
+		for (IPriceTickStreamSink subscriber : subscriberSet) {
 			subscriber.close();
 		}
 		subscriberSet.clear();

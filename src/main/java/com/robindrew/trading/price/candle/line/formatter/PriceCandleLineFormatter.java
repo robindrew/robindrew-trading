@@ -14,22 +14,12 @@ public class PriceCandleLineFormatter implements IPriceCandleLineFormatter {
 	public String formatCandle(IPriceCandle candle, boolean includeEndOfLine) {
 
 		StringBuilder line = new StringBuilder();
-
-		// Instant candle
-		if (candle.isInstant()) {
-			line.append(toLocalDateTime(candle.getOpenTime())).append(',');
-			line.append(candle.getOpenPrice());
-		}
-
-		// Standard candle
-		else {
-			line.append(toLocalDateTime(candle.getOpenTime())).append(',');
-			line.append(toLocalDateTime(candle.getCloseTime())).append(',');
-			line.append(candle.getOpenPrice()).append(',');
-			line.append(candle.getHighPrice()).append(',');
-			line.append(candle.getLowPrice()).append(',');
-			line.append(candle.getClosePrice());
-		}
+		line.append(toLocalDateTime(candle.getOpenTime())).append(',');
+		line.append(toLocalDateTime(candle.getCloseTime())).append(',');
+		line.append(candle.getOpenPrice()).append(',');
+		line.append(candle.getHighPrice()).append(',');
+		line.append(candle.getLowPrice()).append(',');
+		line.append(candle.getClosePrice());
 
 		// End of line?
 		if (includeEndOfLine) {

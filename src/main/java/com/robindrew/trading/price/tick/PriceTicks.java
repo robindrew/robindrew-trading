@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.Iterator;
 import java.util.List;
 
+import com.robindrew.trading.price.candle.IPriceCandle;
 import com.robindrew.trading.price.close.IClosePrice;
 import com.robindrew.trading.price.tick.checker.PriceTickSortedChecker;
 import com.robindrew.trading.price.tick.filter.PriceTickDateFilter;
@@ -18,6 +19,34 @@ import com.robindrew.trading.price.tick.io.stream.source.iterator.PriceTickStrea
 import com.robindrew.trading.price.tick.io.stream.source.iterator.PriceTickStreamSourceIterator;
 
 public class PriceTicks {
+
+	public static IPriceTick getOpenTick(IPriceCandle candle) {
+		int price = candle.getOpenPrice();
+		long timestamp = candle.getOpenTime();
+		int decimalPlaces = candle.getDecimalPlaces();
+		return new PriceTick(price, price, timestamp, decimalPlaces);
+	}
+
+	public static IPriceTick getHighTick(IPriceCandle candle) {
+		int price = candle.getHighPrice();
+		long timestamp = ((candle.getCloseTime() - candle.getOpenTime()) / 2) + candle.getOpenTime();
+		int decimalPlaces = candle.getDecimalPlaces();
+		return new PriceTick(price, price, timestamp, decimalPlaces);
+	}
+
+	public static IPriceTick getLowTick(IPriceCandle candle) {
+		int price = candle.getLowPrice();
+		long timestamp = ((candle.getCloseTime() - candle.getOpenTime()) / 2) + candle.getOpenTime();
+		int decimalPlaces = candle.getDecimalPlaces();
+		return new PriceTick(price, price, timestamp, decimalPlaces);
+	}
+
+	public static IPriceTick getCloseTick(IPriceCandle candle) {
+		int price = candle.getClosePrice();
+		long timestamp = candle.getCloseTime();
+		int decimalPlaces = candle.getDecimalPlaces();
+		return new PriceTick(price, price, timestamp, decimalPlaces);
+	}
 
 	public static double getAverage(double total, int count) {
 		return (count <= 1) ? total : (total / count);

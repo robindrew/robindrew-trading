@@ -7,6 +7,7 @@ import com.robindrew.trading.platform.streaming.InstrumentPriceStream;
 import com.robindrew.trading.price.candle.IPriceCandle;
 import com.robindrew.trading.price.candle.io.stream.source.IPriceCandleStreamSource;
 import com.robindrew.trading.price.history.IInstrumentPriceHistory;
+import com.robindrew.trading.price.tick.PriceTicks;
 
 public class BacktestInstrumentPriceStream extends InstrumentPriceStream implements Runnable {
 
@@ -31,6 +32,14 @@ public class BacktestInstrumentPriceStream extends InstrumentPriceStream impleme
 			putNextCandle(candle);
 		}
 		log.info("[Finished Streaming Prices] {}", getInstrument());
+	}
+
+	private void putNextCandle(IPriceCandle candle) {
+		// Convert the candle to ticks
+		putNextTick(PriceTicks.getOpenTick(candle));
+		putNextTick(PriceTicks.getHighTick(candle));
+		putNextTick(PriceTicks.getLowTick(candle));
+		putNextTick(PriceTicks.getCloseTick(candle));
 	}
 
 	@Override
