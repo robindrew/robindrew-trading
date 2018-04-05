@@ -50,13 +50,13 @@ A service is a stand-alone web application providing a front end to various trad
 
 #### Streaming Prices
 The following projects provide access to the live data feed for the given provider. Each includes asynchronous file output, writing the individual price ticks in a text format. In addition the feeds provide a web interface to view and manage the price feeds.
-* [IG Index Feed](https://github.com/robindrew/robindrew-trading-igindex-feed)
-* [Active Tick Feed](https://github.com/robindrew/robindrew-trading-activetick-feed)
+* [IG Index Feed Service](https://github.com/robindrew/robindrew-trading-igindex-feed)
+* [Active Tick Feed Service](https://github.com/robindrew/robindrew-trading-activetick-feed)
 
 #### Live Trading
 The following projects provide trading access for the given provider, including position management, history and execution. Currently there is only one trading service:
-* [IG Index Trader](https://github.com/robindrew/robindrew-trading/wiki/Service:-IG-Index-Trader)
+* [IG Index Trader Service](https://github.com/robindrew/robindrew-trading/wiki/Service:-IG-Index-Trader)
 
 #### Backtesting
 The following project provides a web interface to the backtesting provider, along with visualisation for historic prices in PCF format:
-* [Backtest Executor](https://github.com/robindrew/robindrew-trading-backtest-executor)
+* [Backtest Executor Service](https://github.com/robindrew/robindrew-trading-backtest-executor)
