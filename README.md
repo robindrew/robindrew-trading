@@ -36,14 +36,14 @@ PCF formatted data for the major FX pairs is available:
 * [ActiveTick PCF Files](https://github.com/robindrew/robindrew-trading-activetick-data)
 * [FXCM PCF Files](https://github.com/robindrew/robindrew-trading-fxcm-data)
 
+Note: IG Index does **not** provide access to any useful quantity of historic price data. Strict limits exist on the amount of historic price data that can be queried via the REST API each month.
+
 ## Providers
 A provider is an implementation of the ITradingPlatform along with supporting classes to simply access to an existing broker APIs.
 The following providers are available, including a provider specifically for backtesting against historic data:
 * [IG Index Provider](https://github.com/robindrew/robindrew-trading-igindex)
 * [Active Tick Provider](https://github.com/robindrew/robindrew-trading-activetick)
 * [Backtest Provider](https://github.com/robindrew/robindrew-trading-backtest)
-
-Note: IG Index does **not** provide access to any useful quantity of historic price data. Strict limits exist on the amount of historic price data that can be queried via the REST API each month.
 
 ## Services
 A service is a stand-alone web application providing a front end to various trading functionality.
