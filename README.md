@@ -6,13 +6,13 @@ Algorithmic trading core library for Java
 * [robindrew-trading-igindex-feed](https://github.com/robindrew/robindrew-trading-igindex-feed)
 * [robindrew-trading-igindex-trader](https://github.com/robindrew/robindrew-trading-igindex-trader)
 * [robindrew-trading-fxcm](https://github.com/robindrew/robindrew-trading-fxcm)
-* [robindrew-trading-fxcm-data](https://github.com/robindrew/robindrew-trading-fxcm-feed)
-* [robindrew-trading-activetick](https://github.com/robindrew/robindrew-trading-fxcm)
-* [robindrew-trading-activetick-feed](https://github.com/robindrew/robindrew-trading-fxcm-feed)
-* [robindrew-trading-activetick-data](https://github.com/robindrew/robindrew-trading-fxcm-feed)
-* [robindrew-trading-backtest](https://github.com/robindrew/robindrew-trading-fxcm)
-* [robindrew-trading-backtest-executor](https://github.com/robindrew/robindrew-trading-fxcm-feed)
-* [robindrew-trading-histdata-data](https://github.com/robindrew/robindrew-trading-fxcm)
+* [robindrew-trading-fxcm-data](https://github.com/robindrew/robindrew-trading-fxcm-data)
+* [robindrew-trading-activetick](https://github.com/robindrew/robindrew-trading-activetick)
+* [robindrew-trading-activetick-feed](https://github.com/robindrew/robindrew-trading-activetick-feed)
+* [robindrew-trading-activetick-data](https://github.com/robindrew/robindrew-trading-activetick-data)
+* [robindrew-trading-backtest](https://github.com/robindrew/robindrew-trading-backtest)
+* [robindrew-trading-backtest-executor](https://github.com/robindrew/robindrew-trading-backtest-executor)
+* [robindrew-trading-histdata-data](https://github.com/robindrew/robindrew-trading-histdata-data)
 
 ## Articles
 Before you dive in to the API itself, please take a quick look at the following articles:
