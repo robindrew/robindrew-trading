@@ -34,6 +34,7 @@ This library requires the [robindrew-common](https://github.com/robindrew/robind
 PCF formatted data for the major FX pairs is available:
 * [HistData PCF Files](https://github.com/robindrew/robindrew-trading-histdata-data)
 * [ActiveTick PCF Files](https://github.com/robindrew/robindrew-trading-activetick-data)
+* [FXCM PCF Files](https://github.com/robindrew/robindrew-trading-fxcm-data)
 
 ## Providers
 A provider is an implementation of the ITradingPlatform along with supporting classes to simply access to an existing broker APIs.
