@@ -21,9 +21,9 @@ public interface ITradingPlatform {
 
 	IPricePrecision getPrecision(IInstrument instrument);
 
-	List<IPosition> getAllPositions();
+	List<? extends IPosition> getAllPositions();
 
-	List<IPosition> getPositions(IInstrument instrument);
+	List<? extends IPosition> getPositions(IInstrument instrument);
 
 	IClosedPosition closePosition(IPosition position);
 
