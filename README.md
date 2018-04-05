@@ -43,6 +43,8 @@ The following providers are available, including a provider specifically for bac
 * [Active Tick Provider](https://github.com/robindrew/robindrew-trading-activetick)
 * [Backtest Provider](https://github.com/robindrew/robindrew-trading-backtest)
 
+Note: IG Index does **not** provide access to any useful amount of historic price data.
+
 ## Services
 A service is a stand-alone web application providing a front end to various trading functionality.
 
