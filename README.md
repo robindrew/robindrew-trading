@@ -6,7 +6,6 @@ Algorithmic trading core library for Java
 * [robindrew-trading-igindex-feed](https://github.com/robindrew/robindrew-trading-igindex-feed)
 * [robindrew-trading-igindex-trader](https://github.com/robindrew/robindrew-trading-igindex-trader)
 * [robindrew-trading-fxcm](https://github.com/robindrew/robindrew-trading-fxcm)
-* [robindrew-trading-fxcm-feed](https://github.com/robindrew/robindrew-trading-fxcm-feed)
 * [robindrew-trading-fxcm-data](https://github.com/robindrew/robindrew-trading-fxcm-feed)
 * [robindrew-trading-activetick](https://github.com/robindrew/robindrew-trading-fxcm)
 * [robindrew-trading-activetick-feed](https://github.com/robindrew/robindrew-trading-fxcm-feed)
