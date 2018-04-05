@@ -1,6 +1,20 @@
 # robindrew-trading
 Algorithmic trading core library for Java
 
+## Sub Projects
+* [robindrew-trading-igindex](https://github.com/robindrew/robindrew-trading-igindex)
+* [robindrew-trading-igindex-feed](https://github.com/robindrew/robindrew-trading-igindex-feed)
+* [robindrew-trading-igindex-trader](https://github.com/robindrew/robindrew-trading-igindex-trader)
+* [robindrew-trading-fxcm](https://github.com/robindrew/robindrew-trading-fxcm)
+* [robindrew-trading-fxcm-feed](https://github.com/robindrew/robindrew-trading-fxcm-feed)
+* [robindrew-trading-fxcm-data](https://github.com/robindrew/robindrew-trading-fxcm-feed)
+* [robindrew-trading-activetick](https://github.com/robindrew/robindrew-trading-fxcm)
+* [robindrew-trading-activetick-feed](https://github.com/robindrew/robindrew-trading-fxcm-feed)
+* [robindrew-trading-activetick-data](https://github.com/robindrew/robindrew-trading-fxcm-feed)
+* [robindrew-trading-backtest](https://github.com/robindrew/robindrew-trading-fxcm)
+* [robindrew-trading-backtest-executor](https://github.com/robindrew/robindrew-trading-fxcm-feed)
+* [robindrew-trading-histdata-data](https://github.com/robindrew/robindrew-trading-fxcm)
+
 ## Articles
 Before you dive in to the API itself, please take a quick look at the following articles:
 * [Introduction to Trading](https://github.com/robindrew/robindrew-trading/wiki/Article:-Introduction-to-Trading)
