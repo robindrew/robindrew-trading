@@ -36,18 +36,24 @@ PCF formatted data for the major FX pairs is available:
 * [ActiveTick PCF Files](https://github.com/robindrew/robindrew-trading-activetick-data)
 
 ## Providers
-The following providers are available for the API, including a provider specifically for backtesting against historic data:
+A provider is an implementation of the ITradingPlatform along with supporting classes to simply access to an existing broker APIs.
+The following providers are available, including a provider specifically for backtesting against historic data:
 * [IG Index Provider](https://github.com/robindrew/robindrew-trading-igindex)
 * [Active Tick Provider](https://github.com/robindrew/robindrew-trading-activetick)
 * [Backtest Provider](https://github.com/robindrew/robindrew-trading-backtest)
 
 ## Services
+A service is a stand-alone web application providing a front end to various trading functionality.
+
+#### Streaming Prices
 The following projects provide access to the live data feed for the given provider. Each includes asynchronous file output, writing the individual price ticks in a text format. In addition the feeds provide a web interface to view and manage the price feeds.
 * [IG Index Feed](https://github.com/robindrew/robindrew-trading-igindex-feed)
 * [Active Tick Feed](https://github.com/robindrew/robindrew-trading-activetick-feed)
 
+#### Live Trading
 The following projects provide trading access for the given provider, including position management, history and execution. Currently there is only one provider:
 * [IG Index Trader](https://github.com/robindrew/robindrew-trading/wiki/Service:-IG-Index-Trader)
 
+#### Backtesting
 The following project provides a web interface to the backtesting provider, along with visualisation for historic prices in PCF format:
 * [Backtest Executor](https://github.com/robindrew/robindrew-trading-backtest-executor)
