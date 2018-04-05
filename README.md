@@ -2,20 +2,20 @@
 Algorithmic trading core library for Java
 
 ## Sub Projects
-There are a number of provider implementations and PCF data projects available, built on this library.
+There are a number of provider implementations and services built on this library. There are also a number of projects containing PCF data for use with backtesting.
 
 Sub Project | Description
 ------------ | -------------
 [robindrew-trading-igindex](https://github.com/robindrew/robindrew-trading-igindex) | IG Index Provider
-[robindrew-trading-igindex-feed](https://github.com/robindrew/robindrew-trading-igindex-feed) | IG Index Feed Website
-[robindrew-trading-igindex-trader](https://github.com/robindrew/robindrew-trading-igindex-trader) | IG Index Trader Website
+[robindrew-trading-igindex-feed](https://github.com/robindrew/robindrew-trading-igindex-feed) | IG Index Feed Service
+[robindrew-trading-igindex-trader](https://github.com/robindrew/robindrew-trading-igindex-trader) | IG Index Trader Service
 [robindrew-trading-fxcm](https://github.com/robindrew/robindrew-trading-fxcm) | FXCM Provider
 [robindrew-trading-fxcm-data](https://github.com/robindrew/robindrew-trading-fxcm-data) | FXCM PCF Data
 [robindrew-trading-activetick](https://github.com/robindrew/robindrew-trading-activetick) | ActiveTick Provider
-[robindrew-trading-activetick-feed](https://github.com/robindrew/robindrew-trading-activetick-feed) | ActiveTick Feed Website
+[robindrew-trading-activetick-feed](https://github.com/robindrew/robindrew-trading-activetick-feed) | ActiveTick Feed Service
 [robindrew-trading-activetick-data](https://github.com/robindrew/robindrew-trading-activetick-data) | ActiveTick PCF Data
 [robindrew-trading-backtest](https://github.com/robindrew/robindrew-trading-backtest) | Backtest Provider
-[robindrew-trading-backtest-executor](https://github.com/robindrew/robindrew-trading-backtest-executor) | Backtest Executor Website
+[robindrew-trading-backtest-executor](https://github.com/robindrew/robindrew-trading-backtest-executor) | Backtest Executor Service
 [robindrew-trading-histdata-data](https://github.com/robindrew/robindrew-trading-histdata-data) | HistData PCF Data
 
 ## Articles
