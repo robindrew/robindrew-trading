@@ -21,7 +21,7 @@ Sub Project | Description | Type
 ## Articles
 Before you dive in to the API itself, please take a quick look at the following articles:
 * [Introduction to Trading](https://github.com/robindrew/robindrew-trading/wiki/Article:-Introduction-to-Trading)
-* [My Approach to Trading](https://github.com/robindrew/robindrew-trading/wiki/Article:-My-Approach-to-Trading)
+* [What is Your Trading Style?](https://github.com/robindrew/robindrew-trading/wiki/Article:-What-is-Your-Trading-Style%3F)
 
 ## Coding
 Please read the [Wiki](https://github.com/robindrew/robindrew-trading/wiki) to get started writing code.
