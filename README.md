@@ -2,17 +2,17 @@
 Algorithmic trading core library for Java
 
 ## Sub Projects
-* [robindrew-trading-igindex](https://github.com/robindrew/robindrew-trading-igindex)
-* [robindrew-trading-igindex-feed](https://github.com/robindrew/robindrew-trading-igindex-feed)
-* [robindrew-trading-igindex-trader](https://github.com/robindrew/robindrew-trading-igindex-trader)
-* [robindrew-trading-fxcm](https://github.com/robindrew/robindrew-trading-fxcm)
-* [robindrew-trading-fxcm-data](https://github.com/robindrew/robindrew-trading-fxcm-data)
-* [robindrew-trading-activetick](https://github.com/robindrew/robindrew-trading-activetick)
-* [robindrew-trading-activetick-feed](https://github.com/robindrew/robindrew-trading-activetick-feed)
-* [robindrew-trading-activetick-data](https://github.com/robindrew/robindrew-trading-activetick-data)
-* [robindrew-trading-backtest](https://github.com/robindrew/robindrew-trading-backtest)
-* [robindrew-trading-backtest-executor](https://github.com/robindrew/robindrew-trading-backtest-executor)
-* [robindrew-trading-histdata-data](https://github.com/robindrew/robindrew-trading-histdata-data)
+* [robindrew-trading-igindex](https://github.com/robindrew/robindrew-trading-igindex) (IG Index Provider)
+* [robindrew-trading-igindex-feed](https://github.com/robindrew/robindrew-trading-igindex-feed) (IG Index Feed Website)
+* [robindrew-trading-igindex-trader](https://github.com/robindrew/robindrew-trading-igindex-trader) (IG Index Trader Website)
+* [robindrew-trading-fxcm](https://github.com/robindrew/robindrew-trading-fxcm) (FXCM Provider)
+* [robindrew-trading-fxcm-data](https://github.com/robindrew/robindrew-trading-fxcm-data) (FXCM PCF Data)
+* [robindrew-trading-activetick](https://github.com/robindrew/robindrew-trading-activetick) (ActiveTick Provider)
+* [robindrew-trading-activetick-feed](https://github.com/robindrew/robindrew-trading-activetick-feed) (ActiveTick Feed Website)
+* [robindrew-trading-activetick-data](https://github.com/robindrew/robindrew-trading-activetick-data) (ActiveTick PCF Data)
+* [robindrew-trading-backtest](https://github.com/robindrew/robindrew-trading-backtest) (Backtest Provider)
+* [robindrew-trading-backtest-executor](https://github.com/robindrew/robindrew-trading-backtest-executor) (Backtest Executor Website)
+* [robindrew-trading-histdata-data](https://github.com/robindrew/robindrew-trading-histdata-data) (HistData PCF Data)
 
 ## Articles
 Before you dive in to the API itself, please take a quick look at the following articles:
