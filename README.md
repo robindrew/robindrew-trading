@@ -30,7 +30,7 @@ There is also [Javadoc](https://htmlpreview.github.io/?https://raw.githubusercon
 ## Dependencies
 This library requires the [robindrew-common](https://github.com/robindrew/robindrew-common) project.
 
-## Data
+## Historic Price Data
 PCF formatted data for the major FX pairs is available:
 * [HistData PCF Files](https://github.com/robindrew/robindrew-trading-histdata-data)
 * [ActiveTick PCF Files](https://github.com/robindrew/robindrew-trading-activetick-data)
