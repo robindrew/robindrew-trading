@@ -1,6 +1,9 @@
 # robindrew-trading
 Algorithmic trading core library for Java
 
+## Sub Projects
+There are a number of provider implementations and PCF data projects available, built on this library.
+
 Sub Project | Description
 ------------ | -------------
 [robindrew-trading-igindex](https://github.com/robindrew/robindrew-trading-igindex) | IG Index Provider
