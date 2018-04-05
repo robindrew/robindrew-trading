@@ -51,7 +51,7 @@ The following projects provide access to the live data feed for the given provid
 * [Active Tick Feed](https://github.com/robindrew/robindrew-trading-activetick-feed)
 
 #### Live Trading
-The following projects provide trading access for the given provider, including position management, history and execution. Currently there is only one provider:
+The following projects provide trading access for the given provider, including position management, history and execution. Currently there is only one trading service:
 * [IG Index Trader](https://github.com/robindrew/robindrew-trading/wiki/Service:-IG-Index-Trader)
 
 #### Backtesting
