@@ -93,8 +93,8 @@ public class PtfFileLineConverter {
 				Collections.sort(ticks, new PriceTickDateComparator());
 
 				// 3. Write the PCF tick file
-				LocalDate month = PtfFormat.getMonth(ticks.get(0));
-				IPtfSource file = manager.getSourceSet(instrument).getSource(month, true);
+				LocalDate day = PtfFormat.getDay(ticks.get(0));
+				IPtfSource file = manager.getSourceSet(instrument).getSource(day, true);
 				if (file.exists()) {
 					log.warn("Source already exists: {}", file.getName());
 					continue;

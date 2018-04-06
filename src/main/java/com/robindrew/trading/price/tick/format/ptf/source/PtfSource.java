@@ -29,17 +29,13 @@ public abstract class PtfSource implements IPtfSource {
 	private static final Logger log = LoggerFactory.getLogger(PtfSource.class);
 
 	private final String name;
-	private final LocalDate month;
+	private final LocalDate day;
 	private final IDataSerializer<List<IPriceTick>> serializer = new PtfDataSerializer();
 	private volatile SoftReference<List<IPriceTick>> cached = new SoftReference<>(null);
 
-	protected PtfSource(String name, LocalDate month) {
-		if (month.getDayOfMonth() != 1) {
-			throw new IllegalArgumentException("month=" + month);
-		}
-
+	protected PtfSource(String name, LocalDate day) {
 		this.name = Check.notEmpty("name", name);
-		this.month = Check.notNull("month", month);
+		this.day = Check.notNull("month", day);
 	}
 
 	@Override
@@ -48,8 +44,8 @@ public abstract class PtfSource implements IPtfSource {
 	}
 
 	@Override
-	public LocalDate getMonth() {
-		return month;
+	public LocalDate getDay() {
+		return day;
 	}
 
 	@Override
@@ -59,7 +55,7 @@ public abstract class PtfSource implements IPtfSource {
 
 	@Override
 	public int compareTo(IPtfSource source) {
-		return getMonth().compareTo(source.getMonth());
+		return getDay().compareTo(source.getDay());
 	}
 
 	@Override
@@ -102,8 +98,8 @@ public abstract class PtfSource implements IPtfSource {
 	}
 
 	private void checkMonth(IPriceTick tick) {
-		if (!month.equals(PtfFormat.getMonth(tick))) {
-			throw new IllegalArgumentException("Incorrect month for tick: " + tick + ", month=" + month);
+		if (!day.equals(PtfFormat.getDay(tick))) {
+			throw new IllegalArgumentException("Incorrect month for tick: " + tick + ", day=" + day);
 		}
 	}
 

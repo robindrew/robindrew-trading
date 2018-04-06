@@ -1,6 +1,6 @@
 package com.robindrew.trading.price.tick.format.ptf.source.file;
 
-import static com.robindrew.trading.price.candle.format.pcf.PcfFormat.FILENAME_FILTER;
+import static com.robindrew.trading.price.tick.format.ptf.PtfFormat.FILENAME_FILTER;
 import static com.robindrew.trading.price.tick.format.ptf.source.file.PtfFileManager.getDirectory;
 
 import java.io.File;

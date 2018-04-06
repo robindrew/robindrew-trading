@@ -9,7 +9,7 @@ public interface IPtfSource extends Comparable<IPtfSource> {
 
 	String getName();
 
-	LocalDate getMonth();
+	LocalDate getDay();
 
 	List<IPriceTick> read();
 

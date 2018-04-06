@@ -14,13 +14,13 @@ public class PtfFile extends PtfSource implements IPtfFile {
 
 	private final File file;
 
-	public PtfFile(File file, LocalDate month) {
-		super(file.getAbsolutePath(), month);
+	public PtfFile(File file, LocalDate day) {
+		super(file.getAbsolutePath(), day);
 		this.file = Check.notNull("file", file);
 	}
 
 	public PtfFile(File file) {
-		this(file, PtfFormat.getMonth(file));
+		this(file, PtfFormat.getDay(file));
 	}
 
 	@Override

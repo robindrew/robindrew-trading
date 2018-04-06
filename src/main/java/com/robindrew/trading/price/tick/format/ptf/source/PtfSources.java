@@ -24,7 +24,7 @@ public class PtfSources {
 	public static <S extends IPtfSource> Set<S> filterSources(Collection<? extends S> sources, ITimeWindow window) {
 		Set<S> filtered = new LinkedHashSet<>();
 		for (S source : sources) {
-			if (window.contains(source.getMonth())) {
+			if (window.contains(source.getDay())) {
 				filtered.add(source);
 			}
 		}

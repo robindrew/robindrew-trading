@@ -28,13 +28,12 @@ public class PtfFormat {
 
 	public static final FilenameFilter FILENAME_FILTER = new PatternFilenameFilter(".+\\.ptf");
 	public static final String FILE_EXTENSION = ".ptf";
-	public static final IPriceInterval MONTHLY = PriceIntervals.MONTHLY;
-	public static final DateTimeFormatter MONTH_FORMATTER = buildDateTimeFormatter();
+	public static final IPriceInterval DAILY = PriceIntervals.DAILY;
+	public static final DateTimeFormatter DAY_FORMATTER = buildDateTimeFormatter();
 
 	private static DateTimeFormatter buildDateTimeFormatter() {
 		DateTimeFormatterBuilder format = new DateTimeFormatterBuilder();
-		format.appendPattern("yyyy-MM");
-		format.parseDefaulting(ChronoField.DAY_OF_MONTH, 1);
+		format.appendPattern("yyyy-DDD");
 		format.parseDefaulting(ChronoField.HOUR_OF_DAY, 0);
 		format.parseDefaulting(ChronoField.MINUTE_OF_HOUR, 0);
 		format.parseDefaulting(ChronoField.SECOND_OF_MINUTE, 0);
@@ -43,32 +42,32 @@ public class PtfFormat {
 	}
 
 	public static final String getFilename(LocalDate date) {
-		return date.format(MONTH_FORMATTER) + FILE_EXTENSION;
+		return date.format(DAY_FORMATTER) + FILE_EXTENSION;
 	}
 
 	public static boolean isPtfFile(File file) {
 		return file.getName().endsWith(FILE_EXTENSION);
 	}
 
-	public static final LocalDate getMonth(File file) {
-		return getMonth(file.getName());
+	public static final LocalDate getDay(File file) {
+		return getDay(file.getName());
 	}
 
-	public static final LocalDate getMonth(String filename) {
+	public static final LocalDate getDay(String filename) {
 		int index = filename.lastIndexOf(FILE_EXTENSION);
-		return LocalDate.parse(filename.substring(0, index), MONTH_FORMATTER);
+		return LocalDate.parse(filename.substring(0, index), DAY_FORMATTER);
 	}
 
-	public static final LocalDate getMonth(IPriceTick tick) {
+	public static final LocalDate getDay(IPriceTick tick) {
 		return getLocalDateTime(tick).toLocalDate();
 	}
 
 	private static final LocalDateTime getLocalDateTime(IPriceTick tick) {
-		return MONTHLY.getDateTime(tick);
+		return DAILY.getDateTime(tick);
 	}
 
-	public static final long getNormalizedMonth(IPriceTick tick) {
-		return MONTHLY.getTimePeriod(tick);
+	public static final long getNormalizedDay(IPriceTick tick) {
+		return DAILY.getTimePeriod(tick);
 	}
 
 }
