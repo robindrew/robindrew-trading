@@ -1,5 +1,6 @@
 package com.robindrew.trading.price.candle.charts;
 
+import static com.robindrew.common.text.Strings.bytes;
 import static java.awt.image.BufferedImage.TYPE_INT_RGB;
 
 import java.awt.Color;
@@ -257,7 +258,7 @@ public class PriceCandleCanvas {
 		Stopwatch timer = Stopwatch.createStarted();
 		byte[] bytes = Images.toGif(image);
 		timer.stop();
-		log.info("Serialized to {} bytes GIF in {}", bytes.length, timer);
+		log.info("Serialized {} to GIF in {}", bytes(bytes), timer);
 		return bytes;
 	}
 
@@ -265,7 +266,7 @@ public class PriceCandleCanvas {
 		Stopwatch timer = Stopwatch.createStarted();
 		byte[] bytes = Images.toPng(image);
 		timer.stop();
-		log.info("Serialized to {} bytes PNG in {}", bytes.length, timer);
+		log.info("Serialized {} to PNG in {}", bytes(bytes), timer);
 		return bytes;
 	}
 
