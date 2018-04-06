@@ -1,5 +1,6 @@
 package com.robindrew.trading.price.candle.charts;
 
+import static com.robindrew.common.text.Strings.bytes;
 import static java.awt.image.BufferedImage.TYPE_INT_RGB;
 
 import java.awt.Color;
@@ -121,11 +122,11 @@ public class PriceCandleCanvas {
 		graphics.setColor(Color.BLACK);
 		graphics.drawLine(x, y1, x, y2);
 
-		String openText = toText(merged.getOpenPrice(), merged.getDecimalPlaces());
-		graphics.drawString(openText, x - getPixelLength(openText) - 8, y2 - xAxisOffset);
+		String lowText = toText(merged.getLowPrice(), merged.getDecimalPlaces());
+		graphics.drawString(lowText, x - getPixelLength(lowText) - 8, y2 - xAxisOffset);
 
-		String closeText = toText(merged.getClosePrice(), merged.getDecimalPlaces());
-		graphics.drawString(closeText, x - getPixelLength(closeText) - 8, y1);
+		String highText = toText(merged.getHighPrice(), merged.getDecimalPlaces());
+		graphics.drawString(highText, x - getPixelLength(highText) - 8, y1);
 	}
 
 	protected int getPixelLength(String text) {
@@ -257,7 +258,7 @@ public class PriceCandleCanvas {
 		Stopwatch timer = Stopwatch.createStarted();
 		byte[] bytes = Images.toGif(image);
 		timer.stop();
-		log.info("Serialized to {} bytes GIF in {}", bytes.length, timer);
+		log.info("Serialized {} to GIF in {}", bytes(bytes), timer);
 		return bytes;
 	}
 
@@ -265,7 +266,7 @@ public class PriceCandleCanvas {
 		Stopwatch timer = Stopwatch.createStarted();
 		byte[] bytes = Images.toPng(image);
 		timer.stop();
-		log.info("Serialized to {} bytes PNG in {}", bytes.length, timer);
+		log.info("Serialized {} to PNG in {}", bytes(bytes), timer);
 		return bytes;
 	}
 

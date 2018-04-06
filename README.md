@@ -21,7 +21,7 @@ Sub Project | Description | Type
 ## Articles
 Before you dive in to the API itself, please take a quick look at the following articles:
 * [Introduction to Trading](https://github.com/robindrew/robindrew-trading/wiki/Article:-Introduction-to-Trading)
-* [My Approach to Trading](https://github.com/robindrew/robindrew-trading/wiki/Article:-My-Approach-to-Trading)
+* [What is Your Trading Style?](https://github.com/robindrew/robindrew-trading/wiki/Article:-What-is-Your-Trading-Style%3F)
 
 ## Coding
 Please read the [Wiki](https://github.com/robindrew/robindrew-trading/wiki) to get started writing code.
@@ -30,21 +30,33 @@ There is also [Javadoc](https://htmlpreview.github.io/?https://raw.githubusercon
 ## Dependencies
 This library requires the [robindrew-common](https://github.com/robindrew/robindrew-common) project.
 
-## Data
+## Historic Price Data
 PCF formatted data for the major FX pairs is available:
 * [HistData PCF Files](https://github.com/robindrew/robindrew-trading-histdata-data)
 * [ActiveTick PCF Files](https://github.com/robindrew/robindrew-trading-activetick-data)
+* [FXCM PCF Files](https://github.com/robindrew/robindrew-trading-fxcm-data)
+
+Note: IG Index does **not** provide access to any useful quantity of historic price data. Strict limits exist on the amount of historic price data that can be queried via the REST API each month.
 
 ## Providers
-The following providers are available for the API:
+A provider is an implementation of the trading platform along with supporting classes to simplify access to existing broker APIs.
+The following providers are available, including a provider specifically for backtesting against historic data:
 * [IG Index Provider](https://github.com/robindrew/robindrew-trading-igindex)
 * [Active Tick Provider](https://github.com/robindrew/robindrew-trading-activetick)
+* [Backtest Provider](https://github.com/robindrew/robindrew-trading-backtest)
 
 ## Services
+A service is a stand-alone web application providing a front end to various trading functionality.
+
+#### Streaming Prices
 The following projects provide access to the live data feed for the given provider. Each includes asynchronous file output, writing the individual price ticks in a text format. In addition the feeds provide a web interface to view and manage the price feeds.
-* [IG Index Feed](https://github.com/robindrew/robindrew-trading-igindex-feed)
-* [Active Tick Feed](https://github.com/robindrew/robindrew-trading-activetick-feed)
+* [IG Index Feed Service](https://github.com/robindrew/robindrew-trading-igindex-feed)
+* [Active Tick Feed Service](https://github.com/robindrew/robindrew-trading-activetick-feed)
 
-The following projects provide trading access for the given provider, including position management, history and execution. Currently there is only one provider:
-* [IG Index Trader](https://github.com/robindrew/robindrew-trading/wiki/Service:-IG-Index-Trader)
+#### Live Trading
+The following projects provide trading access for the given provider, including position management, history and execution. Currently there is only one trading service:
+* [IG Index Trader Service](https://github.com/robindrew/robindrew-trading/wiki/Service:-IG-Index-Trader)
 
+#### Backtesting
+The following project provides a web interface to the backtesting provider, along with visualisation for historic prices in PCF format:
+* [Backtest Executor Service](https://github.com/robindrew/robindrew-trading-backtest-executor)
