@@ -16,6 +16,7 @@ Sub Project | Description | Type
 [robindrew-trading-activetick-data](https://github.com/robindrew/robindrew-trading-activetick-data) | ActiveTick | PCF Data
 [robindrew-trading-backtest](https://github.com/robindrew/robindrew-trading-backtest) | Backtest | Provider
 [robindrew-trading-backtest-executor](https://github.com/robindrew/robindrew-trading-backtest-executor) | Backtest Executor | Service
+[robindrew-trading-histdata](https://github.com/robindrew/robindrew-trading-histdata) | HistData | Provider
 [robindrew-trading-histdata-data](https://github.com/robindrew/robindrew-trading-histdata-data) | HistData | PCF Data
 
 ## Articles
