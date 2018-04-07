@@ -8,7 +8,6 @@
 	<classpathentry kind="var" path="MAVEN_REPO/com/google/guava/guava/23.0/guava-23.0.jar" sourcepath="MAVEN_REPO/com/google/guava/guava/23.0/guava-23.0-sources.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/junit/junit/4.12/junit-4.12.jar" sourcepath="MAVEN_REPO/junit/junit/4.12/junit-4.12-sources.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/org/apache/commons/commons-lang3/3.7/commons-lang3-3.7.jar" sourcepath="MAVEN_REPO/org/apache/commons/commons-lang3/3.7/commons-lang3-3.7-sources.jar"/>
-	<classpathentry kind="var" path="MAVEN_REPO/commons-net/commons-net/3.6/commons-net-3.6.jar" sourcepath="MAVEN_REPO/commons-net/commons-net/3.6/commons-net-3.6-sources.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/org/jfree/jcommon/1.0.24/jcommon-1.0.24.jar" sourcepath="MAVEN_REPO/org/jfree/jcommon/1.0.24/jcommon-1.0.24-sources.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/org/jfree/jfreechart/1.0.19/jfreechart-1.0.19.jar" sourcepath="MAVEN_REPO/org/jfree/jfreechart/1.0.19/jfreechart-1.0.19-sources.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/robindrew-common"/>

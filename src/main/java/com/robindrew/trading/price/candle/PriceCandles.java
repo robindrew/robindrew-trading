@@ -1,5 +1,6 @@
 package com.robindrew.trading.price.candle;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
@@ -19,6 +20,8 @@ import com.robindrew.trading.price.candle.io.stream.source.PriceCandleIntervalSt
 import com.robindrew.trading.price.candle.io.stream.source.PriceCandleStreamToListSource;
 import com.robindrew.trading.price.candle.io.stream.source.iterator.PriceCandleStreamSourceIterable;
 import com.robindrew.trading.price.candle.io.stream.source.iterator.PriceCandleStreamSourceIterator;
+import com.robindrew.trading.price.candle.line.parser.IPriceCandleLineParser;
+import com.robindrew.trading.price.candle.line.parser.PriceCandleLineFile;
 import com.robindrew.trading.price.candle.merger.PriceCandleMerger;
 import com.robindrew.trading.price.close.IClosePrice;
 
@@ -59,6 +62,10 @@ public class PriceCandles {
 
 	public static Iterable<IPriceCandle> iterable(IPriceCandleStreamSource source) {
 		return new PriceCandleStreamSourceIterable(source);
+	}
+
+	public static final List<IPriceCandle> readToList(File file, IPriceCandleLineParser parser) {
+		return new PriceCandleLineFile(file, parser).toList();
 	}
 
 	public static final List<IPriceCandle> drainToList(IPriceCandleStreamSource source) {

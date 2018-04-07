@@ -14,15 +14,10 @@ import com.robindrew.trading.price.candle.format.pcf.source.IPcfSource;
 import com.robindrew.trading.price.candle.interval.IPriceInterval;
 import com.robindrew.trading.price.candle.io.list.source.IPriceCandleListSourceBuilder;
 import com.robindrew.trading.price.candle.modifier.IPriceCandleModifier;
-import com.robindrew.trading.provider.histdata.HistDataInstrument;
 
 public interface IPriceCandleStreamSourceBuilder extends Supplier<IPriceCandleStreamSource> {
 
 	IPriceCandleStreamSourceBuilder setBaseSource(IPriceCandleStreamSource source);
-
-	IPriceCandleStreamSourceBuilder setHistDataM1Directory(HistDataInstrument instrument, String directory);
-
-	IPriceCandleStreamSourceBuilder setHistDataTickDirectory(HistDataInstrument instrument, String directory);
 
 	IPriceCandleStreamSourceBuilder setPcfSources(Collection<? extends IPcfSource> sources);
 

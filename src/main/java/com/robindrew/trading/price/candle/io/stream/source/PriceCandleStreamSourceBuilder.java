@@ -26,15 +26,9 @@ import com.robindrew.trading.price.candle.format.pcf.source.file.PcfFile;
 import com.robindrew.trading.price.candle.interval.IPriceInterval;
 import com.robindrew.trading.price.candle.io.list.source.IPriceCandleListSourceBuilder;
 import com.robindrew.trading.price.candle.io.list.source.PriceCandleListSourceBuilder;
-import com.robindrew.trading.price.candle.line.filter.ILineFilter;
-import com.robindrew.trading.price.candle.line.parser.IPriceCandleLineParser;
 import com.robindrew.trading.price.candle.modifier.IPriceCandleModifier;
 import com.robindrew.trading.price.candle.modifier.PriceCandleDivideModifier;
 import com.robindrew.trading.price.candle.modifier.PriceCandleMultiplyModifier;
-import com.robindrew.trading.provider.histdata.HistDataInstrument;
-import com.robindrew.trading.provider.histdata.line.HistDataLineFilter;
-import com.robindrew.trading.provider.histdata.line.HistDataM1LineParser;
-import com.robindrew.trading.provider.histdata.line.HistDataTickLineParser;
 
 public class PriceCandleStreamSourceBuilder implements IPriceCandleStreamSourceBuilder {
 
@@ -67,20 +61,6 @@ public class PriceCandleStreamSourceBuilder implements IPriceCandleStreamSourceB
 	public IPriceCandleStreamSourceBuilder setPcfSource(IPcfSource source) {
 		List<IPriceCandle> candles = source.read();
 		return setBaseSource(new PriceCandleListBackedStreamSource(candles));
-	}
-
-	@Override
-	public IPriceCandleStreamSourceBuilder setHistDataM1Directory(HistDataInstrument instrument, String directory) {
-		IPriceCandleLineParser parser = new HistDataM1LineParser(instrument);
-		ILineFilter filter = new HistDataLineFilter();
-		return setBaseSource(new PriceCandleDirectoryStreamSource(new File(directory), parser, filter));
-	}
-
-	@Override
-	public IPriceCandleStreamSourceBuilder setHistDataTickDirectory(HistDataInstrument instrument, String directory) {
-		IPriceCandleLineParser parser = new HistDataTickLineParser(instrument);
-		ILineFilter filter = new HistDataLineFilter();
-		return setBaseSource(new PriceCandleDirectoryStreamSource(new File(directory), parser, filter));
 	}
 
 	@Override

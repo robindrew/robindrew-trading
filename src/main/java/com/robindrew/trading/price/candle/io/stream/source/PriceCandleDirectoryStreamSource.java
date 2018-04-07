@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.robindrew.common.io.Files;
+import com.robindrew.common.util.Check;
 import com.robindrew.trading.price.candle.IPriceCandle;
 import com.robindrew.trading.price.candle.io.line.source.FileLineSource;
 import com.robindrew.trading.price.candle.io.line.source.FilteredLineSource;
@@ -25,12 +26,13 @@ public class PriceCandleDirectoryStreamSource implements IPriceCandleStreamSourc
 
 	private final File directory;
 	private final IPriceCandleLineParser parser;
-	private final ILineFilter filter;
 	private final LinkedList<File> files = new LinkedList<>();
+	private ILineFilter filter = null;
+	private Charset charset = US_ASCII;
 
 	private IPriceCandleStreamSource currentSource = null;
 
-	public PriceCandleDirectoryStreamSource(File directory, IPriceCandleLineParser parser, ILineFilter filter) {
+	public PriceCandleDirectoryStreamSource(File directory, IPriceCandleLineParser parser) {
 		if (directory == null) {
 			throw new NullPointerException("directory");
 		}
@@ -43,7 +45,6 @@ public class PriceCandleDirectoryStreamSource implements IPriceCandleStreamSourc
 
 		this.directory = directory;
 		this.parser = parser;
-		this.filter = filter;
 
 		this.files.addAll(new TreeSet<>(Files.listContents(directory)));
 	}
@@ -51,6 +52,16 @@ public class PriceCandleDirectoryStreamSource implements IPriceCandleStreamSourc
 	@Override
 	public String getName() {
 		return directory.getAbsolutePath();
+	}
+
+	public PriceCandleDirectoryStreamSource setCharset(Charset charset) {
+		this.charset = Check.notNull("charset", charset);
+		return this;
+	}
+
+	public PriceCandleDirectoryStreamSource setLineFilter(ILineFilter filter) {
+		this.filter = filter;
+		return this;
 	}
 
 	@Override
@@ -82,7 +93,7 @@ public class PriceCandleDirectoryStreamSource implements IPriceCandleStreamSourc
 		// Next file
 		File file = files.removeFirst();
 		log.info("Source File: " + file + " (" + bytes(file.length()) + ")");
-		ILineSource lines = createLineSource(file, filter, US_ASCII);
+		ILineSource lines = createLineSource(file);
 		currentSource = new PriceCandleLineStreamSource(lines, parser);
 
 		// Each file should contain at least one candle!
@@ -93,8 +104,12 @@ public class PriceCandleDirectoryStreamSource implements IPriceCandleStreamSourc
 		return candle;
 	}
 
-	protected ILineSource createLineSource(File file, ILineFilter filter, Charset charset) {
-		return new FilteredLineSource(new FileLineSource(file, charset), filter);
+	protected ILineSource createLineSource(File file) {
+		ILineSource source = new FileLineSource(file, charset);
+		if (filter != null) {
+			source = new FilteredLineSource(source, filter);
+		}
+		return source;
 	}
 
 }

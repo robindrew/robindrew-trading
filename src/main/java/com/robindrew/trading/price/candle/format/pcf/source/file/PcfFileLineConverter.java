@@ -113,8 +113,9 @@ public class PcfFileLineConverter {
 		}
 	}
 
+	@SuppressWarnings("resource")
 	private PriceCandleIntervalStreamToListSource createSource(File fromDirectory, IPriceInterval interval) {
-		IPriceCandleStreamSource source = new PriceCandleDirectoryStreamSource(fromDirectory, parser, filter);
+		IPriceCandleStreamSource source = new PriceCandleDirectoryStreamSource(fromDirectory, parser).setLineFilter(filter);
 		source = new PriceCandleFilteredStreamSource(source, new PriceCandleConsecutiveFilter(1000));
 		source = new PriceCandleIntervalStreamSource(source, PriceIntervals.MINUTELY);
 		source = new PriceCandleModifierStreamSource(source, new PriceCandleMultiplyModifier(multiplier));

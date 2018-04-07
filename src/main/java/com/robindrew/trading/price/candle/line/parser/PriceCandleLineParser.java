@@ -2,8 +2,10 @@ package com.robindrew.trading.price.candle.line.parser;
 
 import static com.robindrew.common.date.Dates.toMillis;
 
+import java.nio.charset.Charset;
 import java.time.LocalDateTime;
 
+import com.google.common.base.Charsets;
 import com.robindrew.common.text.tokenizer.CharDelimiters;
 import com.robindrew.common.text.tokenizer.CharTokenizer;
 import com.robindrew.trading.price.candle.IPriceCandle;
@@ -21,6 +23,11 @@ public class PriceCandleLineParser implements IPriceCandleLineParser {
 			throw new IllegalArgumentException("decimalPlaces=" + decimalPlaces);
 		}
 		this.decimalPlaces = decimalPlaces;
+	}
+
+	@Override
+	public Charset getCharset() {
+		return Charsets.US_ASCII;
 	}
 
 	@Override
