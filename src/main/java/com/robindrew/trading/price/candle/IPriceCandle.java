@@ -13,9 +13,6 @@ public interface IPriceCandle extends IClosePrice {
 
 	int getLowPrice();
 
-	@Override
-	int getClosePrice();
-
 	IDecimal getOpen();
 
 	IDecimal getHigh();
