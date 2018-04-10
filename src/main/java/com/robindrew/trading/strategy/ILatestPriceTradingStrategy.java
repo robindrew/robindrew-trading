@@ -1,6 +1,6 @@
 package com.robindrew.trading.strategy;
 
-import com.robindrew.trading.price.tick.IPriceTick;
+import com.robindrew.trading.price.candle.IPriceCandle;
 
 /**
  * The {@link LatestPriceTradingStrategy} is an extension to the standard event-based trading strategy. The strategy
@@ -8,6 +8,6 @@ import com.robindrew.trading.price.tick.IPriceTick;
  */
 public interface ILatestPriceTradingStrategy extends ITradingStrategy, Runnable {
 
-	void handleLatestTick(IPriceTick tick);
+	void handleLatestCandle(IPriceCandle candle);
 
 }

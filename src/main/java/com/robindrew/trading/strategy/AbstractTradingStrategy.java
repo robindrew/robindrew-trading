@@ -18,22 +18,22 @@ public abstract class AbstractTradingStrategy implements ITradingStrategy {
 	}
 
 	@Override
-	public IInstrument getInstrument() {
+	public final IInstrument getInstrument() {
 		return instrument;
 	}
 
 	@Override
-	public String getName() {
+	public final String getName() {
 		return name;
 	}
 
 	@Override
-	public ITradingPlatform getPlatform() {
+	public final ITradingPlatform getPlatform() {
 		return platform;
 	}
 
 	@Override
-	public void putNextTick(IPriceTick tick) {
+	public final void putNextTick(IPriceTick tick) {
 		putNextCandle(tick);
 	}
 
