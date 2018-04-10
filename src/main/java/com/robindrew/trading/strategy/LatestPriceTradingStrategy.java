@@ -32,6 +32,12 @@ public abstract class LatestPriceTradingStrategy extends AbstractTradingStrategy
 		Threads.sleep(100);
 	}
 
+	public Thread start() {
+		Thread thread = new Thread(this, getName());
+		thread.start();
+		return thread;
+	}
+
 	@Override
 	public void run() {
 		IStreamingCandlePrice price = priceSink.getPrice();
