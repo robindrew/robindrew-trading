@@ -14,7 +14,7 @@ import com.robindrew.trading.position.order.IPositionOrder;
 import com.robindrew.trading.price.candle.IPriceCandle;
 import com.robindrew.trading.price.precision.IPricePrecision;
 
-public abstract class SingleTradeStrategy extends SingleInstrumentStrategy {
+public abstract class SingleTradeStrategy extends AbstractTradingStrategy {
 
 	private static final Logger log = LoggerFactory.getLogger(SingleTradeStrategy.class);
 

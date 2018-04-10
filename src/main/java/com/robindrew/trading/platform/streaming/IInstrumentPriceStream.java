@@ -1,7 +1,7 @@
 package com.robindrew.trading.platform.streaming;
 
 import com.robindrew.trading.IInstrument;
-import com.robindrew.trading.platform.streaming.latest.IStreamingPrice;
+import com.robindrew.trading.price.candle.streaming.IStreamingCandlePrice;
 import com.robindrew.trading.price.tick.io.stream.sink.IPriceTickStreamSink;
 
 public interface IInstrumentPriceStream extends IPriceTickStreamSink {
@@ -16,7 +16,7 @@ public interface IInstrumentPriceStream extends IPriceTickStreamSink {
 	 * Returns the latest price from the stream.
 	 * @return the latest price from the stream.
 	 */
-	IStreamingPrice getPrice();
+	IStreamingCandlePrice getPrice();
 
 	/**
 	 * Register a listener to the streaming prices.

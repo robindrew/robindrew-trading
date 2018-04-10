@@ -5,14 +5,14 @@ import java.util.concurrent.CopyOnWriteArraySet;
 
 import com.robindrew.common.util.Check;
 import com.robindrew.trading.IInstrument;
-import com.robindrew.trading.platform.streaming.latest.StreamingPrice;
+import com.robindrew.trading.price.candle.streaming.StreamingPriceCandle;
 import com.robindrew.trading.price.tick.IPriceTick;
 import com.robindrew.trading.price.tick.io.stream.sink.IPriceTickStreamSink;
 
 public abstract class InstrumentPriceStream implements IInstrumentPriceStream {
 
 	private final IInstrument instrument;
-	private final StreamingPrice price = new StreamingPrice();
+	private final StreamingPriceCandle price = new StreamingPriceCandle();
 	private final Set<IPriceTickStreamSink> subscriberSet = new CopyOnWriteArraySet<>();
 
 	protected InstrumentPriceStream(IInstrument instrument) {
@@ -60,7 +60,7 @@ public abstract class InstrumentPriceStream implements IInstrumentPriceStream {
 	}
 
 	@Override
-	public StreamingPrice getPrice() {
+	public StreamingPriceCandle getPrice() {
 		return price;
 	}
 

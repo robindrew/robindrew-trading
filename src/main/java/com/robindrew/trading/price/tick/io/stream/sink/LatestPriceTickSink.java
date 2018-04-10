@@ -1,26 +1,26 @@
 package com.robindrew.trading.price.tick.io.stream.sink;
 
 import com.robindrew.common.util.Check;
-import com.robindrew.trading.platform.streaming.latest.IStreamingPrice;
-import com.robindrew.trading.platform.streaming.latest.PriceSnapshot;
-import com.robindrew.trading.platform.streaming.latest.StreamingPrice;
 import com.robindrew.trading.price.tick.IPriceTick;
+import com.robindrew.trading.price.tick.streaming.IStreamingTickPrice;
+import com.robindrew.trading.price.tick.streaming.PriceTickSnapshot;
+import com.robindrew.trading.price.tick.streaming.StreamingPriceTick;
 
 public class LatestPriceTickSink implements IPriceTickStreamSink {
 
 	private final String name;
-	private final StreamingPrice price = new StreamingPrice();
+	private final StreamingPriceTick price = new StreamingPriceTick();
 
 	public LatestPriceTickSink(String name) {
 		this.name = Check.notEmpty("name", name);
 	}
 
-	public IStreamingPrice getPrice() {
+	public IStreamingTickPrice getPrice() {
 		return price;
 	}
 
 	public IPriceTick getLatestTick() {
-		PriceSnapshot snapshot = price.getSnapshot();
+		PriceTickSnapshot snapshot = price.getSnapshot();
 		if (snapshot != null) {
 			return (IPriceTick) snapshot.getLatest();
 		}
