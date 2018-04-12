@@ -130,11 +130,11 @@ public class Instruments {
 	/** Litecoin. */
 	public static final IInstrument LITECOIN = new Instrument("LITECOIN", CURRENCIES);
 
-	/** FTSE 100. */
+	/** FTSE 100 (UK 100). */
 	public static final IInstrument FTSE_100 = new Instrument("FTSE100", INDICES);
-	/** FTSE 100. */
+	/** CAC 40 (France 40). */
 	public static final IInstrument CAC_40 = new Instrument("CAC40", INDICES);
-	/** DAX. */
+	/** DAX (German 30). */
 	public static final IInstrument DAX = new Instrument("DAX", INDICES);
 	/** S&amp;P 500. */
 	public static final IInstrument SP_500 = new Instrument("SP500", INDICES);
