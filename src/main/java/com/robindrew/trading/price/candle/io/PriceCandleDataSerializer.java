@@ -6,7 +6,7 @@ import com.robindrew.common.io.data.IDataReader;
 import com.robindrew.common.io.data.IDataSerializer;
 import com.robindrew.common.io.data.IDataWriter;
 import com.robindrew.trading.price.candle.IPriceCandle;
-import com.robindrew.trading.price.candle.PriceCandle;
+import com.robindrew.trading.price.candle.MidPriceCandle;
 
 /**
  * Non-optimal implementation, but still far more efficient than line parsing/formatting.
@@ -31,7 +31,7 @@ public class PriceCandleDataSerializer implements IDataSerializer<IPriceCandle> 
 			int lowPrice = reader.readPositiveInt();
 			int closePrice = reader.readPositiveInt();
 
-			return new PriceCandle(openPrice, highPrice, lowPrice, closePrice, openTime, closeTime, decimalPlaces);
+			return new MidPriceCandle(openPrice, highPrice, lowPrice, closePrice, openTime, closeTime, decimalPlaces);
 
 		} catch (IOException e) {
 
@@ -56,9 +56,9 @@ public class PriceCandleDataSerializer implements IDataSerializer<IPriceCandle> 
 		writer.writePositiveLong(candle.getOpenTime());
 		writer.writePositiveLong(candle.getCloseTime());
 
-		writer.writePositiveInt(candle.getOpenPrice());
-		writer.writePositiveInt(candle.getHighPrice());
-		writer.writePositiveInt(candle.getLowPrice());
-		writer.writePositiveInt(candle.getClosePrice());
+		writer.writePositiveInt(candle.getMidOpenPrice());
+		writer.writePositiveInt(candle.getMidHighPrice());
+		writer.writePositiveInt(candle.getMidLowPrice());
+		writer.writePositiveInt(candle.getMidClosePrice());
 	}
 }

@@ -8,7 +8,7 @@ import com.robindrew.common.io.data.IDataReader;
 import com.robindrew.common.io.data.IDataSerializer;
 import com.robindrew.common.io.data.IDataWriter;
 import com.robindrew.trading.price.candle.IPriceCandle;
-import com.robindrew.trading.price.candle.PriceCandle;
+import com.robindrew.trading.price.candle.MidPriceCandle;
 
 public class PcfDataSerializer implements IDataSerializer<List<IPriceCandle>> {
 
@@ -34,7 +34,7 @@ public class PcfDataSerializer implements IDataSerializer<List<IPriceCandle>> {
 			int low = reader.readDynamicInt() + basePrice;
 			int close = reader.readDynamicInt() + basePrice;
 
-			IPriceCandle candle = new PriceCandle(open, high, low, close, openTime, closeTime, decimalPlaces);
+			IPriceCandle candle = new MidPriceCandle(open, high, low, close, openTime, closeTime, decimalPlaces);
 			list.add(candle);
 
 			basePrice = close;
@@ -53,7 +53,7 @@ public class PcfDataSerializer implements IDataSerializer<List<IPriceCandle>> {
 		IPriceCandle firstCandle = candles.get(0);
 
 		int count = candles.size();
-		int basePrice = firstCandle.getOpenPrice();
+		int basePrice = firstCandle.getMidOpenPrice();
 		long baseTime = firstCandle.getOpenTime();
 		int decimalPlaces = firstCandle.getDecimalPlaces();
 
@@ -69,10 +69,10 @@ public class PcfDataSerializer implements IDataSerializer<List<IPriceCandle>> {
 				long openTime = candle.getOpenTime();
 				long closeTime = candle.getCloseTime();
 
-				int open = candle.getOpenPrice();
-				int high = candle.getHighPrice();
-				int low = candle.getLowPrice();
-				int close = candle.getClosePrice();
+				int open = candle.getMidOpenPrice();
+				int high = candle.getMidHighPrice();
+				int low = candle.getMidLowPrice();
+				int close = candle.getMidClosePrice();
 
 				writer.writePositiveLong(openTime - baseTime);
 				writer.writePositiveLong(closeTime - openTime);

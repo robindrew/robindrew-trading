@@ -2,24 +2,31 @@ package com.robindrew.trading.price.candle;
 
 import java.time.LocalDateTime;
 
-import com.robindrew.trading.price.close.IClosePrice;
-import com.robindrew.trading.price.decimal.IDecimal;
+public interface IPriceCandle {
 
-public interface IPriceCandle extends IClosePrice {
+	int getBidOpenPrice();
 
-	int getOpenPrice();
+	int getBidHighPrice();
 
-	int getHighPrice();
+	int getBidLowPrice();
 
-	int getLowPrice();
+	int getBidClosePrice();
 
-	IDecimal getOpen();
+	int getAskOpenPrice();
 
-	IDecimal getHigh();
+	int getAskHighPrice();
 
-	IDecimal getLow();
+	int getAskLowPrice();
 
-	IDecimal getClose();
+	int getAskClosePrice();
+
+	int getMidOpenPrice();
+
+	int getMidHighPrice();
+
+	int getMidLowPrice();
+
+	int getMidClosePrice();
 
 	int getDecimalPlaces();
 
@@ -31,7 +38,7 @@ public interface IPriceCandle extends IClosePrice {
 
 	LocalDateTime getCloseDate();
 
-	long getCloseAmount();
+	long getCloseMove();
 
 	long getHighLowRange();
 
@@ -39,15 +46,9 @@ public interface IPriceCandle extends IClosePrice {
 
 	IPriceCandle mergeWith(IPriceCandle candle);
 
-	boolean isInstant();
+	boolean isTick();
 
 	boolean hasClosedUp();
-
-	double getMedian();
-
-	double getTypical();
-
-	double getWeighted();
 
 	boolean after(IPriceCandle candle);
 

@@ -1,7 +1,7 @@
 package com.robindrew.trading.price.candle.modifier;
 
 import com.robindrew.trading.price.candle.IPriceCandle;
-import com.robindrew.trading.price.candle.PriceCandle;
+import com.robindrew.trading.price.candle.MidPriceCandle;
 
 /**
  * Divide all candle prices by the given positive non-zero divisor.
@@ -30,12 +30,12 @@ public class PriceCandleDivideModifier implements IPriceCandleModifier {
 		long openTime = candle.getOpenTime();
 		long closeTime = candle.getCloseTime();
 
-		int open = candle.getOpenPrice() / divideBy;
-		int high = candle.getHighPrice() / divideBy;
-		int low = candle.getLowPrice() / divideBy;
-		int close = candle.getClosePrice() / divideBy;
+		int open = candle.getMidOpenPrice() / divideBy;
+		int high = candle.getMidHighPrice() / divideBy;
+		int low = candle.getMidLowPrice() / divideBy;
+		int close = candle.getMidClosePrice() / divideBy;
 
-		return new PriceCandle(open, high, low, close, openTime, closeTime, candle.getDecimalPlaces() - decimalPlaces);
+		return new MidPriceCandle(open, high, low, close, openTime, closeTime, candle.getDecimalPlaces() - decimalPlaces);
 	}
 
 }

@@ -53,8 +53,8 @@ public abstract class SingleTradeStrategy extends AbstractTradingStrategy {
 		IPricePrecision precision = getPlatform().getPrecision(getInstrument());
 		IPosition position = getOpenPosition();
 
-		int high = candle.getHighPrice();
-		int low = candle.getLowPrice();
+		int high = candle.getMidHighPrice();
+		int low = candle.getMidLowPrice();
 
 		// Has stop loss triggered?
 		int stopLoss = precision.toBigInt(position.getStopLossPrice());

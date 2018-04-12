@@ -48,16 +48,16 @@ public class PriceCandleRangeChecker implements IPriceCandleChecker {
 	}
 
 	public boolean check(IPriceCandle candle) {
-		if (!check(candle, candle.getOpenPrice())) {
+		if (!check(candle, candle.getMidOpenPrice())) {
 			return false;
 		}
-		if (!check(candle, candle.getHighPrice())) {
+		if (!check(candle, candle.getMidHighPrice())) {
 			return false;
 		}
-		if (!check(candle, candle.getLowPrice())) {
+		if (!check(candle, candle.getMidLowPrice())) {
 			return false;
 		}
-		if (!check(candle, candle.getClosePrice())) {
+		if (!check(candle, candle.getMidClosePrice())) {
 			return false;
 		}
 		return true;

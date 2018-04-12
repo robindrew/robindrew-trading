@@ -11,13 +11,14 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 import java.time.LocalDateTime;
 import java.util.concurrent.TimeUnit;
 
+import com.robindrew.common.concurrent.Immutable;
 import com.robindrew.common.date.Dates;
 import com.robindrew.common.date.UnitChrono;
 import com.robindrew.common.date.UnitTime;
 import com.robindrew.common.util.Check;
 import com.robindrew.trading.price.candle.IPriceCandle;
-import com.robindrew.trading.price.tick.IPriceTick;
 
+@Immutable
 public class TimeUnitInterval implements IPriceInterval {
 
 	public static final TimeUnitInterval ONE_SECOND = new TimeUnitInterval(1, SECONDS);
@@ -96,17 +97,6 @@ public class TimeUnitInterval implements IPriceInterval {
 	@Override
 	public LocalDateTime getDateTime(IPriceCandle candle) {
 		long timePeriod = getTimePeriod(candle);
-		return Dates.toLocalDateTime(timePeriod);
-	}
-
-	@Override
-	public long getTimePeriod(IPriceTick tick) {
-		return getTimePeriod(tick.getTimestamp());
-	}
-
-	@Override
-	public LocalDateTime getDateTime(IPriceTick tick) {
-		long timePeriod = getTimePeriod(tick);
 		return Dates.toLocalDateTime(timePeriod);
 	}
 

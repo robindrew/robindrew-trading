@@ -7,7 +7,7 @@ import java.util.List;
 import com.robindrew.common.date.Dates;
 import com.robindrew.common.lang.RandomElement;
 import com.robindrew.trading.price.candle.IPriceCandle;
-import com.robindrew.trading.price.candle.PriceCandle;
+import com.robindrew.trading.price.candle.MidPriceCandle;
 import com.robindrew.trading.price.candle.interval.IPriceInterval;
 
 public class PriceCandleGenerator {
@@ -39,7 +39,7 @@ public class PriceCandleGenerator {
 		for (int i = 0; i < count; i++) {
 
 			IPriceCandle candle = generateCandle(openTime, closePrice);
-			closePrice = candle.getClosePrice();
+			closePrice = candle.getMidClosePrice();
 			openTime += interval.getLength();
 
 			list.add(candle);
@@ -55,7 +55,7 @@ public class PriceCandleGenerator {
 		int lowPrice = random.nextInt(openPrice - 100, openPrice - 1);
 		int closePrice = random.nextInt(lowPrice, highPrice);
 
-		return new PriceCandle(openPrice, highPrice, lowPrice, closePrice, openTime, closeTime, decimalPlaces);
+		return new MidPriceCandle(openPrice, highPrice, lowPrice, closePrice, openTime, closeTime, decimalPlaces);
 	}
 
 }

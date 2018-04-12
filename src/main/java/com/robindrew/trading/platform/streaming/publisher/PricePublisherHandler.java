@@ -20,8 +20,9 @@ import com.robindrew.common.util.Check;
 import com.robindrew.common.util.Java;
 import com.robindrew.common.util.Threads;
 import com.robindrew.trading.IInstrument;
-import com.robindrew.trading.price.tick.IPriceTick;
-import com.robindrew.trading.price.tick.io.stream.sink.IPriceTickStreamSink;
+import com.robindrew.trading.price.candle.IPriceCandle;
+import com.robindrew.trading.price.candle.ITickPriceCandle;
+import com.robindrew.trading.price.candle.io.stream.sink.IPriceCandleStreamSink;
 
 public class PricePublisherHandler implements AutoCloseable, Runnable, IDataConnectionHandler {
 
@@ -32,7 +33,7 @@ public class PricePublisherHandler implements AutoCloseable, Runnable, IDataConn
 	private final Multimap<String, EventSubscriber> subscriberMap = SetMultimapBuilder.treeKeys().arrayListValues().build();
 	private final AtomicBoolean closed = new AtomicBoolean(false);
 
-	public IPriceTickStreamSink getPublisherSink(IInstrument instrument) {
+	public IPriceCandleStreamSink getPublisherSink(IInstrument instrument) {
 		return new PublisherSink(instrument);
 	}
 
@@ -103,7 +104,7 @@ public class PricePublisherHandler implements AutoCloseable, Runnable, IDataConn
 				}
 
 				IDataWriter writer = connection.getWriter();
-				IPriceTick tick = event.getTick();
+				ITickPriceCandle tick = (ITickPriceCandle) event.getCandle();
 				writer.writePositiveLong(tick.getTimestamp());
 				writer.writePositiveInt(tick.getDecimalPlaces());
 				writer.writePositiveInt(tick.getBidPrice());
@@ -132,9 +133,9 @@ public class PricePublisherHandler implements AutoCloseable, Runnable, IDataConn
 	private class InstrumentPriceEvent {
 
 		private final IInstrument instrument;
-		private final IPriceTick tick;
+		private final IPriceCandle tick;
 
-		public InstrumentPriceEvent(IInstrument instrument, IPriceTick tick) {
+		public InstrumentPriceEvent(IInstrument instrument, IPriceCandle tick) {
 			this.instrument = instrument;
 			this.tick = tick;
 		}
@@ -143,12 +144,12 @@ public class PricePublisherHandler implements AutoCloseable, Runnable, IDataConn
 			return instrument;
 		}
 
-		public IPriceTick getTick() {
+		public IPriceCandle getCandle() {
 			return tick;
 		}
 	}
 
-	private class PublisherSink implements IPriceTickStreamSink {
+	private class PublisherSink implements IPriceCandleStreamSink {
 
 		private final IInstrument instrument;
 
@@ -166,7 +167,7 @@ public class PricePublisherHandler implements AutoCloseable, Runnable, IDataConn
 		}
 
 		@Override
-		public void putNextTick(IPriceTick tick) {
+		public void putNextCandle(IPriceCandle tick) {
 			InstrumentPriceEvent event = new InstrumentPriceEvent(instrument, tick);
 			eventQueue.addLast(event);
 		}

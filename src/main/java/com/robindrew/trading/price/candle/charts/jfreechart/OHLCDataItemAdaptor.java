@@ -17,10 +17,10 @@ public class OHLCDataItemAdaptor {
 	public OHLCDataItem toItem(IPriceCandle candle) {
 
 		Date date = new Date(candle.getOpenTime());
-		double open = candle.getOpenPrice();
-		double high = candle.getHighPrice();
-		double low = candle.getLowPrice();
-		double close = candle.getClosePrice();
+		double open = candle.getMidOpenPrice();
+		double high = candle.getMidHighPrice();
+		double low = candle.getMidLowPrice();
+		double close = candle.getMidClosePrice();
 		double volume = 0;
 
 		return new OHLCDataItem(date, open, high, low, close, volume);

@@ -4,9 +4,6 @@ import static com.robindrew.common.date.Dates.toLocalDateTime;
 
 import java.time.LocalDateTime;
 
-import com.robindrew.trading.price.decimal.Decimal;
-import com.robindrew.trading.price.decimal.IDecimal;
-
 public abstract class AbstractPriceCandle implements IPriceCandle {
 
 	@Override
@@ -15,40 +12,20 @@ public abstract class AbstractPriceCandle implements IPriceCandle {
 		builder.append("PriceCandle[");
 		builder.append(toLocalDateTime(getOpenTime())).append('|');
 		builder.append(toLocalDateTime(getCloseTime())).append('|');
-		builder.append(getOpenPrice()).append('|');
-		builder.append(getHighPrice()).append('|');
-		builder.append(getLowPrice()).append('|');
-		builder.append(getClosePrice()).append(']');
+		builder.append(getMidOpenPrice()).append('|');
+		builder.append(getMidHighPrice()).append('|');
+		builder.append(getMidLowPrice()).append('|');
+		builder.append(getMidClosePrice()).append(']');
 		return builder.toString();
 	}
 
 	@Override
-	public IDecimal getOpen() {
-		return new Decimal(getOpenPrice(), getDecimalPlaces());
+	public long getCloseMove() {
+		return getMidClosePrice() - getMidOpenPrice();
 	}
 
 	@Override
-	public IDecimal getHigh() {
-		return new Decimal(getHighPrice(), getDecimalPlaces());
-	}
-
-	@Override
-	public IDecimal getLow() {
-		return new Decimal(getLowPrice(), getDecimalPlaces());
-	}
-
-	@Override
-	public IDecimal getClose() {
-		return new Decimal(getClosePrice(), getDecimalPlaces());
-	}
-
-	@Override
-	public long getCloseAmount() {
-		return getClosePrice() - getOpenPrice();
-	}
-
-	@Override
-	public boolean isInstant() {
+	public boolean isTick() {
 		return getOpenTime() == getCloseTime();
 	}
 
@@ -64,51 +41,27 @@ public abstract class AbstractPriceCandle implements IPriceCandle {
 
 	@Override
 	public boolean before(IPriceCandle candle) {
-		return getClosePrice() < candle.getOpenTime();
+		return getMidClosePrice() < candle.getOpenTime();
 	}
 
 	@Override
 	public boolean containsPrice(int price) {
-		return getLowPrice() <= price && price <= getHighPrice();
+		return getMidLowPrice() <= price && price <= getMidHighPrice();
 	}
 
 	@Override
 	public boolean hasClosedUp() {
-		return getClosePrice() >= getOpenPrice();
+		return getMidClosePrice() >= getMidOpenPrice();
 	}
 
 	@Override
 	public long getHighLowRange() {
-		return getHighPrice() - getLowPrice();
+		return getMidHighPrice() - getMidLowPrice();
 	}
 
 	@Override
 	public long getOpenCloseRange() {
-		return Math.abs(getCloseAmount());
-	}
-
-	@Override
-	public double getMedian() {
-		if (isInstant()) {
-			return getClosePrice();
-		}
-		return (getHighPrice() + getLowPrice()) / 2.0;
-	}
-
-	@Override
-	public double getTypical() {
-		if (isInstant()) {
-			return getClosePrice();
-		}
-		return (getHighPrice() + getLowPrice() + getClosePrice()) / 3.0;
-	}
-
-	@Override
-	public double getWeighted() {
-		if (isInstant()) {
-			return getClosePrice();
-		}
-		return (getHighPrice() + getLowPrice() + getClosePrice() + getClosePrice()) / 4.0;
+		return Math.abs(getCloseMove());
 	}
 
 	@Override
@@ -142,16 +95,16 @@ public abstract class AbstractPriceCandle implements IPriceCandle {
 			if (getCloseTime() != candle.getCloseTime()) {
 				return false;
 			}
-			if (getOpenPrice() != candle.getOpenPrice()) {
+			if (getMidOpenPrice() != candle.getMidOpenPrice()) {
 				return false;
 			}
-			if (getHighPrice() != candle.getHighPrice()) {
+			if (getMidHighPrice() != candle.getMidHighPrice()) {
 				return false;
 			}
-			if (getLowPrice() != candle.getLowPrice()) {
+			if (getMidLowPrice() != candle.getMidLowPrice()) {
 				return false;
 			}
-			if (getClosePrice() != candle.getClosePrice()) {
+			if (getMidClosePrice() != candle.getMidClosePrice()) {
 				return false;
 			}
 			return true;

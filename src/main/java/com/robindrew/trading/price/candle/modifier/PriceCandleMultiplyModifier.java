@@ -1,7 +1,7 @@
 package com.robindrew.trading.price.candle.modifier;
 
 import com.robindrew.trading.price.candle.IPriceCandle;
-import com.robindrew.trading.price.candle.PriceCandle;
+import com.robindrew.trading.price.candle.MidPriceCandle;
 
 /**
  * Multiply all candle prices by the given positive non-zero multiplier.
@@ -30,12 +30,12 @@ public class PriceCandleMultiplyModifier implements IPriceCandleModifier {
 		long openTime = candle.getOpenTime();
 		long closeTime = candle.getCloseTime();
 
-		int open = candle.getOpenPrice() * multiplyBy;
-		int high = candle.getHighPrice() * multiplyBy;
-		int low = candle.getLowPrice() * multiplyBy;
-		int close = candle.getClosePrice() * multiplyBy;
+		int open = candle.getMidOpenPrice() * multiplyBy;
+		int high = candle.getMidHighPrice() * multiplyBy;
+		int low = candle.getMidLowPrice() * multiplyBy;
+		int close = candle.getMidClosePrice() * multiplyBy;
 
-		return new PriceCandle(open, high, low, close, openTime, closeTime, candle.getDecimalPlaces() + decimalPlaces);
+		return new MidPriceCandle(open, high, low, close, openTime, closeTime, candle.getDecimalPlaces() + decimalPlaces);
 	}
 
 }

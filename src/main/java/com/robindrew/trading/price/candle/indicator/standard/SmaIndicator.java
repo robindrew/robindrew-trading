@@ -22,7 +22,7 @@ public class SmaIndicator extends ValueIndicator {
 	protected void calculate(List<IPriceCandle> candles) {
 		long total = 0;
 		for (IPriceCandle candle : candles) {
-			total += candle.getClosePrice();
+			total += candle.getMidClosePrice();
 		}
 		setValue(total / candles.size());
 	}

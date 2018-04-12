@@ -9,9 +9,9 @@ import com.google.common.base.Charsets;
 import com.robindrew.common.text.tokenizer.CharDelimiters;
 import com.robindrew.common.text.tokenizer.CharTokenizer;
 import com.robindrew.trading.price.candle.IPriceCandle;
-import com.robindrew.trading.price.candle.PriceCandle;
+import com.robindrew.trading.price.candle.MidPriceCandle;
+import com.robindrew.trading.price.candle.TickPriceCandle;
 import com.robindrew.trading.price.decimal.Decimals;
-import com.robindrew.trading.price.tick.PriceTick;
 
 public class PriceCandleLineDecimalParser implements IPriceCandleLineParser {
 
@@ -45,7 +45,7 @@ public class PriceCandleLineDecimalParser implements IPriceCandleLineParser {
 			int bidPrice = Decimals.toInt(tokenizer.next(false), decimalPlaces, checkPlaces);
 			int askPrice = Decimals.toInt(tokenizer.next(false), decimalPlaces, checkPlaces);
 
-			return new PriceTick(bidPrice, askPrice, toMillis(date), decimalPlaces);
+			return new TickPriceCandle(bidPrice, askPrice, toMillis(date), decimalPlaces);
 		}
 
 		// Standard candle ...
@@ -60,11 +60,11 @@ public class PriceCandleLineDecimalParser implements IPriceCandleLineParser {
 		int low = Decimals.toInt(tokenizer.next(false), decimalPlaces, checkPlaces);
 		int close = Decimals.toInt(tokenizer.next(false), decimalPlaces, checkPlaces);
 
-		return new PriceCandle(open, high, low, close, toMillis(openDate), toMillis(closeDate), decimalPlaces);
+		return new MidPriceCandle(open, high, low, close, toMillis(openDate), toMillis(closeDate), decimalPlaces);
 	}
 
 	@Override
 	public Charset getCharset() {
-		return Charsets.US_ASCII;	
+		return Charsets.US_ASCII;
 	}
 }

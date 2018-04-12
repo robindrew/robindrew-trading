@@ -3,7 +3,7 @@ package com.robindrew.trading.price.candle.merger;
 import java.util.Collection;
 
 import com.robindrew.trading.price.candle.IPriceCandle;
-import com.robindrew.trading.price.candle.PriceCandle;
+import com.robindrew.trading.price.candle.MidPriceCandle;
 
 public class PriceCandleMerger {
 
@@ -16,26 +16,26 @@ public class PriceCandleMerger {
 		int openPrice;
 		if (candle1.getOpenTime() <= candle2.getOpenTime()) {
 			openTime = candle1.getOpenTime();
-			openPrice = candle1.getOpenPrice();
+			openPrice = candle1.getMidOpenPrice();
 		} else {
 			openTime = candle2.getOpenTime();
-			openPrice = candle2.getOpenPrice();
+			openPrice = candle2.getMidOpenPrice();
 		}
 
 		long closeTime;
 		int closePrice;
 		if (candle1.getCloseTime() >= candle2.getCloseTime()) {
 			closeTime = candle1.getCloseTime();
-			closePrice = candle1.getClosePrice();
+			closePrice = candle1.getMidClosePrice();
 		} else {
 			closeTime = candle2.getCloseTime();
-			closePrice = candle2.getClosePrice();
+			closePrice = candle2.getMidClosePrice();
 		}
 
-		int highPrice = Math.max(candle1.getHighPrice(), candle2.getHighPrice());
-		int lowPrice = Math.min(candle1.getLowPrice(), candle2.getLowPrice());
+		int highPrice = Math.max(candle1.getMidHighPrice(), candle2.getMidHighPrice());
+		int lowPrice = Math.min(candle1.getMidLowPrice(), candle2.getMidLowPrice());
 
-		PriceCandle merged = new PriceCandle(openPrice, highPrice, lowPrice, closePrice, openTime, closeTime, candle1.getDecimalPlaces());
+		MidPriceCandle merged = new MidPriceCandle(openPrice, highPrice, lowPrice, closePrice, openTime, closeTime, candle1.getDecimalPlaces());
 		return merged;
 	}
 
@@ -66,10 +66,10 @@ public class PriceCandleMerger {
 				openTime = candle.getOpenTime();
 				closeTime = candle.getCloseTime();
 
-				openPrice = candle.getOpenPrice();
-				closePrice = candle.getClosePrice();
-				highPrice = candle.getHighPrice();
-				lowPrice = candle.getLowPrice();
+				openPrice = candle.getMidOpenPrice();
+				closePrice = candle.getMidClosePrice();
+				highPrice = candle.getMidHighPrice();
+				lowPrice = candle.getMidLowPrice();
 			}
 
 			// Remaining candles ...
@@ -84,13 +84,13 @@ public class PriceCandleMerger {
 				// Candles are always in order
 				closeTime = candle.getCloseTime();
 
-				closePrice = candle.getClosePrice();
-				highPrice = Math.max(highPrice, candle.getHighPrice());
-				lowPrice = Math.min(lowPrice, candle.getLowPrice());
+				closePrice = candle.getMidClosePrice();
+				highPrice = Math.max(highPrice, candle.getMidHighPrice());
+				lowPrice = Math.min(lowPrice, candle.getMidLowPrice());
 			}
 		}
 
-		return new PriceCandle(openPrice, highPrice, lowPrice, closePrice, openTime, closeTime, decimalPlaces);
+		return new MidPriceCandle(openPrice, highPrice, lowPrice, closePrice, openTime, closeTime, decimalPlaces);
 	}
 
 }

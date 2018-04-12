@@ -23,7 +23,6 @@ import com.robindrew.trading.price.candle.io.stream.source.iterator.PriceCandleS
 import com.robindrew.trading.price.candle.line.parser.IPriceCandleLineParser;
 import com.robindrew.trading.price.candle.line.parser.PriceCandleLineFile;
 import com.robindrew.trading.price.candle.merger.PriceCandleMerger;
-import com.robindrew.trading.price.close.IClosePrice;
 
 public class PriceCandles {
 
@@ -33,6 +32,27 @@ public class PriceCandles {
 
 	public static IPriceCandle merge(Collection<? extends IPriceCandle> candles) {
 		return new PriceCandleMerger().merge(candles);
+	}
+
+	public static double getMedian(IPriceCandle candle) {
+		if (candle.isTick()) {
+			return candle.getMidClosePrice();
+		}
+		return (candle.getMidHighPrice() + candle.getMidLowPrice()) / 2.0;
+	}
+
+	public static double getTypical(IPriceCandle candle) {
+		if (candle.isTick()) {
+			return candle.getMidClosePrice();
+		}
+		return (candle.getMidHighPrice() + candle.getMidLowPrice() + candle.getMidClosePrice()) / 3.0;
+	}
+
+	public static double getWeighted(IPriceCandle candle) {
+		if (candle.isTick()) {
+			return candle.getMidClosePrice();
+		}
+		return (candle.getMidHighPrice() + candle.getMidLowPrice() + candle.getMidClosePrice() + candle.getMidClosePrice()) / 4.0;
 	}
 
 	public static double getAverage(double total, int count) {
@@ -46,8 +66,8 @@ public class PriceCandles {
 		return 2.0f / (periods + 1);
 	}
 
-	public static int getChange(IClosePrice previous, IClosePrice current) {
-		return current.getClosePrice() - previous.getClosePrice();
+	public static int getChange(IPriceCandle previous, IPriceCandle current) {
+		return current.getMidClosePrice() - previous.getMidClosePrice();
 	}
 
 	public static double getPercentDifference(double price1, double price2) {

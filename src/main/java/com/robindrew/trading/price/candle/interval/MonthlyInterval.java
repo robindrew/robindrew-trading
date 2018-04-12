@@ -7,14 +7,15 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 
+import com.robindrew.common.concurrent.Immutable;
 import com.robindrew.common.date.Dates;
 import com.robindrew.common.date.UnitChrono;
 import com.robindrew.trading.price.candle.IPriceCandle;
-import com.robindrew.trading.price.tick.IPriceTick;
 
 /**
  * The Monthly Interval.
  */
+@Immutable
 public class MonthlyInterval implements IPriceInterval {
 
 	private static final long intervalInMillis = days(7).toMillis();
@@ -100,18 +101,8 @@ public class MonthlyInterval implements IPriceInterval {
 	}
 
 	@Override
-	public LocalDateTime getDateTime(IPriceTick tick) {
-		return getDateTime(tick.getTimestamp());
-	}
-
-	@Override
 	public LocalDateTime getDateTime(long timeInMillis) {
 		return normalize(Dates.toLocalDateTime(timeInMillis), interval);
-	}
-
-	@Override
-	public long getTimePeriod(IPriceTick tick) {
-		return getTimePeriod(tick.getTimestamp());
 	}
 
 }

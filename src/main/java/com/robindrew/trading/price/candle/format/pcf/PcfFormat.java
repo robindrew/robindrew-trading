@@ -12,7 +12,6 @@ import com.google.common.io.PatternFilenameFilter;
 import com.robindrew.trading.price.candle.IPriceCandle;
 import com.robindrew.trading.price.candle.interval.IPriceInterval;
 import com.robindrew.trading.price.candle.interval.PriceIntervals;
-import com.robindrew.trading.price.tick.format.ptf.PtfFormat;
 
 /**
  * The PCF (PriceCandleFormat) file format is much faster to read than traditional text formats. The file size is

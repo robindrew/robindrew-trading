@@ -41,15 +41,15 @@ public class GoogleCandlestickChartData {
 			script.append('[');
 			script.append('\'').append(getLabel(candle)).append("',");
 			if (candle.hasClosedUp()) {
-				script.append(candle.getLowPrice()).append(',');
-				script.append(candle.getOpenPrice()).append(',');
-				script.append(candle.getClosePrice()).append(',');
-				script.append(candle.getHighPrice());
+				script.append(candle.getMidLowPrice()).append(',');
+				script.append(candle.getMidOpenPrice()).append(',');
+				script.append(candle.getMidClosePrice()).append(',');
+				script.append(candle.getMidHighPrice());
 			} else {
-				script.append(candle.getHighPrice()).append(',');
-				script.append(candle.getOpenPrice()).append(',');
-				script.append(candle.getClosePrice()).append(',');
-				script.append(candle.getLowPrice());
+				script.append(candle.getMidHighPrice()).append(',');
+				script.append(candle.getMidOpenPrice()).append(',');
+				script.append(candle.getMidClosePrice()).append(',');
+				script.append(candle.getMidLowPrice());
 			}
 			script.append(']');
 		}

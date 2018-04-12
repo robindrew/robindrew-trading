@@ -59,10 +59,10 @@ public class PriceCandleSanityChecker implements IPriceCandleChecker {
 
 	@Override
 	public boolean check(IPriceCandle candle1, IPriceCandle candle2) {
-		checkDifference(candle1.getOpenPrice(), candle2.getOpenPrice(), candle1, candle2);
-		checkDifference(candle1.getClosePrice(), candle2.getClosePrice(), candle1, candle2);
-		checkDifference(candle1.getHighPrice(), candle2.getHighPrice(), candle1, candle2);
-		checkDifference(candle1.getLowPrice(), candle2.getLowPrice(), candle1, candle2);
+		checkDifference(candle1.getMidOpenPrice(), candle2.getMidOpenPrice(), candle1, candle2);
+		checkDifference(candle1.getMidClosePrice(), candle2.getMidClosePrice(), candle1, candle2);
+		checkDifference(candle1.getMidHighPrice(), candle2.getMidHighPrice(), candle1, candle2);
+		checkDifference(candle1.getMidLowPrice(), candle2.getMidLowPrice(), candle1, candle2);
 		return true;
 	}
 

@@ -3,7 +3,6 @@ package com.robindrew.trading.strategy;
 import com.robindrew.common.util.Check;
 import com.robindrew.trading.IInstrument;
 import com.robindrew.trading.platform.ITradingPlatform;
-import com.robindrew.trading.price.tick.IPriceTick;
 
 public abstract class AbstractTradingStrategy implements ITradingStrategy {
 
@@ -30,11 +29,6 @@ public abstract class AbstractTradingStrategy implements ITradingStrategy {
 	@Override
 	public final ITradingPlatform getPlatform() {
 		return platform;
-	}
-
-	@Override
-	public final void putNextTick(IPriceTick tick) {
-		putNextCandle(tick);
 	}
 
 }

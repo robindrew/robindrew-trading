@@ -14,22 +14,22 @@ import com.robindrew.common.io.data.server.DataConnection;
 import com.robindrew.common.io.data.server.IDataConnection;
 import com.robindrew.common.util.Check;
 import com.robindrew.trading.IInstrument;
-import com.robindrew.trading.price.tick.IPriceTick;
-import com.robindrew.trading.price.tick.PriceTick;
-import com.robindrew.trading.price.tick.io.stream.sink.IPriceTickStreamSink;
+import com.robindrew.trading.price.candle.IPriceCandle;
+import com.robindrew.trading.price.candle.TickPriceCandle;
+import com.robindrew.trading.price.candle.io.stream.sink.IPriceCandleStreamSink;
 
 /**
  * Simple price subscriber client for the {@link PricePublisherServer}. Each client must be run in its own thread and
  * subscribes for updates to a single instrument.
  */
-public class PriceSubscriberClient implements Runnable, IPriceTickStreamSink {
+public class PriceSubscriberClient implements Runnable, IPriceCandleStreamSink {
 
 	private static final Logger log = LoggerFactory.getLogger(PriceSubscriberClient.class);
 
 	private final String host;
 	private final int port;
 	private final IInstrument instrument;
-	private final Set<IPriceTickStreamSink> priceSinks = new CopyOnWriteArraySet<>();
+	private final Set<IPriceCandleStreamSink> priceSinks = new CopyOnWriteArraySet<>();
 	private final AtomicBoolean closed = new AtomicBoolean(false);
 
 	public PriceSubscriberClient(String host, int port, IInstrument instrument) throws IOException {
@@ -81,8 +81,8 @@ public class PriceSubscriberClient implements Runnable, IPriceTickStreamSink {
 				int bidPrice = reader.readPositiveInt();
 				int askPrice = reader.readPositiveInt();
 
-				IPriceTick tick = new PriceTick(bidPrice, askPrice, timestamp, decimalPlaces);
-				putNextTick(tick);
+				IPriceCandle tick = new TickPriceCandle(bidPrice, askPrice, timestamp, decimalPlaces);
+				putNextCandle(tick);
 			}
 
 		} catch (Exception e) {
@@ -103,15 +103,15 @@ public class PriceSubscriberClient implements Runnable, IPriceTickStreamSink {
 		priceSinks.clear();
 	}
 
-	public void register(IPriceTickStreamSink sink) {
+	public void register(IPriceCandleStreamSink sink) {
 		Check.notNull("sink", sink);
 		priceSinks.add(sink);
 	}
 
 	@Override
-	public void putNextTick(IPriceTick tick) {
-		for (IPriceTickStreamSink sink : priceSinks) {
-			sink.putNextTick(tick);
+	public void putNextCandle(IPriceCandle tick) {
+		for (IPriceCandleStreamSink sink : priceSinks) {
+			sink.putNextCandle(tick);
 		}
 	}
 }

@@ -107,7 +107,7 @@ public class PriceCandleCanvas {
 			index = renderMissingCandle(candle, interval, previousOpen, index, candleWidth);
 			previousOpen = interval.getTimePeriod(candle);
 
-			renderCandle(candle, index++, candleWidth, pointsPerPixel, merged.getLowPrice());
+			renderCandle(candle, index++, candleWidth, pointsPerPixel, merged.getMidLowPrice());
 		}
 
 		renderXAxis(index, candleWidth);
@@ -122,10 +122,10 @@ public class PriceCandleCanvas {
 		graphics.setColor(Color.BLACK);
 		graphics.drawLine(x, y1, x, y2);
 
-		String lowText = toText(merged.getLowPrice(), merged.getDecimalPlaces());
+		String lowText = toText(merged.getMidLowPrice(), merged.getDecimalPlaces());
 		graphics.drawString(lowText, x - getPixelLength(lowText) - 8, y2 - xAxisOffset);
 
-		String highText = toText(merged.getHighPrice(), merged.getDecimalPlaces());
+		String highText = toText(merged.getMidHighPrice(), merged.getDecimalPlaces());
 		graphics.drawString(highText, x - getPixelLength(highText) - 8, y1);
 	}
 
@@ -209,8 +209,8 @@ public class PriceCandleCanvas {
 
 		// Draw the wick
 		int wickX = x + (candleWidth / 2);
-		double high = candle.getHighPrice();
-		double low = candle.getLowPrice();
+		double high = candle.getMidHighPrice();
+		double low = candle.getMidLowPrice();
 
 		int lowY = (int) ((low - basePrice) / pointsPerPixel);
 		int highY = (int) ((high - basePrice) / pointsPerPixel);
@@ -223,8 +223,8 @@ public class PriceCandleCanvas {
 		graphics.drawLine(wickX, highY, wickX, lowY);
 
 		// Draw the candle
-		double open = candle.getOpenPrice();
-		double close = candle.getClosePrice();
+		double open = candle.getMidOpenPrice();
+		double close = candle.getMidClosePrice();
 		int openY = (int) ((open - basePrice) / pointsPerPixel);
 		int closeY = (int) ((close - basePrice) / pointsPerPixel);
 

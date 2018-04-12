@@ -10,7 +10,6 @@ import java.time.temporal.ChronoUnit;
 import com.robindrew.common.date.Dates;
 import com.robindrew.common.date.UnitChrono;
 import com.robindrew.trading.price.candle.IPriceCandle;
-import com.robindrew.trading.price.tick.IPriceTick;
 
 /**
  * The Monthly Interval.
@@ -100,16 +99,6 @@ public class YearlyInterval implements IPriceInterval {
 	@Override
 	public LocalDateTime getDateTime(long timeInMillis) {
 		return normalize(Dates.toLocalDateTime(timeInMillis), interval);
-	}
-
-	@Override
-	public long getTimePeriod(IPriceTick tick) {
-		return getTimePeriod(tick.getTimestamp());
-	}
-
-	@Override
-	public LocalDateTime getDateTime(IPriceTick tick) {
-		return getDateTime(tick.getTimestamp());
 	}
 
 }

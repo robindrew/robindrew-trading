@@ -47,7 +47,7 @@ public class PriceCandleSnapshot implements IPriceCandleSnapshot {
 		if (previous == null) {
 			return BUY;
 		}
-		return previous.getClosePrice() <= latest.getClosePrice() ? BUY : SELL;
+		return previous.getMidClosePrice() <= latest.getMidClosePrice() ? BUY : SELL;
 	}
 
 	public PriceCandleSnapshot update(IPriceCandle latest) {

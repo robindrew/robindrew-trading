@@ -5,15 +5,15 @@ import java.util.concurrent.CopyOnWriteArraySet;
 
 import com.robindrew.common.util.Check;
 import com.robindrew.trading.IInstrument;
+import com.robindrew.trading.price.candle.IPriceCandle;
+import com.robindrew.trading.price.candle.io.stream.sink.IPriceCandleStreamSink;
 import com.robindrew.trading.price.candle.streaming.StreamingPriceCandle;
-import com.robindrew.trading.price.tick.IPriceTick;
-import com.robindrew.trading.price.tick.io.stream.sink.IPriceTickStreamSink;
 
 public abstract class InstrumentPriceStream implements IInstrumentPriceStream {
 
 	private final IInstrument instrument;
 	private final StreamingPriceCandle price = new StreamingPriceCandle();
-	private final Set<IPriceTickStreamSink> subscriberSet = new CopyOnWriteArraySet<>();
+	private final Set<IPriceCandleStreamSink> subscriberSet = new CopyOnWriteArraySet<>();
 
 	protected InstrumentPriceStream(IInstrument instrument) {
 		this.instrument = Check.notNull("instrument", instrument);
@@ -30,30 +30,30 @@ public abstract class InstrumentPriceStream implements IInstrumentPriceStream {
 	}
 
 	@Override
-	public void putNextTick(IPriceTick candle) {
+	public void putNextCandle(IPriceCandle candle) {
 
 		// Update the latest price
 		price.update(candle);
 
 		// Propagate the candle to each subscriber
-		for (IPriceTickStreamSink subscriber : subscriberSet) {
-			subscriber.putNextTick(candle);
+		for (IPriceCandleStreamSink subscriber : subscriberSet) {
+			subscriber.putNextCandle(candle);
 		}
 	}
 
 	@Override
-	public boolean register(IPriceTickStreamSink sink) {
+	public boolean register(IPriceCandleStreamSink sink) {
 		return subscriberSet.add(sink);
 	}
 
 	@Override
-	public boolean unregister(IPriceTickStreamSink sink) {
+	public boolean unregister(IPriceCandleStreamSink sink) {
 		return subscriberSet.remove(sink);
 	}
 
 	@Override
 	public void close() {
-		for (IPriceTickStreamSink subscriber : subscriberSet) {
+		for (IPriceCandleStreamSink subscriber : subscriberSet) {
 			subscriber.close();
 		}
 		subscriberSet.clear();

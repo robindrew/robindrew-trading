@@ -16,10 +16,10 @@ public class PriceCandleLineFormatter implements IPriceCandleLineFormatter {
 		StringBuilder line = new StringBuilder();
 		line.append(toLocalDateTime(candle.getOpenTime())).append(',');
 		line.append(toLocalDateTime(candle.getCloseTime())).append(',');
-		line.append(candle.getOpenPrice()).append(',');
-		line.append(candle.getHighPrice()).append(',');
-		line.append(candle.getLowPrice()).append(',');
-		line.append(candle.getClosePrice());
+		line.append(candle.getMidOpenPrice()).append(',');
+		line.append(candle.getMidHighPrice()).append(',');
+		line.append(candle.getMidLowPrice()).append(',');
+		line.append(candle.getMidClosePrice());
 
 		// End of line?
 		if (includeEndOfLine) {
