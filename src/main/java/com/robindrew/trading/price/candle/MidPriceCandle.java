@@ -1,5 +1,7 @@
 package com.robindrew.trading.price.candle;
 
+import static com.robindrew.common.date.Dates.toLocalDateTime;
+
 import com.robindrew.common.concurrent.Immutable;
 
 @Immutable
@@ -54,6 +56,19 @@ public class MidPriceCandle extends AbstractPriceCandle {
 		this.openTime = openTime;
 		this.closeTime = closeTime;
 		this.decimalPlaces = (byte) decimalPlaces;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("PriceCandle[");
+		builder.append(toLocalDateTime(getOpenTime())).append('|');
+		builder.append(toLocalDateTime(getCloseTime())).append('|');
+		builder.append(getMidOpenPrice()).append('|');
+		builder.append(getMidHighPrice()).append('|');
+		builder.append(getMidLowPrice()).append('|');
+		builder.append(getMidClosePrice()).append(']');
+		return builder.toString();
 	}
 
 	@Override

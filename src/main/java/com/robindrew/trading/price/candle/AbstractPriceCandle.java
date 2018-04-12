@@ -12,10 +12,14 @@ public abstract class AbstractPriceCandle implements IPriceCandle {
 		builder.append("PriceCandle[");
 		builder.append(toLocalDateTime(getOpenTime())).append('|');
 		builder.append(toLocalDateTime(getCloseTime())).append('|');
-		builder.append(getMidOpenPrice()).append('|');
-		builder.append(getMidHighPrice()).append('|');
-		builder.append(getMidLowPrice()).append('|');
-		builder.append(getMidClosePrice()).append(']');
+		builder.append(getBidOpenPrice()).append('|');
+		builder.append(getAskOpenPrice()).append('|');
+		builder.append(getBidHighPrice()).append('|');
+		builder.append(getAskHighPrice()).append('|');
+		builder.append(getBidLowPrice()).append('|');
+		builder.append(getAskLowPrice()).append('|');
+		builder.append(getBidClosePrice()).append('!');
+		builder.append(getAskClosePrice()).append(']');
 		return builder.toString();
 	}
 

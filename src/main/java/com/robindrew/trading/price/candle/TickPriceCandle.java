@@ -1,5 +1,7 @@
 package com.robindrew.trading.price.candle;
 
+import static com.robindrew.common.date.Dates.toLocalDateTime;
+
 import com.robindrew.common.concurrent.Immutable;
 import com.robindrew.trading.price.Mid;
 
@@ -26,6 +28,16 @@ public class TickPriceCandle extends AbstractPriceCandle implements ITickPriceCa
 		this.askPrice = askPrice;
 		this.timestamp = timestamp;
 		this.decimalPlaces = (byte) decimalPlaces;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("TickPriceCandle[");
+		builder.append(toLocalDateTime(getTimestamp())).append('|');
+		builder.append(getBidPrice()).append('|');
+		builder.append(getAskPrice()).append(']');
+		return builder.toString();
 	}
 
 	@Override
