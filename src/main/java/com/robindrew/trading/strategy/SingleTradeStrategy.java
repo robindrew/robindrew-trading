@@ -44,13 +44,13 @@ public abstract class SingleTradeStrategy extends AbstractTradingStrategy {
 	}
 
 	public void openPosition(IPositionOrder order) {
-		IPosition position = getPlatform().openPosition(order);
+		IPosition position = getPositionService().openPosition(order);
 		setOpenPosition(position);
 	}
 
 	public void checkOpenPosition(IPriceCandle candle) {
 
-		IPricePrecision precision = getPlatform().getPrecision(getInstrument());
+		IPricePrecision precision = getPositionService().getPrecision(getInstrument());
 		IPosition position = getOpenPosition();
 
 		int high = candle.getMidHighPrice();
@@ -73,7 +73,7 @@ public abstract class SingleTradeStrategy extends AbstractTradingStrategy {
 
 	public void closeOpenPosition(LocalDateTime closeDate, BigDecimal expectedClosePrice) {
 		IPosition position = openPosition.getAndSet(null);
-		getPlatform().closePosition(position);
+		getPositionService().closePosition(position);
 	}
 
 }
