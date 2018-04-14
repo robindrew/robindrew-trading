@@ -1,4 +1,4 @@
-package com.robindrew.trading.price.candle.format.pcf.source;
+package com.robindrew.trading.price.candle.format.ptf.source;
 
 import static com.robindrew.common.text.Strings.bytes;
 
@@ -12,30 +12,31 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Lists;
 import com.robindrew.trading.price.candle.IPriceCandle;
+import com.robindrew.trading.price.candle.ITickPriceCandle;
 import com.robindrew.trading.price.candle.io.stream.source.IPriceCandleStreamSource;
 import com.robindrew.trading.price.candle.io.stream.source.PriceCandleListBackedStreamSource;
 
-public class PcfSourcesStreamSource implements IPriceCandleStreamSource {
+public class PtfSourcesStreamSource implements IPriceCandleStreamSource {
 
-	private static final Logger log = LoggerFactory.getLogger(PcfSourcesStreamSource.class);
+	private static final Logger log = LoggerFactory.getLogger(PtfSourcesStreamSource.class);
 
-	private final LinkedList<IPcfSource> sources;
+	private final LinkedList<IPtfSource> sources;
 	private final boolean reverse;
 
 	private IPriceCandleStreamSource currentSource = null;
 
-	public PcfSourcesStreamSource(Collection<? extends IPcfSource> sources) {
+	public PtfSourcesStreamSource(Collection<? extends IPtfSource> sources) {
 		this(sources, false);
 	}
 
-	public PcfSourcesStreamSource(Collection<? extends IPcfSource> sources, boolean reverse) {
+	public PtfSourcesStreamSource(Collection<? extends IPtfSource> sources, boolean reverse) {
 		this.sources = new LinkedList<>(reverse ? Lists.reverse(new ArrayList<>(sources)) : sources);
 		this.reverse = reverse;
 	}
 
 	@Override
 	public String getName() {
-		return "PcfSourceStreamSource";
+		return "PtfSourceStreamSource";
 	}
 
 	@Override
@@ -66,12 +67,12 @@ public class PcfSourcesStreamSource implements IPriceCandleStreamSource {
 			}
 
 			// Next file
-			IPcfSource source = sources.removeFirst();
+			IPtfSource source = sources.removeFirst();
 			if (log.isDebugEnabled()) {
 				log.debug("Source: {} ({})", source, bytes(source.size()));
 			}
 
-			List<? extends IPriceCandle> candles = source.read();
+			List<ITickPriceCandle> candles = source.read();
 			if (reverse) {
 				candles = Lists.reverse(candles);
 			}

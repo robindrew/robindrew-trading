@@ -140,4 +140,8 @@ public class TickPriceCandle extends AbstractPriceCandle implements ITickPriceCa
 		return getTimestamp();
 	}
 
+	@Override
+	public long getTickVolume() {
+		return 1;
+	}
 }

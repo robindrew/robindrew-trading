@@ -2,8 +2,10 @@ package com.robindrew.trading.price.candle.charts.googlecharts;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Collection;
 import java.util.List;
 
+import com.google.common.collect.ImmutableList;
 import com.robindrew.common.date.Dates;
 import com.robindrew.trading.price.candle.IPriceCandle;
 
@@ -12,14 +14,14 @@ public class GoogleCandlestickChartData {
 	private final List<IPriceCandle> candles;
 	private DateTimeFormatter format;
 
-	public GoogleCandlestickChartData(List<IPriceCandle> candles, DateTimeFormatter format) {
+	public GoogleCandlestickChartData(Collection<? extends IPriceCandle> candles, DateTimeFormatter format) {
 		if (candles.isEmpty()) {
 			throw new IllegalArgumentException("candles is empty");
 		}
 		if (format == null) {
 			throw new NullPointerException("format");
 		}
-		this.candles = candles;
+		this.candles = ImmutableList.copyOf(candles);
 		this.format = format;
 	}
 

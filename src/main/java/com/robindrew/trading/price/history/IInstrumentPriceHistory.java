@@ -12,11 +12,11 @@ public interface IInstrumentPriceHistory {
 
 	IInstrument getInstrument();
 
-	List<IPriceCandle> getPriceCandles(LocalDateTime from, LocalDateTime to);
+	List<? extends IPriceCandle> getPriceCandles(LocalDateTime from, LocalDateTime to);
 
 	IPriceCandleStreamSource getStreamSource(LocalDateTime from, LocalDateTime to);
 
 	IPriceCandleStreamSource getStreamSource();
 
-	List<IPriceCandle> getLatestPrices(IPriceInterval interval, int count);
+	List<? extends IPriceCandle> getLatestPrices(IPriceInterval interval, int count);
 }

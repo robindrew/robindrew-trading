@@ -17,6 +17,12 @@ public class Decimals {
 		return array;
 	}
 
+	/**
+	 * Optimised method for converting a Decimal to a String.
+	 * @param value the decimal value.
+	 * @param decimalPlaces the number of decimal places.
+	 * @return the string equivalent.
+	 */
 	public static String toString(int value, int decimalPlaces) {
 		if (value < 1) {
 			throw new IllegalArgumentException("value=" + value);

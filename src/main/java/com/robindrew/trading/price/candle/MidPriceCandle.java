@@ -145,4 +145,9 @@ public class MidPriceCandle extends AbstractPriceCandle {
 	public int getAskClosePrice() {
 		return closePrice;
 	}
+
+	@Override
+	public long getTickVolume() {
+		return 0;
+	}
 }

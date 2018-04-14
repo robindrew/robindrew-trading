@@ -32,6 +32,8 @@ public interface IPriceCandle {
 
 	long getOpenTime();
 
+	long getTickVolume();
+
 	LocalDateTime getOpenDate();
 
 	long getCloseTime();

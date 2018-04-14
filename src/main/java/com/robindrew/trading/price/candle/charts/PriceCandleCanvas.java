@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -38,7 +39,7 @@ public class PriceCandleCanvas {
 		IPcfSourceSet set = manager.getSourceSet(Instruments.USD_JPY);
 
 		IPcfSource source = set.getSource(LocalDate.of(2017, 6, 01));
-		List<IPriceCandle> candles = source.read();
+		List<? extends IPriceCandle> candles = source.read();
 		candles = candles.subList(0, 180);
 
 		IPriceInterval interval = PriceIntervals.MINUTELY;
@@ -85,7 +86,7 @@ public class PriceCandleCanvas {
 		this.graphics = (Graphics2D) image.getGraphics();
 	}
 
-	public void renderCandles(List<IPriceCandle> candles, IPriceInterval interval) {
+	public void renderCandles(Collection<? extends IPriceCandle> candles, IPriceInterval interval) {
 
 		// Clear the canvas by rendering the background
 		graphics.setColor(background);

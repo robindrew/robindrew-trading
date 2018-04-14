@@ -173,4 +173,8 @@ public class PriceCandle extends AbstractPriceCandle {
 		return askClosePrice;
 	}
 
+	@Override
+	public long getTickVolume() {
+		return 0;
+	}
 }

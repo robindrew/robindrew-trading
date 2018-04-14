@@ -104,7 +104,7 @@ public class PcfFileLineConverter {
 
 				// 4. Verify the PCF candle file
 				if (verify) {
-					List<IPriceCandle> written = file.read();
+					List<? extends IPriceCandle> written = file.read();
 					if (!candles.equals(written)) {
 						throw new IllegalStateException("Candles do not match!!");
 					}

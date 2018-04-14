@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.robindrew.trading.price.candle.IPriceCandle;
+import com.robindrew.trading.price.candle.ITickPriceCandle;
 import com.robindrew.trading.price.candle.PriceCandleDateComparator;
 import com.robindrew.trading.price.candle.checker.IPriceCandleChecker;
 import com.robindrew.trading.price.candle.checker.PriceCandleSanityChecker;
@@ -23,6 +24,8 @@ import com.robindrew.trading.price.candle.format.pcf.source.IPcfSource;
 import com.robindrew.trading.price.candle.format.pcf.source.PcfSourcesStreamSource;
 import com.robindrew.trading.price.candle.format.pcf.source.file.IPcfFile;
 import com.robindrew.trading.price.candle.format.pcf.source.file.PcfFile;
+import com.robindrew.trading.price.candle.format.ptf.source.IPtfSource;
+import com.robindrew.trading.price.candle.format.ptf.source.PtfSourcesStreamSource;
 import com.robindrew.trading.price.candle.interval.IPriceInterval;
 import com.robindrew.trading.price.candle.io.list.source.IPriceCandleListSourceBuilder;
 import com.robindrew.trading.price.candle.io.list.source.PriceCandleListSourceBuilder;
@@ -59,13 +62,31 @@ public class PriceCandleStreamSourceBuilder implements IPriceCandleStreamSourceB
 
 	@Override
 	public IPriceCandleStreamSourceBuilder setPcfSource(IPcfSource source) {
-		List<IPriceCandle> candles = source.read();
+		List<? extends IPriceCandle> candles = source.read();
 		return setBaseSource(new PriceCandleListBackedStreamSource(candles));
 	}
 
 	@Override
 	public IPriceCandleStreamSourceBuilder setPcfSources(Collection<? extends IPcfSource> sources) {
 		return setBaseSource(new PcfSourcesStreamSource(sources));
+	}
+
+	@Override
+	public IPriceCandleStreamSourceBuilder setPtfFile(String filename) {
+		File file = new File(filename);
+		IPcfFile pcf = new PcfFile(file);
+		return setPcfSource(pcf);
+	}
+
+	@Override
+	public IPriceCandleStreamSourceBuilder setPtfSource(IPtfSource source) {
+		List<ITickPriceCandle> candles = source.read();
+		return setBaseSource(new PriceCandleListBackedStreamSource(candles));
+	}
+
+	@Override
+	public IPriceCandleStreamSourceBuilder setPtfSources(Collection<? extends IPtfSource> sources) {
+		return setBaseSource(new PtfSourcesStreamSource(sources));
 	}
 
 	@Override

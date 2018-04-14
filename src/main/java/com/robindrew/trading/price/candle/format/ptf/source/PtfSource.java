@@ -1,4 +1,4 @@
-package com.robindrew.trading.price.candle.format.pcf.source;
+package com.robindrew.trading.price.candle.format.ptf.source;
 
 import static com.robindrew.common.text.Strings.number;
 
@@ -23,25 +23,22 @@ import com.robindrew.common.io.data.IDataWriter;
 import com.robindrew.common.util.Check;
 import com.robindrew.common.util.Java;
 import com.robindrew.trading.price.candle.IPriceCandle;
-import com.robindrew.trading.price.candle.format.pcf.PcfDataSerializer;
-import com.robindrew.trading.price.candle.format.pcf.PcfFormat;
+import com.robindrew.trading.price.candle.ITickPriceCandle;
+import com.robindrew.trading.price.candle.format.ptf.PtfDataSerializer;
+import com.robindrew.trading.price.candle.format.ptf.PtfFormat;
 
-public abstract class PcfSource implements IPcfSource {
+public abstract class PtfSource implements IPtfSource {
 
-	private static final Logger log = LoggerFactory.getLogger(PcfSource.class);
+	private static final Logger log = LoggerFactory.getLogger(PtfSource.class);
 
 	private final String name;
-	private final LocalDate month;
-	private final IDataSerializer<List<IPriceCandle>> serializer = new PcfDataSerializer();
-	private volatile SoftReference<List<IPriceCandle>> cached = new SoftReference<>(null);
+	private final LocalDate day;
+	private final IDataSerializer<List<ITickPriceCandle>> serializer = new PtfDataSerializer();
+	private volatile SoftReference<List<ITickPriceCandle>> cached = new SoftReference<>(null);
 
-	protected PcfSource(String name, LocalDate month) {
-		if (month.getDayOfMonth() != 1) {
-			throw new IllegalArgumentException("month=" + month);
-		}
-
+	protected PtfSource(String name, LocalDate day) {
 		this.name = Check.notEmpty("name", name);
-		this.month = Check.notNull("month", month);
+		this.day = Check.notNull("day", day);
 	}
 
 	@Override
@@ -50,8 +47,8 @@ public abstract class PcfSource implements IPcfSource {
 	}
 
 	@Override
-	public LocalDate getMonth() {
-		return month;
+	public LocalDate getDay() {
+		return day;
 	}
 
 	@Override
@@ -60,8 +57,8 @@ public abstract class PcfSource implements IPcfSource {
 	}
 
 	@Override
-	public int compareTo(IPcfSource source) {
-		return getMonth().compareTo(source.getMonth());
+	public int compareTo(IPtfSource source) {
+		return getDay().compareTo(source.getDay());
 	}
 
 	@Override
@@ -76,20 +73,23 @@ public abstract class PcfSource implements IPcfSource {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void write(Collection<? extends IPriceCandle> candles) {
-		final List<IPriceCandle> list;
+		final List<ITickPriceCandle> ticks;
 		if (candles instanceof List) {
-			list = (List<IPriceCandle>) candles;
+			ticks = (List<ITickPriceCandle>) candles;
 		} else {
-			list = new ArrayList<>(candles);
+			ticks = new ArrayList<>(candles.size());
+			for (IPriceCandle candle : candles) {
+				ticks.add((ITickPriceCandle) candle);
+			}
 		}
-		write(list);
+		write(ticks);
 	}
 
-	public void write(List<IPriceCandle> candles) {
+	public void write(List<ITickPriceCandle> candles) {
 		if (candles.isEmpty()) {
 			throw new IllegalArgumentException("candles is empty");
 		}
-		checkMonth(candles);
+		checkDay(candles);
 
 		if (!exists()) {
 			if (!create()) {
@@ -108,21 +108,21 @@ public abstract class PcfSource implements IPcfSource {
 		log.debug("Written PCF file: " + getName() + ", " + number(candles) + " candles in " + timer);
 	}
 
-	private void checkMonth(Collection<? extends IPriceCandle> candles) {
-		for (IPriceCandle candle : candles) {
-			checkMonth(candle);
+	private void checkDay(List<ITickPriceCandle> candles) {
+		for (ITickPriceCandle candle : candles) {
+			checkDay(candle);
 		}
 	}
 
-	private void checkMonth(IPriceCandle candle) {
-		if (!month.equals(PcfFormat.getMonth(candle))) {
-			throw new IllegalArgumentException("Incorrect month for candle: " + candle + ", month=" + month);
+	private void checkDay(ITickPriceCandle candle) {
+		if (!day.equals(PtfFormat.getDay(candle))) {
+			throw new IllegalArgumentException("Incorrect month for candle: " + candle + ", month=" + day);
 		}
 	}
 
 	@Override
-	public List<IPriceCandle> read() {
-		List<IPriceCandle> candles = cached.get();
+	public List<ITickPriceCandle> read() {
+		List<ITickPriceCandle> candles = cached.get();
 		if (candles != null) {
 			return candles;
 		}
