@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatterBuilder;
 import java.time.temporal.ChronoField;
 
 import com.google.common.io.PatternFilenameFilter;
-import com.robindrew.trading.price.candle.ITickPriceCandle;
+import com.robindrew.trading.price.candle.IPriceCandle;
 import com.robindrew.trading.price.candle.format.pcf.PcfFormat;
 import com.robindrew.trading.price.candle.interval.IPriceInterval;
 import com.robindrew.trading.price.candle.interval.PriceIntervals;
@@ -58,15 +58,15 @@ public class PtfFormat {
 		return LocalDate.parse(filename.substring(0, index), DAY_FORMATTER);
 	}
 
-	public static final LocalDate getDay(ITickPriceCandle tick) {
+	public static final LocalDate getDay(IPriceCandle tick) {
 		return getLocalDateTime(tick).toLocalDate();
 	}
 
-	private static final LocalDateTime getLocalDateTime(ITickPriceCandle tick) {
+	private static final LocalDateTime getLocalDateTime(IPriceCandle tick) {
 		return DAILY.getDateTime(tick);
 	}
 
-	public static final long getNormalizedDay(ITickPriceCandle tick) {
+	public static final long getNormalizedDay(IPriceCandle tick) {
 		return DAILY.getTimePeriod(tick);
 	}
 
