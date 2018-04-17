@@ -34,6 +34,7 @@ public class TransactionLog extends AbstractTransactionLog implements ITransacti
 
 	private final File directory;
 	private final BlockingDeque<Entry> entryQueue = new LinkedBlockingDeque<>();
+	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss,S");
 
 	public TransactionLog(File directory) {
 		this.directory = Check.existsDirectory("directory", directory);
@@ -70,6 +71,9 @@ public class TransactionLog extends AbstractTransactionLog implements ITransacti
 			if (currentFile == null || !currentFile.equals(entryFile)) {
 				close(currentWriter);
 				currentFile = entryFile;
+				if (!currentFile.exists()) {
+					log.info("[New Log File] {}", currentFile);
+				}
 				currentWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(currentFile, true), UTF_8));
 			}
 
@@ -94,7 +98,6 @@ public class TransactionLog extends AbstractTransactionLog implements ITransacti
 
 	private String formatDate(long timestamp) {
 		LocalDateTime date = Dates.toLocalDateTime(timestamp);
-		DateTimeFormatter formatter = DateTimeFormatter.BASIC_ISO_DATE;
 		return date.format(formatter);
 	}
 
