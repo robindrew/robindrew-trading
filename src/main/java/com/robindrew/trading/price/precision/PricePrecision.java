@@ -2,7 +2,6 @@ package com.robindrew.trading.price.precision;
 
 import java.math.BigDecimal;
 
-import com.robindrew.common.util.Check;
 import com.robindrew.trading.price.decimal.Decimals;
 
 public class PricePrecision implements IPricePrecision {
