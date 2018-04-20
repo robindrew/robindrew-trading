@@ -8,28 +8,14 @@ import com.robindrew.trading.price.decimal.Decimals;
 public class PricePrecision implements IPricePrecision {
 
 	private final int decimalPlaces;
-	private final int minPrice;
-	private final int maxPrice;
 
-	public PricePrecision(int decimalPlaces, int minPrice, int maxPrice) {
+	public PricePrecision(int decimalPlaces) {
 		this.decimalPlaces = decimalPlaces;
-		this.minPrice = Check.min("minPrice", minPrice, 1);
-		this.maxPrice = Check.min("maxPrice", maxPrice, minPrice + 1);
 	}
 
 	@Override
 	public int getDecimalPlaces() {
 		return decimalPlaces;
-	}
-
-	@Override
-	public int getMinPrice() {
-		return minPrice;
-	}
-
-	@Override
-	public int getMaxPrice() {
-		return maxPrice;
 	}
 
 	@Override
