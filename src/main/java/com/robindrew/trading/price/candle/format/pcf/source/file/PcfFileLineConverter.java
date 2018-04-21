@@ -12,7 +12,6 @@ import com.robindrew.common.util.Check;
 import com.robindrew.trading.IInstrument;
 import com.robindrew.trading.price.candle.IPriceCandle;
 import com.robindrew.trading.price.candle.PriceCandleDateComparator;
-import com.robindrew.trading.price.candle.checker.PriceCandleRangeChecker;
 import com.robindrew.trading.price.candle.filter.PriceCandleConsecutiveFilter;
 import com.robindrew.trading.price.candle.format.pcf.PcfFormat;
 import com.robindrew.trading.price.candle.format.pcf.source.IPcfSource;
@@ -22,7 +21,6 @@ import com.robindrew.trading.price.candle.interval.PriceIntervals;
 import com.robindrew.trading.price.candle.io.list.filter.PriceCandleListDuplicateFilter;
 import com.robindrew.trading.price.candle.io.list.source.IPriceCandleListSource;
 import com.robindrew.trading.price.candle.io.stream.source.IPriceCandleStreamSource;
-import com.robindrew.trading.price.candle.io.stream.source.PriceCandleCheckerStreamSource;
 import com.robindrew.trading.price.candle.io.stream.source.PriceCandleDirectoryStreamSource;
 import com.robindrew.trading.price.candle.io.stream.source.PriceCandleFilteredStreamSource;
 import com.robindrew.trading.price.candle.io.stream.source.PriceCandleIntervalStreamSource;
@@ -43,8 +41,6 @@ public class PcfFileLineConverter {
 	private boolean verify = true;
 	private int loggingFrequency = 1000;
 	private int multiplier = 0;
-	private int minPrice = 1;
-	private int maxPrice = Integer.MAX_VALUE;
 
 	public PcfFileLineConverter(IPcfSourceManager manager, IPriceCandleLineParser parser, ILineFilter filter) {
 		this.manager = Check.notNull("manager", manager);
@@ -62,14 +58,6 @@ public class PcfFileLineConverter {
 
 	public void setLoggingFrequency(int loggingFrequency) {
 		this.loggingFrequency = loggingFrequency;
-	}
-
-	public void setMinPrice(int minPrice) {
-		this.minPrice = minPrice;
-	}
-
-	public void setMaxPrice(int maxPrice) {
-		this.maxPrice = maxPrice;
 	}
 
 	public void setMultiplier(int multiplier) {
@@ -120,7 +108,6 @@ public class PcfFileLineConverter {
 		source = new PriceCandleIntervalStreamSource(source, PriceIntervals.MINUTELY);
 		source = new PriceCandleModifierStreamSource(source, new PriceCandleMultiplyModifier(multiplier));
 		source = new PriceCandleLoggedStreamSource(source, loggingFrequency);
-		source = new PriceCandleCheckerStreamSource(source, new PriceCandleRangeChecker(minPrice, maxPrice));
 		return new PriceCandleIntervalStreamToListSource(source, interval);
 	}
 
