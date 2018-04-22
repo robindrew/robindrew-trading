@@ -37,9 +37,8 @@ public abstract class StreamingService<I extends IInstrument> implements IStream
 		return stream;
 	}
 
-	@SuppressWarnings("unchecked")
 	protected void registerStream(IInstrumentPriceStream<I> stream) {
-		I instrument = (I) stream.getInstrument();
+		I instrument = stream.getInstrument();
 		if (streamMap.putIfAbsent(instrument, stream) != null) {
 			throw new IllegalStateException("stream already registered for instrument: " + instrument);
 		}

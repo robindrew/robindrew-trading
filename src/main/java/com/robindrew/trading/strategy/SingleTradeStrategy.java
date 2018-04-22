@@ -14,13 +14,13 @@ import com.robindrew.trading.position.order.IPositionOrder;
 import com.robindrew.trading.price.candle.IPriceCandle;
 import com.robindrew.trading.price.precision.IPricePrecision;
 
-public abstract class SingleTradeStrategy extends AbstractTradingStrategy {
+public abstract class SingleTradeStrategy<I extends IInstrument> extends AbstractTradingStrategy<I> {
 
 	private static final Logger log = LoggerFactory.getLogger(SingleTradeStrategy.class);
 
 	private final AtomicReference<IPosition> openPosition = new AtomicReference<IPosition>();
 
-	protected SingleTradeStrategy(String name, ITradingPlatform platform, IInstrument instrument) {
+	protected SingleTradeStrategy(String name, ITradingPlatform<I> platform, IInstrument instrument) {
 		super(name, platform, instrument);
 	}
 
