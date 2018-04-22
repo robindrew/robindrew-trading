@@ -91,7 +91,15 @@ public class TransactionLog extends AbstractTransactionLog implements ITransacti
 		line.append(' ');
 		line.append(entry.getHeader());
 		line.append('\n');
-		line.append(Strings.json(entry.getContent(), true));
+
+		// Content
+		Object content = entry.getContent();
+		if (content instanceof CharSequence) {
+			line.append(content);
+		} else {
+			line.append(Strings.json(content, true));
+		}
+
 		line.append('\n');
 		writer.write(Strings.chars(line));
 	}
