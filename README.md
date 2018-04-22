@@ -10,7 +10,7 @@ Sub Project | Description | Type
 [robindrew-trading-igindex-feed](https://github.com/robindrew/robindrew-trading-igindex-feed) | IG Index Feed | Service
 [robindrew-trading-igindex-trader](https://github.com/robindrew/robindrew-trading-igindex-trader) | IG Index Trader | Service
 [robindrew-trading-fxcm](https://github.com/robindrew/robindrew-trading-fxcm) | FXCM | Provider
-[robindrew-trading-fxcm-trader](https://github.com/robindrew/robindrew-trading-fxcm-data) | FXCM Trader | Service
+[robindrew-trading-fxcm-trader](https://github.com/robindrew/robindrew-trading-fxcm-trader) | FXCM Trader | Service
 [robindrew-trading-fxcm-data](https://github.com/robindrew/robindrew-trading-fxcm-data) | FXCM | PCF Data
 [robindrew-trading-activetick](https://github.com/robindrew/robindrew-trading-activetick) | ActiveTick | Provider
 [robindrew-trading-activetick-feed](https://github.com/robindrew/robindrew-trading-activetick-feed) | ActiveTick Feed | Service
