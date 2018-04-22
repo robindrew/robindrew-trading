@@ -10,6 +10,7 @@ Sub Project | Description | Type
 [robindrew-trading-igindex-feed](https://github.com/robindrew/robindrew-trading-igindex-feed) | IG Index Feed | Service
 [robindrew-trading-igindex-trader](https://github.com/robindrew/robindrew-trading-igindex-trader) | IG Index Trader | Service
 [robindrew-trading-fxcm](https://github.com/robindrew/robindrew-trading-fxcm) | FXCM | Provider
+[robindrew-trading-fxcm-trader](https://github.com/robindrew/robindrew-trading-fxcm-data) | FXCM Trader | Service
 [robindrew-trading-fxcm-data](https://github.com/robindrew/robindrew-trading-fxcm-data) | FXCM | PCF Data
 [robindrew-trading-activetick](https://github.com/robindrew/robindrew-trading-activetick) | ActiveTick | Provider
 [robindrew-trading-activetick-feed](https://github.com/robindrew/robindrew-trading-activetick-feed) | ActiveTick Feed | Service
@@ -43,6 +44,7 @@ Note: IG Index does **not** provide access to any useful quantity of historic pr
 A provider is an implementation of the trading platform along with supporting classes to simplify access to existing broker APIs.
 The following providers are available, including a provider specifically for backtesting against historic data:
 * [IG Index Provider](https://github.com/robindrew/robindrew-trading-igindex)
+* [FXCM Provider](https://github.com/robindrew/robindrew-trading-fxcm)
 * [Active Tick Provider](https://github.com/robindrew/robindrew-trading-activetick)
 * [Backtest Provider](https://github.com/robindrew/robindrew-trading-backtest)
 
@@ -55,8 +57,9 @@ The following projects provide access to the live data feed for the given provid
 * [Active Tick Feed Service](https://github.com/robindrew/robindrew-trading-activetick-feed)
 
 #### Live Trading
-The following projects provide trading access for the given provider, including position management, history and execution. Currently there is only one trading service:
-* [IG Index Trader Service](https://github.com/robindrew/robindrew-trading/wiki/Service:-IG-Index-Trader)
+The following projects provide trading access for the given provider, including position management, history and execution:
+* [IG Index Trader Service](https://github.com/robindrew/robindrew-trading-igindex-trader)
+* [FXCM Trader Service](https://github.com/robindrew/robindrew-trading-fxcm-trader)
 
 #### Backtesting
 The following project provides a web interface to the backtesting provider, along with visualisation for historic prices in PCF format:
