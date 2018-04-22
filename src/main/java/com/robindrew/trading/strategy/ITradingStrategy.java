@@ -5,9 +5,9 @@ import com.robindrew.trading.platform.ITradingPlatform;
 import com.robindrew.trading.platform.positions.IPositionService;
 import com.robindrew.trading.price.candle.io.stream.sink.IPriceCandleStreamSink;
 
-public interface ITradingStrategy extends IPriceCandleStreamSink {
+public interface ITradingStrategy<I extends IInstrument> extends IPriceCandleStreamSink {
 
-	ITradingPlatform getPlatform();
+	ITradingPlatform<I> getPlatform();
 
 	IPositionService getPositionService();
 

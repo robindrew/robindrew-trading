@@ -4,13 +4,13 @@ import com.robindrew.trading.IInstrument;
 import com.robindrew.trading.price.candle.io.stream.sink.IPriceCandleStreamSink;
 import com.robindrew.trading.price.candle.streaming.IStreamingCandlePrice;
 
-public interface IInstrumentPriceStream extends IPriceCandleStreamSink {
+public interface IInstrumentPriceStream<I extends IInstrument> extends IPriceCandleStreamSink {
 
 	/**
 	 * Returns the instrument for which this stream prices.
 	 * @return the instrument for which this stream prices.
 	 */
-	IInstrument getInstrument();
+	I getInstrument();
 
 	/**
 	 * Returns the latest price from the stream.

@@ -9,18 +9,18 @@ import com.robindrew.trading.price.candle.IPriceCandle;
 import com.robindrew.trading.price.candle.io.stream.sink.IPriceCandleStreamSink;
 import com.robindrew.trading.price.candle.streaming.StreamingPriceCandle;
 
-public abstract class InstrumentPriceStream implements IInstrumentPriceStream {
+public abstract class InstrumentPriceStream<I extends IInstrument> implements IInstrumentPriceStream<I> {
 
-	private final IInstrument instrument;
+	private final I instrument;
 	private final StreamingPriceCandle price = new StreamingPriceCandle();
 	private final Set<IPriceCandleStreamSink> subscriberSet = new CopyOnWriteArraySet<>();
 
-	protected InstrumentPriceStream(IInstrument instrument) {
+	protected InstrumentPriceStream(I instrument) {
 		this.instrument = Check.notNull("instrument", instrument);
 	}
 
 	@Override
-	public IInstrument getInstrument() {
+	public I getInstrument() {
 		return instrument;
 	}
 

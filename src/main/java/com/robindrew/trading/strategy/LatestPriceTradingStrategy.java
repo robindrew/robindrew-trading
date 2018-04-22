@@ -8,11 +8,11 @@ import com.robindrew.trading.price.candle.io.stream.sink.LatestPriceCandleSink;
 import com.robindrew.trading.price.candle.streaming.IPriceCandleSnapshot;
 import com.robindrew.trading.price.candle.streaming.IStreamingCandlePrice;
 
-public abstract class LatestPriceTradingStrategy extends AbstractTradingStrategy implements ILatestPriceTradingStrategy {
+public abstract class LatestPriceTradingStrategy<I extends IInstrument> extends AbstractTradingStrategy<I> implements ILatestPriceTradingStrategy<I> {
 
 	private final LatestPriceCandleSink priceSink;
 
-	protected LatestPriceTradingStrategy(String name, ITradingPlatform platform, IInstrument instrument) {
+	protected LatestPriceTradingStrategy(String name, ITradingPlatform<I> platform, IInstrument instrument) {
 		super(name, platform, instrument);
 		this.priceSink = new LatestPriceCandleSink(name);
 	}

@@ -5,13 +5,13 @@ import com.robindrew.trading.IInstrument;
 import com.robindrew.trading.platform.ITradingPlatform;
 import com.robindrew.trading.platform.positions.IPositionService;
 
-public abstract class AbstractTradingStrategy implements ITradingStrategy {
+public abstract class AbstractTradingStrategy<I extends IInstrument> implements ITradingStrategy<I> {
 
 	private final String name;
-	private final ITradingPlatform platform;
+	private final ITradingPlatform<I> platform;
 	private final IInstrument instrument;
 
-	protected AbstractTradingStrategy(String name, ITradingPlatform platform, IInstrument instrument) {
+	protected AbstractTradingStrategy(String name, ITradingPlatform<I> platform, IInstrument instrument) {
 		this.name = Check.notEmpty("name", name);
 		this.platform = Check.notNull("platform", platform);
 		this.instrument = Check.notNull("instrument", instrument);
@@ -28,7 +28,7 @@ public abstract class AbstractTradingStrategy implements ITradingStrategy {
 	}
 
 	@Override
-	public final ITradingPlatform getPlatform() {
+	public final ITradingPlatform<I> getPlatform() {
 		return platform;
 	}
 

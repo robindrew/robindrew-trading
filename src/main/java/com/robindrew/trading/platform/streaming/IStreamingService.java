@@ -4,17 +4,19 @@ import java.util.Set;
 
 import com.robindrew.trading.IInstrument;
 
-public interface IStreamingService extends AutoCloseable {
+public interface IStreamingService<I extends IInstrument> extends AutoCloseable {
 
-	boolean supports(IInstrument instrument);
+	boolean isSubscribed(I instrument);
 
-	Set<IInstrumentPriceStream> getPriceStreams();
+	boolean supports(I instrument);
 
-	IInstrumentPriceStream getPriceStream(IInstrument instrument);
+	boolean subscribe(I instrument);
 
-	void register(IInstrumentPriceStream stream);
+	boolean unsubscribe(I instrument);
 
-	void unregister(IInstrument instrument);
+	Set<IInstrumentPriceStream<I>> getPriceStreams();
+
+	IInstrumentPriceStream<I> getPriceStream(I instrument);
 
 	void connect();
 

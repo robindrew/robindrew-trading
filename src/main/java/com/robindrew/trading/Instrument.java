@@ -3,6 +3,7 @@ package com.robindrew.trading;
 import org.apache.commons.lang3.builder.CompareToBuilder;
 
 import com.robindrew.common.util.Check;
+import com.robindrew.trading.price.precision.IPricePrecision;
 
 public class Instrument implements IInstrument {
 
@@ -87,6 +88,11 @@ public class Instrument implements IInstrument {
 			return underlying.matches(instrument);
 		}
 		return false;
+	}
+
+	@Override
+	public IPricePrecision getPrecision() {
+		throw new UnsupportedOperationException();
 	}
 
 }
