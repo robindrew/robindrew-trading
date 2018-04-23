@@ -31,18 +31,22 @@ public class PriceCandleSnapshot implements IPriceCandleSnapshot {
 		this.previous = Check.notNull("previous", previous);
 	}
 
+	@Override
 	public long getTimestamp() {
 		return timestamp;
 	}
 
+	@Override
 	public Optional<IPriceCandle> getPrevious() {
 		return Optional.ofNullable(previous);
 	}
 
+	@Override
 	public IPriceCandle getLatest() {
 		return latest;
 	}
 
+	@Override
 	public TradeDirection getDirection() {
 		if (previous == null) {
 			return BUY;

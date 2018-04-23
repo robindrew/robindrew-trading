@@ -1,8 +1,16 @@
 package com.robindrew.trading.price.candle.streaming;
 
-import java.util.concurrent.atomic.AtomicLong;
-import java.util.concurrent.atomic.AtomicReference;
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
+import static java.util.concurrent.TimeUnit.MINUTES;
 
+import java.util.Deque;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicLong;
+
+import com.google.common.collect.ImmutableList;
+import com.robindrew.common.date.UnitTime;
 import com.robindrew.trading.price.candle.IPriceCandle;
 
 /**
@@ -10,12 +18,39 @@ import com.robindrew.trading.price.candle.IPriceCandle;
  */
 public class StreamingPriceCandle implements IStreamingCandlePrice {
 
-	private final AtomicReference<PriceCandleSnapshot> priceSnapshot = new AtomicReference<PriceCandleSnapshot>();
+	private static final UnitTime DEFAULT_SINCE = new UnitTime(15, MINUTES);
+
 	private final AtomicLong count = new AtomicLong(0);
+	private final Deque<PriceCandleSnapshot> snapshots = new LinkedList<>();
+	private final long since;
+
+	public StreamingPriceCandle(long since) {
+		if (since < 1) {
+			throw new IllegalArgumentException("since=" + since);
+		}
+		this.since = since;
+	}
+
+	public StreamingPriceCandle(UnitTime since) {
+		this(since.getTime(MILLISECONDS));
+	}
+
+	public StreamingPriceCandle(long time, TimeUnit unit) {
+		this(unit.toMillis(time));
+	}
+
+	public StreamingPriceCandle() {
+		this(DEFAULT_SINCE);
+	}
 
 	@Override
 	public PriceCandleSnapshot getSnapshot() {
-		return priceSnapshot.get();
+		synchronized (snapshots) {
+			if (snapshots.isEmpty()) {
+				return null;
+			}
+			return snapshots.getLast();
+		}
 	}
 
 	@Override
@@ -28,14 +63,43 @@ public class StreamingPriceCandle implements IStreamingCandlePrice {
 	}
 
 	public void update(IPriceCandle candle, long timestamp) {
-		PriceCandleSnapshot snapshot = priceSnapshot.get();
+		PriceCandleSnapshot snapshot = getSnapshot();
 		if (snapshot == null) {
 			snapshot = new PriceCandleSnapshot(candle, timestamp);
 		} else {
 			snapshot = snapshot.update(candle, timestamp);
 		}
-		priceSnapshot.set(snapshot);
+		synchronized (snapshots) {
+			if (addNextSnapshot(snapshot)) {
+				clearPreviousSnapshots();
+			}
+		}
 		count.incrementAndGet();
+	}
+
+	private boolean addNextSnapshot(PriceCandleSnapshot snapshot) {
+		if (snapshots.isEmpty() || snapshots.getLast().getTimestamp() <= snapshot.getTimestamp()) {
+			snapshots.addLast(snapshot);
+			return true;
+		}
+		return false;
+	}
+
+	private void clearPreviousSnapshots() {
+		long limit = System.currentTimeMillis() - since;
+		while (snapshots.size() > 1 && snapshots.getFirst().getTimestamp() < limit) {
+			snapshots.removeFirst();
+		}
+	}
+
+	@Override
+	public List<IPriceCandleSnapshot> getSnapshotHistory() {
+		synchronized (snapshots) {
+			clearPreviousSnapshots();
+
+			// Copy the list
+			return ImmutableList.copyOf(snapshots);
+		}
 	}
 
 }
