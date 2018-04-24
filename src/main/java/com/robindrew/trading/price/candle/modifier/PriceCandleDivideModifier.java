@@ -35,7 +35,9 @@ public class PriceCandleDivideModifier implements IPriceCandleModifier {
 		int low = candle.getMidLowPrice() / divideBy;
 		int close = candle.getMidClosePrice() / divideBy;
 
-		return new MidPriceCandle(open, high, low, close, openTime, closeTime, candle.getDecimalPlaces() - decimalPlaces);
+		long tickVolume = candle.getTickVolume();
+
+		return new MidPriceCandle(open, high, low, close, openTime, closeTime, candle.getDecimalPlaces() - decimalPlaces, tickVolume);
 	}
 
 }

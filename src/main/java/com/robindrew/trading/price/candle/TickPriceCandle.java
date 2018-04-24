@@ -142,6 +142,7 @@ public class TickPriceCandle extends AbstractPriceCandle implements ITickPriceCa
 
 	@Override
 	public long getTickVolume() {
+		// This is a single tick!
 		return 1;
 	}
 }

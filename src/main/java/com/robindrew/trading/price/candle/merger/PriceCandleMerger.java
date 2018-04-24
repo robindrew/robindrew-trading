@@ -35,8 +35,9 @@ public class PriceCandleMerger {
 		int highPrice = Math.max(candle1.getMidHighPrice(), candle2.getMidHighPrice());
 		int lowPrice = Math.min(candle1.getMidLowPrice(), candle2.getMidLowPrice());
 
-		MidPriceCandle merged = new MidPriceCandle(openPrice, highPrice, lowPrice, closePrice, openTime, closeTime, candle1.getDecimalPlaces());
-		return merged;
+		long tickVolume = candle1.getTickVolume() + candle2.getTickVolume();
+
+		return new MidPriceCandle(openPrice, highPrice, lowPrice, closePrice, openTime, closeTime, candle1.getDecimalPlaces(), tickVolume);
 	}
 
 	public IPriceCandle merge(Collection<? extends IPriceCandle> candles) {
@@ -54,6 +55,8 @@ public class PriceCandleMerger {
 		int highPrice = 0;
 		int lowPrice = 0;
 
+		long tickVolume = 0;
+
 		boolean first = true;
 		for (IPriceCandle candle : candles) {
 
@@ -70,6 +73,8 @@ public class PriceCandleMerger {
 				closePrice = candle.getMidClosePrice();
 				highPrice = candle.getMidHighPrice();
 				lowPrice = candle.getMidLowPrice();
+
+				tickVolume = candle.getTickVolume();
 			}
 
 			// Remaining candles ...
@@ -87,10 +92,12 @@ public class PriceCandleMerger {
 				closePrice = candle.getMidClosePrice();
 				highPrice = Math.max(highPrice, candle.getMidHighPrice());
 				lowPrice = Math.min(lowPrice, candle.getMidLowPrice());
+				
+				tickVolume += candle.getTickVolume();
 			}
 		}
 
-		return new MidPriceCandle(openPrice, highPrice, lowPrice, closePrice, openTime, closeTime, decimalPlaces);
+		return new MidPriceCandle(openPrice, highPrice, lowPrice, closePrice, openTime, closeTime, decimalPlaces, tickVolume);
 	}
 
 }

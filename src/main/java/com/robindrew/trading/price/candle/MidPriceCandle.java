@@ -14,8 +14,9 @@ public class MidPriceCandle extends AbstractPriceCandle {
 	private final long openTime;
 	private final long closeTime;
 	private final byte decimalPlaces;
+	private final long tickVolume;
 
-	public MidPriceCandle(int openPrice, int highPrice, int lowPrice, int closePrice, long openTime, long closeTime, int decimalPlaces) {
+	public MidPriceCandle(int openPrice, int highPrice, int lowPrice, int closePrice, long openTime, long closeTime, int decimalPlaces, long tickVolume) {
 		if (openPrice <= 0) {
 			throw new IllegalArgumentException("openPrice=" + openPrice);
 		}
@@ -27,6 +28,9 @@ public class MidPriceCandle extends AbstractPriceCandle {
 		}
 		if (closePrice <= 0) {
 			throw new IllegalArgumentException("closePrice=" + closePrice);
+		}
+		if (tickVolume < 0) {
+			throw new IllegalArgumentException("tickVolume=" + tickVolume);
 		}
 
 		// Sanity checks
@@ -45,7 +49,7 @@ public class MidPriceCandle extends AbstractPriceCandle {
 		if (openTime > closeTime) {
 			throw new IllegalArgumentException("openTime=" + openTime + ", closeTime=" + closeTime);
 		}
-		if (decimalPlaces < 0 || decimalPlaces > 6) {
+		if (decimalPlaces < 0 || decimalPlaces > 9) {
 			throw new IllegalArgumentException("decimalPlaces=" + decimalPlaces);
 		}
 
@@ -56,6 +60,7 @@ public class MidPriceCandle extends AbstractPriceCandle {
 		this.openTime = openTime;
 		this.closeTime = closeTime;
 		this.decimalPlaces = (byte) decimalPlaces;
+		this.tickVolume = tickVolume;
 	}
 
 	@Override
@@ -148,6 +153,6 @@ public class MidPriceCandle extends AbstractPriceCandle {
 
 	@Override
 	public long getTickVolume() {
-		return 0;
+		return tickVolume;
 	}
 }

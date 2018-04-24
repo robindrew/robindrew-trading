@@ -20,8 +20,9 @@ public class PriceCandle extends AbstractPriceCandle {
 	private final long closeTime;
 
 	private final byte decimalPlaces;
+	private final long tickVolume;
 
-	public PriceCandle(int bidOpenPrice, int bidHighPrice, int bidLowPrice, int bidClosePrice, int askOpenPrice, int askHighPrice, int askLowPrice, int askClosePrice, long openTime, long closeTime, int decimalPlaces) {
+	public PriceCandle(int bidOpenPrice, int bidHighPrice, int bidLowPrice, int bidClosePrice, int askOpenPrice, int askHighPrice, int askLowPrice, int askClosePrice, long openTime, long closeTime, int decimalPlaces, long tickVolume) {
 
 		if (bidOpenPrice <= 0) {
 			throw new IllegalArgumentException("bidOpenPrice=" + bidOpenPrice);
@@ -81,6 +82,9 @@ public class PriceCandle extends AbstractPriceCandle {
 		if (decimalPlaces < 0 || decimalPlaces > 6) {
 			throw new IllegalArgumentException("decimalPlaces=" + decimalPlaces);
 		}
+		if (tickVolume < 0) {
+			throw new IllegalArgumentException("tickVolume=" + tickVolume);
+		}
 
 		this.bidOpenPrice = bidOpenPrice;
 		this.bidHighPrice = bidHighPrice;
@@ -96,6 +100,7 @@ public class PriceCandle extends AbstractPriceCandle {
 		this.closeTime = closeTime;
 
 		this.decimalPlaces = (byte) decimalPlaces;
+		this.tickVolume = tickVolume;
 	}
 
 	@Override
@@ -175,6 +180,6 @@ public class PriceCandle extends AbstractPriceCandle {
 
 	@Override
 	public long getTickVolume() {
-		return 0;
+		return tickVolume;
 	}
 }

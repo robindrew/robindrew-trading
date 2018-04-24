@@ -55,7 +55,8 @@ public class PriceCandleGenerator {
 		int lowPrice = random.nextInt(openPrice - 100, openPrice - 1);
 		int closePrice = random.nextInt(lowPrice, highPrice);
 
-		return new MidPriceCandle(openPrice, highPrice, lowPrice, closePrice, openTime, closeTime, decimalPlaces);
+		long tickVolume = random.nextLong(1, 100);
+		return new MidPriceCandle(openPrice, highPrice, lowPrice, closePrice, openTime, closeTime, decimalPlaces, tickVolume);
 	}
 
 }

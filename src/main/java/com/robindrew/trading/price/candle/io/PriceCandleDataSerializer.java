@@ -31,7 +31,9 @@ public class PriceCandleDataSerializer implements IDataSerializer<IPriceCandle> 
 			int lowPrice = reader.readPositiveInt();
 			int closePrice = reader.readPositiveInt();
 
-			return new MidPriceCandle(openPrice, highPrice, lowPrice, closePrice, openTime, closeTime, decimalPlaces);
+			long tickVolume = reader.readPositiveLong();
+
+			return new MidPriceCandle(openPrice, highPrice, lowPrice, closePrice, openTime, closeTime, decimalPlaces, tickVolume);
 
 		} catch (IOException e) {
 
@@ -60,5 +62,7 @@ public class PriceCandleDataSerializer implements IDataSerializer<IPriceCandle> 
 		writer.writePositiveInt(candle.getMidHighPrice());
 		writer.writePositiveInt(candle.getMidLowPrice());
 		writer.writePositiveInt(candle.getMidClosePrice());
+
+		writer.writePositiveLong(candle.getTickVolume());
 	}
 }

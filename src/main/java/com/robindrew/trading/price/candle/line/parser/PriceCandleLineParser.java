@@ -62,7 +62,9 @@ public class PriceCandleLineParser implements IPriceCandleLineParser {
 		int low = Integer.parseInt(tokenizer.next(false));
 		int close = Integer.parseInt(tokenizer.next(false));
 
-		return new MidPriceCandle(open, high, low, close, toMillis(openDate), toMillis(closeDate), decimalPlaces);
+		long tickVolume = Long.parseLong(tokenizer.next(false));
+
+		return new MidPriceCandle(open, high, low, close, toMillis(openDate), toMillis(closeDate), decimalPlaces, tickVolume);
 	}
 
 }
