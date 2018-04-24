@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import com.robindrew.trading.price.candle.IPriceCandle;
 import com.robindrew.trading.price.candle.MidPriceCandle;
+import com.robindrew.trading.price.candle.PriceCandle;
 
 public class PriceCandleMerger {
 
@@ -12,32 +13,53 @@ public class PriceCandleMerger {
 			throw new IllegalArgumentException("Unable to merge candles with different precision");
 		}
 
-		long openTime;
-		int openPrice;
+		int decimalPlaces = candle1.getDecimalPlaces();
+
+		// Open
+		final long openTime;
+		final int bidOpenPrice;
+		final int askOpenPrice;
 		if (candle1.getOpenTime() <= candle2.getOpenTime()) {
 			openTime = candle1.getOpenTime();
-			openPrice = candle1.getMidOpenPrice();
+			bidOpenPrice = candle1.getBidOpenPrice();
+			askOpenPrice = candle1.getAskOpenPrice();
 		} else {
 			openTime = candle2.getOpenTime();
-			openPrice = candle2.getMidOpenPrice();
+			bidOpenPrice = candle2.getBidOpenPrice();
+			askOpenPrice = candle2.getAskOpenPrice();
 		}
 
-		long closeTime;
-		int closePrice;
+		// Close
+		final long closeTime;
+		final int bidClosePrice;
+		final int askClosePrice;
 		if (candle1.getCloseTime() >= candle2.getCloseTime()) {
 			closeTime = candle1.getCloseTime();
-			closePrice = candle1.getMidClosePrice();
+			bidClosePrice = candle1.getBidClosePrice();
+			askClosePrice = candle1.getAskClosePrice();
 		} else {
 			closeTime = candle2.getCloseTime();
-			closePrice = candle2.getMidClosePrice();
+			bidClosePrice = candle2.getBidClosePrice();
+			askClosePrice = candle2.getAskClosePrice();
 		}
 
-		int highPrice = Math.max(candle1.getMidHighPrice(), candle2.getMidHighPrice());
-		int lowPrice = Math.min(candle1.getMidLowPrice(), candle2.getMidLowPrice());
+		// High
+		int bidHighPrice = Math.max(candle1.getBidHighPrice(), candle2.getBidHighPrice());
+		int askHighPrice = Math.max(candle1.getAskHighPrice(), candle2.getAskHighPrice());
+
+		// Low
+		int bidLowPrice = Math.min(candle1.getBidLowPrice(), candle2.getBidLowPrice());
+		int askLowPrice = Math.min(candle1.getAskLowPrice(), candle2.getAskLowPrice());
 
 		long tickVolume = candle1.getTickVolume() + candle2.getTickVolume();
 
-		return new MidPriceCandle(openPrice, highPrice, lowPrice, closePrice, openTime, closeTime, candle1.getDecimalPlaces(), tickVolume);
+		// Check if this is a mid price candle
+		if (bidOpenPrice == askOpenPrice && bidClosePrice == askClosePrice && bidHighPrice == askHighPrice && bidLowPrice == askLowPrice) {
+			return new MidPriceCandle(bidOpenPrice, bidHighPrice, bidLowPrice, bidClosePrice, openTime, closeTime, decimalPlaces, tickVolume);
+		}
+
+		// Full bid/ask price candle
+		return new PriceCandle(bidOpenPrice, bidHighPrice, bidLowPrice, bidClosePrice, askOpenPrice, askHighPrice, askLowPrice, askClosePrice, openTime, closeTime, decimalPlaces, tickVolume);
 	}
 
 	public IPriceCandle merge(Collection<? extends IPriceCandle> candles) {
@@ -92,7 +114,7 @@ public class PriceCandleMerger {
 				closePrice = candle.getMidClosePrice();
 				highPrice = Math.max(highPrice, candle.getMidHighPrice());
 				lowPrice = Math.min(lowPrice, candle.getMidLowPrice());
-				
+
 				tickVolume += candle.getTickVolume();
 			}
 		}
