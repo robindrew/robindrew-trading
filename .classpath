@@ -10,6 +10,9 @@
 	<classpathentry kind="var" path="MAVEN_REPO/org/apache/commons/commons-lang3/3.7/commons-lang3-3.7.jar" sourcepath="MAVEN_REPO/org/apache/commons/commons-lang3/3.7/commons-lang3-3.7-sources.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/org/jfree/jcommon/1.0.24/jcommon-1.0.24.jar" sourcepath="MAVEN_REPO/org/jfree/jcommon/1.0.24/jcommon-1.0.24-sources.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/org/jfree/jfreechart/1.0.19/jfreechart-1.0.19.jar" sourcepath="MAVEN_REPO/org/jfree/jfreechart/1.0.19/jfreechart-1.0.19-sources.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/org/apache/httpcomponents/httpclient/4.5.2/httpclient-4.5.2.jar" sourcepath="MAVEN_REPO/org/apache/httpcomponents/httpclient/4.5.2/httpclient-4.5.2-sources.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/org/apache/httpcomponents/httpcore/4.4.5/httpcore-4.4.5.jar" sourcepath="MAVEN_REPO/org/apache/httpcomponents/httpcore/4.4.5/httpcore-4.4.5-sources.jar"/>
+	<classpathentry kind="var" path="MAVEN_REPO/com/google/code/gson/gson/2.8.2/gson-2.8.2.jar" sourcepath="MAVEN_REPO/com/google/code/gson/gson/2.8.2/gson-2.8.2-sources.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/robindrew-common"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
