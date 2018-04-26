@@ -19,6 +19,8 @@ Sub Project | Description | Type
 [robindrew-trading-backtest-executor](https://github.com/robindrew/robindrew-trading-backtest-executor) | Backtest Executor | Service
 [robindrew-trading-histdata](https://github.com/robindrew/robindrew-trading-histdata) | HistData | Provider
 [robindrew-trading-histdata-data](https://github.com/robindrew/robindrew-trading-histdata-data) | HistData | PCF Data
+[robindrew-trading-oanda](https://github.com/robindrew/robindrew-trading-oanda) | OANDA | Provider
+[robindrew-trading-oanda-trader](https://github.com/robindrew/robindrew-trading-oanda-trader) | OANDA | Service
 
 ## Articles
 Before you dive in to the API itself, please take a quick look at the following articles:
@@ -45,8 +47,10 @@ A provider is an implementation of the trading platform along with supporting cl
 The following providers are available, including a provider specifically for backtesting against historic data:
 * [IG Index Provider](https://github.com/robindrew/robindrew-trading-igindex)
 * [FXCM Provider](https://github.com/robindrew/robindrew-trading-fxcm)
+* [OANDA Provider](https://github.com/robindrew/robindrew-trading-oanda)
 * [Active Tick Provider](https://github.com/robindrew/robindrew-trading-activetick)
 * [Backtest Provider](https://github.com/robindrew/robindrew-trading-backtest)
+
 
 ## Services
 A service is a stand-alone web application providing a front end to various trading functionality.
