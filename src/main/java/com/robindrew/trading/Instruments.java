@@ -10,18 +10,33 @@ public class Instruments {
 	public static final IInstrument AUD_CAD = new Instrument("AUDCAD", CURRENCIES);
 	/** AUD/CHF. */
 	public static final IInstrument AUD_CHF = new Instrument("AUDCHF", CURRENCIES);
+	/** AUD/HKD. */
+	public static final IInstrument AUD_HKD = new Instrument("AUDHKD", CURRENCIES);
 	/** AUD/JPY. */
 	public static final IInstrument AUD_JPY = new Instrument("AUDJPY", CURRENCIES);
 	/** AUD/NZD. */
 	public static final IInstrument AUD_NZD = new Instrument("AUDNZD", CURRENCIES);
+	/** AUD/SGD. */
+	public static final IInstrument AUD_SGD = new Instrument("AUDSGD", CURRENCIES);
 	/** AUD/USD. */
 	public static final IInstrument AUD_USD = new Instrument("AUDUSD", CURRENCIES);
+
 	/** CAD/CHF. */
 	public static final IInstrument CAD_CHF = new Instrument("CADCHF", CURRENCIES);
+	/** CAD/HKD. */
+	public static final IInstrument CAD_HKD = new Instrument("CADHKD", CURRENCIES);
 	/** CAD/JPY. */
 	public static final IInstrument CAD_JPY = new Instrument("CADJPY", CURRENCIES);
+	/** CAD/SGD. */
+	public static final IInstrument CAD_SGD = new Instrument("CADSGD", CURRENCIES);
+
+	/** CHF/HKD. */
+	public static final IInstrument CHF_HKD = new Instrument("CHFHKD", CURRENCIES);
 	/** CHF/JPY. */
 	public static final IInstrument CHF_JPY = new Instrument("CHFJPY", CURRENCIES);
+	/** CHF/ZAR. */
+	public static final IInstrument CHF_ZAR = new Instrument("CHFZAR", CURRENCIES);
+
 	/** EUR/AUD. */
 	public static final IInstrument EUR_AUD = new Instrument("EURAUD", CURRENCIES);
 	/** EUR/CAD. */
@@ -50,6 +65,13 @@ public class Instruments {
 	public static final IInstrument EUR_TRY = new Instrument("EURTRY", CURRENCIES);
 	/** EUR/USD. */
 	public static final IInstrument EUR_USD = new Instrument("EURUSD", CURRENCIES);
+	/** EUR/HKD. */
+	public static final IInstrument EUR_HKD = new Instrument("EURHKD", CURRENCIES);
+	/** EUR/SGD. */
+	public static final IInstrument EUR_SGD = new Instrument("EURSGD", CURRENCIES);
+	/** EUR/ZAR. */
+	public static final IInstrument EUR_ZAR = new Instrument("EURZAR", CURRENCIES);
+
 	/** GBP/AUD. */
 	public static final IInstrument GBP_AUD = new Instrument("GBPAUD", CURRENCIES);
 	/** GBP/CAD. */
@@ -62,6 +84,18 @@ public class Instruments {
 	public static final IInstrument GBP_NZD = new Instrument("GBPNZD", CURRENCIES);
 	/** GBP/USD. */
 	public static final IInstrument GBP_USD = new Instrument("GBPUSD", CURRENCIES);
+	/** GBP/HKD. */
+	public static final IInstrument GBP_HKD = new Instrument("GBPHKD", CURRENCIES);
+	/** GBP/PLN. */
+	public static final IInstrument GBP_PLN = new Instrument("GBPPLN", CURRENCIES);
+	/** GBP/SGD. */
+	public static final IInstrument GBP_SGD = new Instrument("GBPSGD", CURRENCIES);
+	/** GBP/ZAR. */
+	public static final IInstrument GBP_ZAR = new Instrument("GBPZAR", CURRENCIES);
+
+	/** HKD/JPY. */
+	public static final IInstrument HKD_JPY = new Instrument("HKDJPY", CURRENCIES);
+
 	/** NZD/CAD. */
 	public static final IInstrument NZD_CAD = new Instrument("NZDCAD", CURRENCIES);
 	/** NZD/CHF. */
@@ -70,10 +104,24 @@ public class Instruments {
 	public static final IInstrument NZD_JPY = new Instrument("NZDJPY", CURRENCIES);
 	/** NZD/USD. */
 	public static final IInstrument NZD_USD = new Instrument("NZDUSD", CURRENCIES);
+	/** NZD/HKD. */
+	public static final IInstrument NZD_HKD = new Instrument("NZDHKD", CURRENCIES);
+	/** NZD/SGD. */
+	public static final IInstrument NZD_SGD = new Instrument("NZDSGD", CURRENCIES);
+
 	/** SGD/JPY. */
 	public static final IInstrument SGD_JPY = new Instrument("SGDJPY", CURRENCIES);
+	/** SGD/CHF. */
+	public static final IInstrument SGD_CHF = new Instrument("SGDCHF", CURRENCIES);
+	/** SGD/HKD. */
+	public static final IInstrument SGD_HKD = new Instrument("SGDHKD", CURRENCIES);
+
 	/** SPX/USD. */
 	public static final IInstrument SPX_USD = new Instrument("SPXUSD", CURRENCIES);
+
+	/** TRY/JPY. */
+	public static final IInstrument TRY_JPY = new Instrument("TRYJPY", CURRENCIES);
+
 	/** UDX/USD. */
 	public static final IInstrument UDX_USD = new Instrument("UDXUSD", CURRENCIES);
 	/** USD/CAD. */
@@ -104,22 +152,69 @@ public class Instruments {
 	public static final IInstrument USD_TRY = new Instrument("USDTRY", CURRENCIES);
 	/** USD/ZAR. */
 	public static final IInstrument USD_ZAR = new Instrument("USDZAR", CURRENCIES);
+	/** USD/CNH. */
+	public static final IInstrument USD_CNH = new Instrument("USDCNH", CURRENCIES);
+	/** USD/INR. */
+	public static final IInstrument USD_INR = new Instrument("USDINR", CURRENCIES);
+	/** USD/SAR. */
+	public static final IInstrument USD_SAR = new Instrument("USDSAR", CURRENCIES);
+	/** USD/THB. */
+	public static final IInstrument USD_THB = new Instrument("USDTHB", CURRENCIES);
+
 	/** WTI/USD. */
 	public static final IInstrument WTI_USD = new Instrument("WTIUSD", CURRENCIES);
-	/** XAG/USD. */
-	public static final IInstrument XAG_USD = new Instrument("XAGUSD", CURRENCIES);
-	/** XAU/AUD. */
-	public static final IInstrument XAU_AUD = new Instrument("XAUAUD", CURRENCIES);
-	/** XAU/CHF. */
-	public static final IInstrument XAU_CHF = new Instrument("XAUCHF", CURRENCIES);
-	/** XAU/EUR. */
-	public static final IInstrument XAU_EUR = new Instrument("XAUEUR", CURRENCIES);
-	/** XAU/GBP. */
-	public static final IInstrument XAU_GBP = new Instrument("XAUGBP", CURRENCIES);
-	/** XAU/USD. */
-	public static final IInstrument XAU_USD = new Instrument("XAUUSD", CURRENCIES);
+
 	/** ZAR/JPY. */
 	public static final IInstrument ZAR_JPY = new Instrument("ZARJPY", CURRENCIES);
+
+	/** XAG_AUD (Silver/AUD). */
+	public static final IInstrument XAG_AUD = new Instrument("XAGAUD", CURRENCIES);
+	/** XAG_CAD (Silver/CAD). */
+	public static final IInstrument XAG_CAD = new Instrument("XAGCAD", CURRENCIES);
+	/** XAG_CHF (Silver/CHF). */
+	public static final IInstrument XAG_CHF = new Instrument("XAGCHF", CURRENCIES);
+	/** XAG_EUR (Silver/EUR). */
+	public static final IInstrument XAG_EUR = new Instrument("XAGEUR", CURRENCIES);
+	/** XAG_GBP (Silver/GBP). */
+	public static final IInstrument XAG_GBP = new Instrument("XAGGBP", CURRENCIES);
+	/** XAG_HKD (Silver/HKD). */
+	public static final IInstrument XAG_HKD = new Instrument("XAGHKD", CURRENCIES);
+	/** XAG_JPY (Silver/JPY). */
+	public static final IInstrument XAG_JPY = new Instrument("XAGJPY", CURRENCIES);
+	/** XAG_NZD (Silver/NZD). */
+	public static final IInstrument XAG_NZD = new Instrument("XAGNZD", CURRENCIES);
+	/** XAG_SGD (Silver/SGD). */
+	public static final IInstrument XAG_SGD = new Instrument("XAGSGD", CURRENCIES);
+	/** XAG_USD (Silver). */
+	public static final IInstrument XAG_USD = new Instrument("XAGUSD", CURRENCIES);
+
+	/** XAU_AUD (Gold/AUD). */
+	public static final IInstrument XAU_AUD = new Instrument("XAUAUD", CURRENCIES);
+	/** XAU_CAD (Gold/CAD). */
+	public static final IInstrument XAU_CAD = new Instrument("XAUCAD", CURRENCIES);
+	/** XAU_CHF (Gold/CHF). */
+	public static final IInstrument XAU_CHF = new Instrument("XAUCHF", CURRENCIES);
+	/** XAU_EUR (Gold/EUR). */
+	public static final IInstrument XAU_EUR = new Instrument("XAUEUR", CURRENCIES);
+	/** XAU_GBP (Gold/GBP). */
+	public static final IInstrument XAU_GBP = new Instrument("XAUGBP", CURRENCIES);
+	/** XAU_HKD (Gold/HKD). */
+	public static final IInstrument XAU_HKD = new Instrument("XAUHKD", CURRENCIES);
+	/** XAU_JPY (Gold/JPY). */
+	public static final IInstrument XAU_JPY = new Instrument("XAUJPY", CURRENCIES);
+	/** XAU_NZD (Gold/NZD). */
+	public static final IInstrument XAU_NZD = new Instrument("XAUNZD", CURRENCIES);
+	/** XAU_SGD (Gold/SGD). */
+	public static final IInstrument XAU_SGD = new Instrument("XAUSGD", CURRENCIES);
+	/** XAU_USD (Gold). */
+	public static final IInstrument XAU_USD = new Instrument("XAUUSD", CURRENCIES);
+	/** XAU_XAG (Gold/Silver). */
+	public static final IInstrument XAU_XAG = new Instrument("XAUXAG", CURRENCIES);
+
+	/** XPD_USD (Palladium). */
+	public static final IInstrument XPD_USD = new Instrument("XPDUSD", CURRENCIES);
+	/** XPT_USD (Platinum). */
+	public static final IInstrument XPT_USD = new Instrument("XPTUSD", CURRENCIES);
 
 	/** Bitcoin. */
 	public static final IInstrument BITCOIN = new Instrument("BITCOIN", CURRENCIES);
@@ -134,16 +229,26 @@ public class Instruments {
 	public static final IInstrument FTSE_100 = new Instrument("FTSE100", INDICES);
 	/** CAC 40 (France 40). */
 	public static final IInstrument CAC_40 = new Instrument("CAC40", INDICES);
+	/** CHINA A50. */
+	public static final IInstrument CHINA_A50 = new Instrument("CHINAA50", INDICES);
 	/** DAX (German 30). */
-	public static final IInstrument DAX = new Instrument("DAX", INDICES);
+	public static final IInstrument DAX_30 = new Instrument("DAX", INDICES);
 	/** S&amp;P 500. */
 	public static final IInstrument SP_500 = new Instrument("SP500", INDICES);
 	/** DOW JONES. */
-	public static final IInstrument DOW_JONES = new Instrument("DOWJONES", INDICES);
+	public static final IInstrument DOW_JONES_30 = new Instrument("DOWJONES", INDICES);
+	/** NIFTY_50 (India 50). */
+	public static final IInstrument NIFTY_50 = new Instrument("NIFTY50", INDICES);
 	/** HANG SENG. */
-	public static final IInstrument HANG_SENG = new Instrument("HANGSENG", INDICES);
-	/** ASX 200. */
+	public static final IInstrument HANG_SENG_33 = new Instrument("HANGSENG33", INDICES);
+	/** AEX 25 (Netherlands 25) */
+	public static final IInstrument AEX_25 = new Instrument("AEX25", INDICES);
+	/** TAIEX (Taiwan ALL) */
+	public static final IInstrument TAIEX = new Instrument("TAIEX", INDICES);
+	/** ASX 200 (Australia 200). */
 	public static final IInstrument ASX_200 = new Instrument("ASX200", INDICES);
+	/** STRAITS TIMES (Singapore 30). */
+	public static final IInstrument STRAITS_TIMES_30 = new Instrument("STRAITSTIMES30", INDICES);
 	/** EURO STOXX 50. */
 	public static final IInstrument EURO_STOXX_50 = new Instrument("EUROSTOXX50", INDICES);
 	/** NASDAQ 100. */
@@ -152,11 +257,28 @@ public class Instruments {
 	public static final IInstrument NIKKEI_225 = new Instrument("NIKKEI225", INDICES);
 	/** US DOLLAR INDEX. */
 	public static final IInstrument US_DOLLAR_INDEX = new Instrument("USDOLLARINDEX", INDICES);
+	/** RUSSELL 2000. */
+	public static final IInstrument RUSSELL_2000 = new Instrument("RUSSELL2000", INDICES);
+
+	/** UK GILT (10Y). */
+	public static final IInstrument UK_GILT_10Y = new Instrument("UKGILT10Y", INDICES);
+	/** German BUND (10Y). */
+	public static final IInstrument DE_BUND_10Y = new Instrument("DEBUND10Y", INDICES);
+	/** US T-NOTE (2Y). */
+	public static final IInstrument US_TNOTE_2Y = new Instrument("USTNOTE2Y", INDICES);
+	/** US T-NOTE (5Y). */
+	public static final IInstrument US_TNOTE_5Y = new Instrument("USTNOTE5Y", INDICES);
+	/** US T-NOTE (10Y). */
+	public static final IInstrument US_TNOTE_10Y = new Instrument("USTNOTE10Y", INDICES);
+	/** US T-BOND (30Y). */
+	public static final IInstrument US_TBOND_30Y = new Instrument("USTBOND30Y", INDICES);
 
 	/** BRENT CRUDE OIL (Brent Crude). */
 	public static final IInstrument BRENT_CRUDE_OIL = new Instrument("BRENTCRUDEOIL", COMMODITIES);
 	/** US CRUDE OIL (West Texas Intermediate). */
 	public static final IInstrument US_CRUDE_OIL = new Instrument("USCRUDEOIL", COMMODITIES);
+	/** NATURAL GAS. */
+	public static final IInstrument NATURAL_GAS = new Instrument("NATURALGAS", COMMODITIES);
 
 	/** GOLD. */
 	public static final IInstrument GOLD = new Instrument("GOLD", COMMODITIES);
@@ -164,6 +286,19 @@ public class Instruments {
 	public static final IInstrument SILVER = new Instrument("SILVER", COMMODITIES);
 	/** PLATINUM. */
 	public static final IInstrument PLATINUM = new Instrument("PLATINUM", COMMODITIES);
+	/** PALLADIUM. */
+	public static final IInstrument PALLADIUM = new Instrument("PALLADIUM", COMMODITIES);
+	/** COPPER. */
+	public static final IInstrument COPPER = new Instrument("COPPER", COMMODITIES);
+
+	/** SUGAR. */
+	public static final IInstrument SUGAR = new Instrument("SUGAR", COMMODITIES);
+	/** CORN. */
+	public static final IInstrument CORN = new Instrument("CORN", COMMODITIES);
+	/** WHEAT. */
+	public static final IInstrument WHEAT = new Instrument("WHEAT", COMMODITIES);
+	/** SOYBEANS. */
+	public static final IInstrument SOYBEANS = new Instrument("SOYBEANS", COMMODITIES);
 
 	public static IInstrument valueOf(String name) {
 		switch (name) {
@@ -293,14 +428,14 @@ public class Instruments {
 				return FTSE_100;
 			case "CAC40":
 				return CAC_40;
-			case "DAX":
-				return DAX;
+			case "DAX30":
+				return DAX_30;
 			case "SP500":
 				return SP_500;
 			case "DOWJONES":
-				return DOW_JONES;
+				return DOW_JONES_30;
 			case "HANGSENG":
-				return HANG_SENG;
+				return HANG_SENG_33;
 			case "ASX200":
 				return ASX_200;
 			case "EUROSTOXX50":
