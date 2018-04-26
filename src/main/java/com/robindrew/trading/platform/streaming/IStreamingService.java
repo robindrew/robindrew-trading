@@ -18,11 +18,4 @@ public interface IStreamingService<I extends IInstrument> extends AutoCloseable 
 
 	IInstrumentPriceStream<I> getPriceStream(I instrument);
 
-	void connect();
-
-	boolean isConnected();
-
-	@Override
-	void close();
-
 }
