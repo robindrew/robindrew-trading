@@ -9,7 +9,6 @@ import com.robindrew.trading.position.IPosition;
 import com.robindrew.trading.position.closed.IClosedPosition;
 import com.robindrew.trading.position.order.IPositionOrder;
 import com.robindrew.trading.price.precision.IPricePrecision;
-import com.robindrew.trading.trade.funds.AccountFunds;
 
 public interface IPositionService {
 
@@ -22,8 +21,6 @@ public interface IPositionService {
 	IClosedPosition closePosition(IPosition position);
 
 	Map<IPosition, IClosedPosition> closePositions(Collection<? extends IPosition> positions);
-
-	AccountFunds getAvailableFunds();
 
 	IPosition openPosition(IPositionOrder order);
 

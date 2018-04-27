@@ -9,9 +9,8 @@ import com.robindrew.trading.position.IPosition;
 import com.robindrew.trading.position.closed.IClosedPosition;
 import com.robindrew.trading.position.order.IPositionOrder;
 import com.robindrew.trading.price.precision.IPricePrecision;
-import com.robindrew.trading.trade.funds.AccountFunds;
 
-public class UnavailablePositionService implements IPositionService {
+public class AbstractPositionService implements IPositionService {
 
 	@Override
 	public IPricePrecision getPrecision(IInstrument instrument) {
@@ -35,11 +34,6 @@ public class UnavailablePositionService implements IPositionService {
 
 	@Override
 	public Map<IPosition, IClosedPosition> closePositions(Collection<? extends IPosition> positions) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public AccountFunds getAvailableFunds() {
 		throw new UnsupportedOperationException();
 	}
 
