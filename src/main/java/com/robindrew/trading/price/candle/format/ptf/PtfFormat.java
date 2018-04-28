@@ -69,5 +69,4 @@ public class PtfFormat {
 	public static final long getNormalizedDay(IPriceCandle tick) {
 		return DAILY.getTimePeriod(tick);
 	}
-
 }

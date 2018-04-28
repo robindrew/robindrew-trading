@@ -30,7 +30,8 @@ public class PtfFileManager implements IPtfSourceManager {
 	public static File getDirectory(ITradeDataProvider provider, IInstrument instrument, File rootDirectory) {
 		File providerDir = new File(rootDirectory, provider.name());
 		File typeDir = new File(providerDir, instrument.getType().name());
-		return new File(typeDir, instrument.getName());
+		String name = instrument.getUnderlying(true).getName();
+		return new File(typeDir, name);
 	}
 
 	private final File rootDirectory;

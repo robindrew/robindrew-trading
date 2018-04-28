@@ -97,7 +97,7 @@ public abstract class PtfSource implements IPtfSource {
 			}
 		}
 
-		log.debug("Writing PCF file: {}", getName());
+		log.debug("Writing PTF file: {}", getName());
 		Stopwatch timer = Stopwatch.createStarted();
 		try (IDataWriter writer = new DataWriter(toByteSink().openBufferedStream())) {
 			serializer.writeObject(writer, candles);
@@ -105,7 +105,7 @@ public abstract class PtfSource implements IPtfSource {
 			throw Java.propagate(e);
 		}
 		timer.stop();
-		log.debug("Written PCF file: " + getName() + ", " + number(candles) + " candles in " + timer);
+		log.debug("Written PTF file: " + getName() + ", " + number(candles) + " candles in " + timer);
 	}
 
 	private void checkDay(List<ITickPriceCandle> candles) {
