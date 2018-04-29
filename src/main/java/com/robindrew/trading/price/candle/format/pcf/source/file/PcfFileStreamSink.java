@@ -24,7 +24,7 @@ public class PcfFileStreamSink implements IPriceCandleStreamSink {
 
 	@Override
 	public String getName() {
-		return "PcfDirectoryStreamSink";
+		return "PcfFileStreamSink";
 	}
 
 	public void setWritePartialFile(boolean enable) {
