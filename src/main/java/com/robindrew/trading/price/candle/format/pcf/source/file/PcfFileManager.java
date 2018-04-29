@@ -18,12 +18,11 @@ import com.robindrew.common.util.Check;
 import com.robindrew.trading.IInstrument;
 import com.robindrew.trading.Instrument;
 import com.robindrew.trading.InstrumentType;
-import com.robindrew.trading.price.candle.format.pcf.source.IPcfSourceManager;
 import com.robindrew.trading.price.candle.format.pcf.source.IPcfSourceSet;
 import com.robindrew.trading.provider.ITradeDataProvider;
 import com.robindrew.trading.provider.TradeDataProvider;
 
-public class PcfFileManager implements IPcfSourceManager {
+public class PcfFileManager implements IPcfFileManager {
 
 	private static final Logger log = LoggerFactory.getLogger(PcfFileManager.class);
 
@@ -67,6 +66,11 @@ public class PcfFileManager implements IPcfSourceManager {
 				}
 			}
 		}
+	}
+
+	@Override
+	public File getDirectory(ITradeDataProvider provider, IInstrument instrument) {
+		return getDirectory(provider, instrument, rootDirectory);
 	}
 
 	@Override
