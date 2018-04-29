@@ -32,7 +32,7 @@ public class PriceCandleListFilteredSink implements IPriceCandleListSink {
 	}
 
 	@Override
-	public void putNextCandles(List<IPriceCandle> candles) {
+	public void putNextCandles(List<? extends IPriceCandle> candles) {
 		candles = filter.filter(candles);
 		sink.putNextCandles(candles);
 	}

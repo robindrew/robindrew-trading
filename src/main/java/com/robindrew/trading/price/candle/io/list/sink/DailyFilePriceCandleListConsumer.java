@@ -34,7 +34,7 @@ public class DailyFilePriceCandleListConsumer implements IPriceCandleListSink {
 	}
 
 	@Override
-	public void putNextCandles(List<IPriceCandle> candles) {
+	public void putNextCandles(List<? extends IPriceCandle> candles) {
 		if (candles.isEmpty()) {
 			return;
 		}
@@ -43,12 +43,12 @@ public class DailyFilePriceCandleListConsumer implements IPriceCandleListSink {
 		writeCandles(candles, date);
 	}
 
-	private LocalDate getDate(List<IPriceCandle> candles) {
+	private LocalDate getDate(List<? extends IPriceCandle> candles) {
 		IPriceCandle first = candles.get(0);
 		return Dates.toLocalDateTime(first.getOpenTime()).toLocalDate();
 	}
 
-	private void writeCandles(List<IPriceCandle> candles, LocalDate date) {
+	private void writeCandles(List<? extends IPriceCandle> candles, LocalDate date) {
 		String lines = toLines(candles);
 
 		// We push all the lines out in one single write
@@ -72,7 +72,7 @@ public class DailyFilePriceCandleListConsumer implements IPriceCandleListSink {
 		return new File(directory, filename + "." + date + ".txt");
 	}
 
-	private String toLines(List<IPriceCandle> candles) {
+	private String toLines(List<? extends IPriceCandle> candles) {
 		StringBuilder lines = new StringBuilder();
 		for (IPriceCandle candle : candles) {
 			lines.append(formatter.formatCandle(candle, true));

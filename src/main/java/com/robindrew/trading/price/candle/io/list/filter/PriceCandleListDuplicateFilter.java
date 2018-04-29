@@ -17,7 +17,7 @@ public class PriceCandleListDuplicateFilter implements IPriceCandleListFilter {
 	private static final Logger log = LoggerFactory.getLogger(PriceCandleListDuplicateFilter.class);
 
 	@Override
-	public List<IPriceCandle> filter(List<IPriceCandle> candles) {
+	public List<IPriceCandle> filter(List<? extends IPriceCandle> candles) {
 		int size = candles.size();
 		Set<IPriceCandle> set = new LinkedHashSet<>(candles);
 		int duplicates = size - set.size();

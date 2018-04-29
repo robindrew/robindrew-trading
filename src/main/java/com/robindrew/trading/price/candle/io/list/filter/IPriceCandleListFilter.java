@@ -7,6 +7,6 @@ import com.robindrew.trading.price.candle.IPriceCandle;
 @FunctionalInterface
 public interface IPriceCandleListFilter {
 
-	List<IPriceCandle> filter(List<IPriceCandle> candles);
+	List<IPriceCandle> filter(List<? extends IPriceCandle> candles);
 
 }

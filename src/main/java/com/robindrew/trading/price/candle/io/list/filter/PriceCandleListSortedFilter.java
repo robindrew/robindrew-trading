@@ -24,10 +24,10 @@ public class PriceCandleListSortedFilter implements IPriceCandleListFilter {
 	}
 
 	@Override
-	public List<IPriceCandle> filter(List<IPriceCandle> candles) {
-		candles = new ArrayList<>(candles);
-		Collections.sort(candles, comparator);
-		return candles;
+	public List<IPriceCandle> filter(List<? extends IPriceCandle> candles) {
+		List<IPriceCandle> sorted = new ArrayList<>(candles);
+		Collections.sort(sorted, comparator);
+		return sorted;
 	}
 
 }

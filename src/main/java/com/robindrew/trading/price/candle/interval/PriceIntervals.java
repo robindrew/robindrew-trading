@@ -13,6 +13,34 @@ public class PriceIntervals {
 	public static final IPriceInterval MONTHLY = interval(1, ChronoUnit.MONTHS);
 	public static final IPriceInterval YEARLY = interval(1, ChronoUnit.YEARS);
 
+	public static IPriceInterval yearly(long years) {
+		return interval(years, ChronoUnit.YEARS);
+	}
+
+	public static IPriceInterval monthly(long months) {
+		return interval(months, ChronoUnit.MONTHS);
+	}
+
+	public static IPriceInterval weekly(long weeks) {
+		return interval(weeks, ChronoUnit.WEEKS);
+	}
+
+	public static IPriceInterval daily(long days) {
+		return interval(days, ChronoUnit.DAYS);
+	}
+
+	public static IPriceInterval hourly(long hours) {
+		return interval(hours, ChronoUnit.HOURS);
+	}
+
+	public static IPriceInterval minutely(long minutes) {
+		return interval(minutes, ChronoUnit.MINUTES);
+	}
+
+	public static IPriceInterval secondly(long seconds) {
+		return interval(seconds, ChronoUnit.SECONDS);
+	}
+
 	public static IPriceInterval interval(long amount, ChronoUnit unit) {
 		switch (unit) {
 			case NANOS:

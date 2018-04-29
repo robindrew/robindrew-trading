@@ -31,7 +31,7 @@ public class PriceCandleAtomicConsumer implements IPriceCandleListSink, IPriceCa
 	}
 
 	@Override
-	public void putNextCandles(List<IPriceCandle> candles) {
+	public void putNextCandles(List<? extends IPriceCandle> candles) {
 		for (IPriceCandle candle : candles) {
 			putNextCandle(candle);
 		}

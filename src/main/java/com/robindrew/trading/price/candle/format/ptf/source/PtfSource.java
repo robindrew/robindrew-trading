@@ -127,7 +127,7 @@ public abstract class PtfSource implements IPtfSource {
 			return candles;
 		}
 
-		log.debug("Reading PCF file: {}", getName());
+		log.info("Reading PCF file: {}", getName());
 		Stopwatch timer = Stopwatch.createStarted();
 		try (IDataReader reader = new DataReader(toByteSource().openBufferedStream())) {
 			candles = serializer.readObject(reader);
@@ -135,7 +135,7 @@ public abstract class PtfSource implements IPtfSource {
 			throw Java.propagate(e);
 		}
 		timer.stop();
-		log.debug("Read from PCF file: {}, {} candles in {} ", getName(), number(candles), timer);
+		log.info("Read from PCF file: {}, {} candles in {} ", getName(), number(candles), timer);
 
 		cached = new SoftReference<>(candles);
 		return candles;

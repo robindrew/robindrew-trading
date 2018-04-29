@@ -1,13 +1,12 @@
 package com.robindrew.trading.price.candle.io.stream.sink;
 
+import java.util.List;
+
 import com.robindrew.trading.price.candle.IPriceCandle;
 import com.robindrew.trading.price.candle.interval.IPriceInterval;
+import com.robindrew.trading.price.candle.io.list.sink.IPriceCandleListSink;
 
-/**
- * Note that this does NOT support monthly intervals or above, as months have different lengths, and years are subject
- * to leap year loss.
- */
-public class PriceCandleIntervalStreamSink implements IPriceCandleStreamSink {
+public class PriceCandleIntervalStreamSink implements IPriceCandleStreamSink, IPriceCandleListSink {
 
 	private final IPriceCandleStreamSink sink;
 	private final IPriceInterval interval;
@@ -62,6 +61,13 @@ public class PriceCandleIntervalStreamSink implements IPriceCandleStreamSink {
 		merged = current;
 		mergedTimePeriod = currentTimePeriod;
 		sink.putNextCandle(next);
+	}
+
+	@Override
+	public void putNextCandles(List<? extends IPriceCandle> candles) {
+		for (IPriceCandle candle : candles) {
+			putNextCandle(candle);
+		}
 	}
 
 }

@@ -49,7 +49,7 @@ public class QueuedPriceCandleSink implements IPriceCandleStreamSink, IPriceCand
 	}
 
 	@Override
-	public void putNextCandles(List<IPriceCandle> candles) {
+	public void putNextCandles(List<? extends IPriceCandle> candles) {
 		candleConsumer.publishEvents(candles);
 	}
 

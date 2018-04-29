@@ -22,7 +22,7 @@ public class DateBatchedPriceCandleListConsumer extends NamedCloseableDeletage<I
 	}
 
 	@Override
-	public void putNextCandles(List<IPriceCandle> candles) {
+	public void putNextCandles(List<? extends IPriceCandle> candles) {
 		for (List<IPriceCandle> list : partitioner.partition(candles)) {
 			getDelegate().putNextCandles(list);
 		}

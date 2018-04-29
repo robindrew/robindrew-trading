@@ -76,7 +76,7 @@ public class RollingCacheStreamSink implements IPriceCandleStreamSink, IPriceCan
 	}
 
 	@Override
-	public void putNextCandles(List<IPriceCandle> candles) {
+	public void putNextCandles(List<? extends IPriceCandle> candles) {
 		synchronized (this) {
 			for (IPriceCandle candle : candles) {
 				putNextCandle(candle);

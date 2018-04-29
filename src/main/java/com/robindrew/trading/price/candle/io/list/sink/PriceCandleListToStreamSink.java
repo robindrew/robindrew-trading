@@ -27,7 +27,7 @@ public class PriceCandleListToStreamSink implements IPriceCandleListSink {
 	}
 
 	@Override
-	public void putNextCandles(List<IPriceCandle> candles) {
+	public void putNextCandles(List<? extends IPriceCandle> candles) {
 		for (IPriceCandle candle : candles) {
 			sink.putNextCandle(candle);
 		}

@@ -7,6 +7,6 @@ import com.robindrew.trading.price.candle.IPriceCandle;
 
 public interface IPriceCandleListSink extends INamedCloseable {
 
-	void putNextCandles(List<IPriceCandle> candles);
+	void putNextCandles(List<? extends IPriceCandle> candles);
 
 }

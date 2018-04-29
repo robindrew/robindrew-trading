@@ -32,7 +32,7 @@ public class MultiListSink implements IPriceCandleListSink {
 	}
 
 	@Override
-	public void putNextCandles(List<IPriceCandle> candles) {
+	public void putNextCandles(List<? extends IPriceCandle> candles) {
 		for (IPriceCandleListSink sink : sinks) {
 			sink.putNextCandles(candles);
 		}

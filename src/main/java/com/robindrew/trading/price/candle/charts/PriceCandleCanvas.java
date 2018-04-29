@@ -8,9 +8,10 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,13 +21,17 @@ import com.robindrew.common.image.Images;
 import com.robindrew.trading.Instruments;
 import com.robindrew.trading.price.candle.IPriceCandle;
 import com.robindrew.trading.price.candle.PriceCandles;
-import com.robindrew.trading.price.candle.format.pcf.source.IPcfSource;
-import com.robindrew.trading.price.candle.format.pcf.source.IPcfSourceManager;
-import com.robindrew.trading.price.candle.format.pcf.source.IPcfSourceSet;
-import com.robindrew.trading.price.candle.format.pcf.source.file.PcfFileManager;
+import com.robindrew.trading.price.candle.format.ptf.source.IPtfSource;
+import com.robindrew.trading.price.candle.format.ptf.source.IPtfSourceManager;
+import com.robindrew.trading.price.candle.format.ptf.source.IPtfSourceSet;
+import com.robindrew.trading.price.candle.format.ptf.source.PtfSourcesStreamSource;
+import com.robindrew.trading.price.candle.format.ptf.source.file.PtfFileManager;
 import com.robindrew.trading.price.candle.interval.IPriceInterval;
 import com.robindrew.trading.price.candle.interval.PriceIntervals;
+import com.robindrew.trading.price.candle.io.stream.source.IPriceCandleStreamSource;
+import com.robindrew.trading.price.candle.io.stream.source.PriceCandleIntervalStreamSource;
 import com.robindrew.trading.price.decimal.Decimals;
+import com.robindrew.trading.provider.TradeDataProvider;
 
 public class PriceCandleCanvas {
 
@@ -34,25 +39,24 @@ public class PriceCandleCanvas {
 
 	public static void main(String[] args) throws Throwable {
 
-		String directory = "C:\\development\\repository\\git\\robindrew-public\\robindrew-trading-histdata-data\\data\\pcf";
-		IPcfSourceManager manager = new PcfFileManager(new File(directory));
-		IPcfSourceSet set = manager.getSourceSet(Instruments.USD_JPY);
+		String directory = "C:\\development\\data\\converted";
+		IPtfSourceManager manager = new PtfFileManager(new File(directory), TradeDataProvider.FXCM);
+		IPtfSourceSet set = manager.getSourceSet(Instruments.USD_JPY);
 
-		IPcfSource source = set.getSource(LocalDate.of(2017, 6, 01));
-		List<? extends IPriceCandle> candles = source.read();
-		candles = candles.subList(0, 180);
+		LocalDateTime from = LocalDateTime.of(2017, 1, 1, 0, 0);
+		LocalDateTime to = LocalDateTime.of(2017, 12, 31, 23, 59);
+		Set<? extends IPtfSource> sources = set.getSources(from, to);
 
-		IPriceInterval interval = PriceIntervals.MINUTELY;
+		IPriceInterval interval = PriceIntervals.daily(2);
+		IPriceCandleStreamSource source = new PtfSourcesStreamSource(sources);
+		source = new PriceCandleIntervalStreamSource(source, interval);
+		List<IPriceCandle> candles = PriceCandles.drainToList(source);
 
 		int width = 900;
 		int height = 600;
 
 		PriceCandleCanvas canvas = new PriceCandleCanvas(width, height);
 		canvas.renderCandles(candles, interval);
-		canvas.toPng();
-		canvas.toPng();
-		canvas.toPng();
-		canvas.toPng();
 		canvas.writeAsPng("c:/temp/pcg.png");
 	}
 
