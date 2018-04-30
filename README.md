@@ -12,15 +12,14 @@ Sub Project | Description | Type
 [robindrew-trading-fxcm](https://github.com/robindrew/robindrew-trading-fxcm) | FXCM | Provider
 [robindrew-trading-fxcm-trader](https://github.com/robindrew/robindrew-trading-fxcm-trader) | FXCM Trader | Service
 [robindrew-trading-fxcm-data](https://github.com/robindrew/robindrew-trading-fxcm-data) | FXCM | PCF Data
-[robindrew-trading-activetick](https://github.com/robindrew/robindrew-trading-activetick) | ActiveTick | Provider
-[robindrew-trading-activetick-feed](https://github.com/robindrew/robindrew-trading-activetick-feed) | ActiveTick Feed | Service
-[robindrew-trading-activetick-data](https://github.com/robindrew/robindrew-trading-activetick-data) | ActiveTick | PCF Data
 [robindrew-trading-backtest](https://github.com/robindrew/robindrew-trading-backtest) | Backtest | Provider
 [robindrew-trading-backtest-executor](https://github.com/robindrew/robindrew-trading-backtest-executor) | Backtest Executor | Service
 [robindrew-trading-histdata](https://github.com/robindrew/robindrew-trading-histdata) | HistData | Provider
 [robindrew-trading-histdata-data](https://github.com/robindrew/robindrew-trading-histdata-data) | HistData | PCF Data
 [robindrew-trading-oanda](https://github.com/robindrew/robindrew-trading-oanda) | OANDA | Provider
 [robindrew-trading-oanda-trader](https://github.com/robindrew/robindrew-trading-oanda-trader) | OANDA | Service
+[robindrew-trading-activetick](https://github.com/robindrew/robindrew-trading-activetick) | ActiveTick | Provider
+[robindrew-trading-activetick-feed](https://github.com/robindrew/robindrew-trading-activetick-feed) | ActiveTick Feed | Service
 
 ## Articles
 Before you dive in to the API itself, please take a quick look at the following articles:
