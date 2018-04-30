@@ -37,10 +37,11 @@ This library requires the [robindrew-common](https://github.com/robindrew/robind
 ## Historic Price Data
 PCF formatted data for the major FX pairs is available:
 * [HistData PCF Files](https://github.com/robindrew/robindrew-trading-histdata-data)
-* [ActiveTick PCF Files](https://github.com/robindrew/robindrew-trading-activetick-data)
 * [FXCM PCF Files](https://github.com/robindrew/robindrew-trading-fxcm-data)
 
 Note: IG Index does **not** provide access to any useful quantity of historic price data. Strict limits exist on the amount of historic price data that can be queried via the REST API each month.
+
+Note: The ActiveTick PCF files have been archived and should not be used. It is in the old format and as I have cancelled access to ActiveTick I do not have the ability to update them.
 
 ## Providers
 A provider is an implementation of the trading platform along with supporting classes to simplify access to existing broker APIs.
