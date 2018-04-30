@@ -34,7 +34,7 @@ public class PcfDataSerializer implements IDataSerializer<List<IPriceCandle>> {
 			int low = reader.readDynamicInt() + basePrice;
 			int close = reader.readDynamicInt() + basePrice;
 
-			long tickVolume = reader.readDynamicLong();
+			long tickVolume = reader.readPositiveLong();
 
 			IPriceCandle candle = new MidPriceCandle(open, high, low, close, openTime, closeTime, decimalPlaces, tickVolume);
 			list.add(candle);
@@ -84,7 +84,7 @@ public class PcfDataSerializer implements IDataSerializer<List<IPriceCandle>> {
 				writer.writeDynamicInt(low - basePrice);
 				writer.writeDynamicInt(close - basePrice);
 
-				writer.writeDynamicLong(candle.getTickVolume());
+				writer.writePositiveLong(candle.getTickVolume());
 
 				basePrice = close;
 				baseTime = closeTime;
