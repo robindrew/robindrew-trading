@@ -21,6 +21,8 @@ Sub Project | Description | Type
 [robindrew-trading-activetick](https://github.com/robindrew/robindrew-trading-activetick) | ActiveTick | Provider
 [robindrew-trading-activetick-feed](https://github.com/robindrew/robindrew-trading-activetick-feed) | ActiveTick Feed | Service
 
+Note: I no longer actively maintain the ActiveTick projects, if someone else is interested in accessing them, please contact me directly.
+
 ## Articles
 Before you dive in to the API itself, please take a quick look at the following articles:
 * [Introduction to Trading](https://github.com/robindrew/robindrew-trading/wiki/Article:-Introduction-to-Trading)
