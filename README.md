@@ -12,15 +12,16 @@ Sub Project | Description | Type
 [robindrew-trading-fxcm](https://github.com/robindrew/robindrew-trading-fxcm) | FXCM | Provider
 [robindrew-trading-fxcm-trader](https://github.com/robindrew/robindrew-trading-fxcm-trader) | FXCM Trader | Service
 [robindrew-trading-fxcm-data](https://github.com/robindrew/robindrew-trading-fxcm-data) | FXCM | PCF Data
-[robindrew-trading-activetick](https://github.com/robindrew/robindrew-trading-activetick) | ActiveTick | Provider
-[robindrew-trading-activetick-feed](https://github.com/robindrew/robindrew-trading-activetick-feed) | ActiveTick Feed | Service
-[robindrew-trading-activetick-data](https://github.com/robindrew/robindrew-trading-activetick-data) | ActiveTick | PCF Data
 [robindrew-trading-backtest](https://github.com/robindrew/robindrew-trading-backtest) | Backtest | Provider
 [robindrew-trading-backtest-executor](https://github.com/robindrew/robindrew-trading-backtest-executor) | Backtest Executor | Service
 [robindrew-trading-histdata](https://github.com/robindrew/robindrew-trading-histdata) | HistData | Provider
 [robindrew-trading-histdata-data](https://github.com/robindrew/robindrew-trading-histdata-data) | HistData | PCF Data
 [robindrew-trading-oanda](https://github.com/robindrew/robindrew-trading-oanda) | OANDA | Provider
 [robindrew-trading-oanda-trader](https://github.com/robindrew/robindrew-trading-oanda-trader) | OANDA | Service
+[robindrew-trading-activetick](https://github.com/robindrew/robindrew-trading-activetick) | ActiveTick | Provider
+[robindrew-trading-activetick-feed](https://github.com/robindrew/robindrew-trading-activetick-feed) | ActiveTick Feed | Service
+
+Note: I no longer actively maintain the ActiveTick projects, if someone else is interested in accessing them, please contact me directly.
 
 ## Articles
 Before you dive in to the API itself, please take a quick look at the following articles:
@@ -37,10 +38,11 @@ This library requires the [robindrew-common](https://github.com/robindrew/robind
 ## Historic Price Data
 PCF formatted data for the major FX pairs is available:
 * [HistData PCF Files](https://github.com/robindrew/robindrew-trading-histdata-data)
-* [ActiveTick PCF Files](https://github.com/robindrew/robindrew-trading-activetick-data)
 * [FXCM PCF Files](https://github.com/robindrew/robindrew-trading-fxcm-data)
 
 Note: IG Index does **not** provide access to any useful quantity of historic price data. Strict limits exist on the amount of historic price data that can be queried via the REST API each month.
+
+Note: The ActiveTick PCF files have been archived and should not be used. It is in the old format and as I have cancelled access to ActiveTick I do not have the ability to update them.
 
 ## Providers
 A provider is an implementation of the trading platform along with supporting classes to simplify access to existing broker APIs.
