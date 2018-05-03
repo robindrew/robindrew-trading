@@ -1,17 +1,17 @@
 package com.robindrew.trading.httpclient;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.util.EntityUtils;
 
 import com.google.common.base.Charsets;
-import com.google.common.io.ByteStreams;
-import com.google.common.io.CharStreams;
 import com.robindrew.common.util.Java;
 
 public class HttpClients {
@@ -22,23 +22,15 @@ public class HttpClients {
 
 	public static String getTextContent(HttpEntity entity, Charset charset) {
 		try {
-			InputStream stream = entity.getContent();
-			if (stream == null) {
-				return "";
-			}
-			return CharStreams.toString(new InputStreamReader(stream, charset));
+			return EntityUtils.toString(entity, charset);
 		} catch (IOException e) {
 			throw Java.propagate(e);
 		}
 	}
 
-	public static byte[] getBinaryContent(HttpEntity entity, Charset charset) {
+	public static byte[] getBinaryContent(HttpEntity entity) {
 		try {
-			InputStream stream = entity.getContent();
-			if (stream == null) {
-				return new byte[0];
-			}
-			return ByteStreams.toByteArray(stream);
+			return EntityUtils.toByteArray(entity);
 		} catch (IOException e) {
 			throw Java.propagate(e);
 		}
@@ -55,6 +47,14 @@ public class HttpClients {
 			}
 		}
 		return null;
+	}
+
+	public static void setJsonContent(HttpEntityEnclosingRequestBase request, String json) {
+		request.setEntity(new StringEntity(json, ContentType.APPLICATION_JSON));
+	}
+
+	public static void setXmlContent(HttpEntityEnclosingRequestBase request, String json) {
+		request.setEntity(new StringEntity(json, ContentType.TEXT_XML));
 	}
 
 }
