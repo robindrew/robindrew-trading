@@ -62,10 +62,6 @@ public abstract class HttpClientExecutor<R> implements IHttpClientExecutor<R> {
 		return client.execute(request);
 	}
 
-	protected boolean failed(HttpUriRequest request, HttpResponse response) {
-		return response.getStatusLine().getStatusCode() != 200;
-	}
-
 	protected int getRetryAttempts() {
 		return 0;
 	}

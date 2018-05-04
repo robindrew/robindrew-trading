@@ -1,20 +1,26 @@
 package com.robindrew.trading.httpclient;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Charsets;
-import com.google.common.io.ByteStreams;
-import com.google.common.io.CharStreams;
+import com.robindrew.common.text.LineBuilder;
 import com.robindrew.common.util.Java;
 
 public class HttpClients {
+
+	private static final Logger log = LoggerFactory.getLogger(HttpClients.class);
 
 	public static String getTextContent(HttpEntity entity) {
 		return getTextContent(entity, Charsets.UTF_8);
@@ -22,23 +28,15 @@ public class HttpClients {
 
 	public static String getTextContent(HttpEntity entity, Charset charset) {
 		try {
-			InputStream stream = entity.getContent();
-			if (stream == null) {
-				return "";
-			}
-			return CharStreams.toString(new InputStreamReader(stream, charset));
+			return EntityUtils.toString(entity, charset);
 		} catch (IOException e) {
 			throw Java.propagate(e);
 		}
 	}
 
-	public static byte[] getBinaryContent(HttpEntity entity, Charset charset) {
+	public static byte[] getBinaryContent(HttpEntity entity) {
 		try {
-			InputStream stream = entity.getContent();
-			if (stream == null) {
-				return new byte[0];
-			}
-			return ByteStreams.toByteArray(stream);
+			return EntityUtils.toByteArray(entity);
 		} catch (IOException e) {
 			throw Java.propagate(e);
 		}
@@ -55,6 +53,68 @@ public class HttpClients {
 			}
 		}
 		return null;
+	}
+
+	public static void setJsonContent(HttpEntityEnclosingRequestBase request, String json) {
+		request.setEntity(new StringEntity(json, ContentType.APPLICATION_JSON));
+	}
+
+	public static void setXmlContent(HttpEntityEnclosingRequestBase request, String json) {
+		request.setEntity(new StringEntity(json, ContentType.TEXT_XML));
+	}
+
+	public static String toString(HttpUriRequest request) {
+
+		// HTTP Request
+		LineBuilder lines = new LineBuilder();
+		lines.appendLine(request.getRequestLine());
+		for (Header header : request.getAllHeaders()) {
+			lines.append(header.getName()).append(": ").append(header.getValue()).appendLine();
+		}
+		if (request instanceof HttpEntityEnclosingRequestBase) {
+			HttpEntityEnclosingRequestBase base = (HttpEntityEnclosingRequestBase) request;
+			lines.appendLine();
+			lines.append(HttpClients.getTextContent(base.getEntity()));
+		}
+		return lines.toString();
+	}
+
+	public static String toString(HttpResponse response, String textContent) {
+
+		// HTTP Response
+		LineBuilder lines = new LineBuilder();
+		lines.appendLine(response.getStatusLine());
+		for (Header header : response.getAllHeaders()) {
+			lines.append(header.getName()).append(": ").append(header.getValue()).appendLine();
+		}
+		lines.appendLine();
+		if (textContent != null) {
+			lines.append(textContent);
+		}
+		return lines.toString();
+	}
+
+	public static String toString(HttpResponse response, boolean includeContent) {
+
+		// HTTP Response
+		LineBuilder lines = new LineBuilder();
+		lines.appendLine(response.getStatusLine());
+		for (Header header : response.getAllHeaders()) {
+			lines.append(header.getName()).append(": ").append(header.getValue()).appendLine();
+		}
+		lines.appendLine();
+		if (includeContent) {
+			HttpEntity entity = response.getEntity();
+			if (entity != null) {
+				try {
+					String textContent = EntityUtils.toString(entity);
+					lines.append(textContent);
+				} catch (Exception e) {
+					log.warn("Exception parsing HTTP response content", e);
+				}
+			}
+		}
+		return lines.toString();
 	}
 
 }
