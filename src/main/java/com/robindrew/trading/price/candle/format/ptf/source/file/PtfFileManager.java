@@ -18,12 +18,11 @@ import com.robindrew.common.util.Check;
 import com.robindrew.trading.IInstrument;
 import com.robindrew.trading.Instrument;
 import com.robindrew.trading.InstrumentType;
-import com.robindrew.trading.price.candle.format.ptf.source.IPtfSourceManager;
 import com.robindrew.trading.price.candle.format.ptf.source.IPtfSourceSet;
 import com.robindrew.trading.provider.ITradeDataProvider;
 import com.robindrew.trading.provider.TradeDataProvider;
 
-public class PtfFileManager implements IPtfSourceManager {
+public class PtfFileManager implements IPtfFileManager {
 
 	private static final Logger log = LoggerFactory.getLogger(PtfFileManager.class);
 
@@ -67,6 +66,16 @@ public class PtfFileManager implements IPtfSourceManager {
 				}
 			}
 		}
+	}
+
+	@Override
+	public File getRootDirectory() {
+		return rootDirectory;
+	}
+
+	@Override
+	public File getDirectory(ITradeDataProvider provider, IInstrument instrument) {
+		return getDirectory(provider, instrument, rootDirectory);
 	}
 
 	@Override

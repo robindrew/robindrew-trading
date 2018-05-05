@@ -69,6 +69,11 @@ public class PcfFileManager implements IPcfFileManager {
 	}
 
 	@Override
+	public File getRootDirectory() {
+		return rootDirectory;
+	}
+
+	@Override
 	public File getDirectory(ITradeDataProvider provider, IInstrument instrument) {
 		return getDirectory(provider, instrument, rootDirectory);
 	}
