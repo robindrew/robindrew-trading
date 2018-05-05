@@ -5,12 +5,13 @@ import java.util.List;
 import java.util.Map;
 
 import com.robindrew.trading.IInstrument;
+import com.robindrew.trading.platform.ITradingService;
 import com.robindrew.trading.position.IPosition;
 import com.robindrew.trading.position.closed.IClosedPosition;
 import com.robindrew.trading.position.order.IPositionOrder;
 import com.robindrew.trading.price.precision.IPricePrecision;
 
-public interface IPositionService {
+public interface IPositionService extends ITradingService {
 
 	IPricePrecision getPrecision(IInstrument instrument);
 
