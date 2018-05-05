@@ -18,8 +18,6 @@ Sub Project | Description | Type
 [robindrew-trading-histdata-data](https://github.com/robindrew/robindrew-trading-histdata-data) | HistData | PCF Data
 [robindrew-trading-oanda](https://github.com/robindrew/robindrew-trading-oanda) | OANDA | Provider
 [robindrew-trading-oanda-trader](https://github.com/robindrew/robindrew-trading-oanda-trader) | OANDA | Service
-[robindrew-trading-activetick](https://github.com/robindrew/robindrew-trading-activetick) | ActiveTick | Provider
-[robindrew-trading-activetick-feed](https://github.com/robindrew/robindrew-trading-activetick-feed) | ActiveTick Feed | Service
 
 Note: I no longer actively maintain the ActiveTick projects, if someone else is interested in accessing them, please contact me directly.
 
@@ -50,7 +48,6 @@ The following providers are available, including a provider specifically for bac
 * [IG Index Provider](https://github.com/robindrew/robindrew-trading-igindex)
 * [FXCM Provider](https://github.com/robindrew/robindrew-trading-fxcm)
 * [OANDA Provider](https://github.com/robindrew/robindrew-trading-oanda)
-* [Active Tick Provider](https://github.com/robindrew/robindrew-trading-activetick)
 * [Backtest Provider](https://github.com/robindrew/robindrew-trading-backtest)
 
 
@@ -58,9 +55,8 @@ The following providers are available, including a provider specifically for bac
 A service is a stand-alone web application providing a front end to various trading functionality.
 
 #### Streaming Prices
-The following projects provide access to the live data feed for the given provider. Each includes asynchronous file output, writing the individual price ticks in a text format. In addition the feeds provide a web interface to view and manage the price feeds.
-* [IG Index Feed Service](https://github.com/robindrew/robindrew-trading-igindex-feed)
-* [Active Tick Feed Service](https://github.com/robindrew/robindrew-trading-activetick-feed)
+The following project provides access to the live data feed for all available providers. Each includes asynchronous file output, writing the individual price ticks in a text format. In addition the feeds provide a web interface to view and manage the price feeds.
+* [Multi Feed Service](https://github.com/robindrew/robindrew-trading-multifeed)
 
 #### Live Trading
 The following projects provide trading access for the given provider, including position management, history and execution:
