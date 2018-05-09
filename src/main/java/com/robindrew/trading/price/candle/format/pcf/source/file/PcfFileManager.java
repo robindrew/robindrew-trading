@@ -150,4 +150,17 @@ public class PcfFileManager implements IPcfFileManager {
 		return set;
 	}
 
+	@Override
+	public IInstrument getInstrument(ITradeDataProvider provider, String name) {
+		for (IInstrument instrument : getInstruments(provider)) {
+			if (instrument.getName().equals(name)) {
+				return instrument;
+			}
+			if (instrument.getUnderlying().getName().equals(name)) {
+				return instrument;
+			}
+		}
+		throw new IllegalArgumentException("instrument not found: '" + name + "'");
+	}
+
 }

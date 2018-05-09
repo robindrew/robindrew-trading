@@ -17,4 +17,6 @@ public interface IPcfSourceManager {
 
 	IPcfSourceSet getSourceSet(IInstrument instrument, ITradeDataProvider provider);
 
+	IInstrument getInstrument(ITradeDataProvider provider, String name);
+
 }
