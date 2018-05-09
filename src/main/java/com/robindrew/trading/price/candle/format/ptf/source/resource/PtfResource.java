@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import com.google.common.io.ByteSink;
 import com.google.common.io.ByteSource;
 import com.google.common.io.Resources;
+import com.robindrew.trading.price.candle.format.PriceFormat;
 import com.robindrew.trading.price.candle.format.ptf.PtfFormat;
 import com.robindrew.trading.price.candle.format.ptf.source.PtfSource;
 
@@ -52,5 +53,10 @@ public class PtfResource extends PtfSource implements IPtfResource {
 	@Override
 	public boolean create() {
 		return false;
+	}
+
+	@Override
+	public PriceFormat getFormat() {
+		return PriceFormat.PTF;
 	}
 }

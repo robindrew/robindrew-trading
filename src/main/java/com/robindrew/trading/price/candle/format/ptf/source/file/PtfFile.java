@@ -7,6 +7,7 @@ import com.google.common.io.ByteSink;
 import com.google.common.io.ByteSource;
 import com.google.common.io.Files;
 import com.robindrew.common.util.Check;
+import com.robindrew.trading.price.candle.format.PriceFormat;
 import com.robindrew.trading.price.candle.format.ptf.PtfFormat;
 import com.robindrew.trading.price.candle.format.ptf.source.PtfSource;
 
@@ -49,4 +50,10 @@ public class PtfFile extends PtfSource implements IPtfFile {
 		parent.mkdirs();
 		return parent.exists() && parent.isDirectory();
 	}
+
+	@Override
+	public PriceFormat getFormat() {
+		return PriceFormat.PTF;
+	}
+
 }

@@ -9,6 +9,8 @@ public interface IPriceCandleSource {
 
 	String getName();
 
+	PriceFormat getFormat();
+
 	List<? extends IPriceCandle> read();
 
 	void write(Collection<? extends IPriceCandle> candles);
