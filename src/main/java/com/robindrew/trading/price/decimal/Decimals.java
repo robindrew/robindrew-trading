@@ -140,10 +140,10 @@ public class Decimals {
 			}
 		}
 
-		// Truncate to integer
+		// Truncate to integer (and check we haven't lost any digits!)
 		int roundedInt = (int) roundedLong;
 		if (roundedInt != roundedLong) {
-			throw new IllegalArgumentException("value=" + value + ", decimalPlaces=" + decimalPlaces);
+			throw new IllegalArgumentException("Digits lost when rounding to integer, value=" + value + ", decimalPlaces=" + decimalPlaces);
 		}
 		return roundedInt;
 	}
@@ -166,10 +166,10 @@ public class Decimals {
 
 		long roundedLong = multiplyDouble.toBigInteger().longValue();
 
-		// Truncate to integer
+		// Truncate to integer (and check we haven't lost any digits!)
 		int roundedInt = (int) roundedLong;
 		if (roundedInt != roundedLong) {
-			throw new IllegalArgumentException("value=" + value + ", decimalPlaces=" + decimalPlaces);
+			throw new IllegalArgumentException("Digits lost when rounding to integer, value=" + value + ", decimalPlaces=" + decimalPlaces);
 		}
 		return roundedInt;
 	}
