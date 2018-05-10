@@ -1,5 +1,6 @@
 package com.robindrew.trading.price.candle;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public interface IPriceCandle {
@@ -27,6 +28,14 @@ public interface IPriceCandle {
 	int getMidLowPrice();
 
 	int getMidClosePrice();
+
+	BigDecimal getMidOpen();
+
+	BigDecimal getMidHigh();
+
+	BigDecimal getMidLow();
+
+	BigDecimal getMidClose();
 
 	int getDecimalPlaces();
 

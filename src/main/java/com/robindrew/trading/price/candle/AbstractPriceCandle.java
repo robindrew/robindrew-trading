@@ -1,10 +1,32 @@
 package com.robindrew.trading.price.candle;
 
 import static com.robindrew.common.date.Dates.toLocalDateTime;
+import static com.robindrew.trading.price.decimal.Decimals.toBigDecimal;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public abstract class AbstractPriceCandle implements IPriceCandle {
+
+	@Override
+	public BigDecimal getMidOpen() {
+		return toBigDecimal(getMidOpenPrice(), getDecimalPlaces());
+	}
+
+	@Override
+	public BigDecimal getMidHigh() {
+		return toBigDecimal(getMidHighPrice(), getDecimalPlaces());
+	}
+
+	@Override
+	public BigDecimal getMidLow() {
+		return toBigDecimal(getMidLowPrice(), getDecimalPlaces());
+	}
+
+	@Override
+	public BigDecimal getMidClose() {
+		return toBigDecimal(getMidClosePrice(), getDecimalPlaces());
+	}
 
 	@Override
 	public String toString() {
