@@ -3,11 +3,14 @@ package com.robindrew.trading.price.candle;
 import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import com.robindrew.common.util.Check;
 import com.robindrew.trading.price.candle.checker.PriceCandleSortedChecker;
 import com.robindrew.trading.price.candle.filter.PriceCandleDateFilter;
 import com.robindrew.trading.price.candle.filter.PriceCandleDateTimeFilter;
@@ -94,6 +97,30 @@ public class PriceCandles {
 		try (IPriceCandleListSource list = new PriceCandleStreamToListSource(source)) {
 			return list.getNextCandles();
 		}
+	}
+
+	public static List<IPriceCandle> drainToList(IPriceCandleStreamSource source, int limit) {
+		Check.notNull("source", source);
+		if (limit < 0) {
+			throw new IllegalArgumentException("limit=" + limit);
+		}
+		if (limit == 0) {
+			return Collections.emptyList();
+		}
+
+		List<IPriceCandle> list = new ArrayList<>();
+		while (true) {
+			IPriceCandle candle = source.getNextCandle();
+			if (candle == null) {
+				break;
+			}
+			list.add(candle);
+			if (list.size() >= limit) {
+				break;
+			}
+		}
+
+		return list;
 	}
 
 	public static IPriceCandleStreamSource filterByDates(IPriceCandleStreamSource source, LocalDateTime from, LocalDateTime to) {

@@ -3,11 +3,18 @@ package com.robindrew.trading.price.candle.format.ptf.source;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
+import java.util.SortedSet;
 
 import com.robindrew.trading.IInstrument;
 import com.robindrew.trading.price.candle.io.stream.source.IPriceCandleStreamSource;
 
 public interface IPtfSourceSet {
+
+	/**
+	 * Returns the available days of prices.
+	 * @return the available days of prices.
+	 */
+	SortedSet<LocalDate> getDays();
 
 	/**
 	 * Returns the underyling instrument.
@@ -31,10 +38,10 @@ public interface IPtfSourceSet {
 
 	/**
 	 * Returns the source for the given instrument and month.
-	 * @param month the month.
+	 * @param date the date.
 	 * @return the source.
 	 */
-	IPtfSource getSource(LocalDate month);
+	IPtfSource getSource(LocalDate date);
 
 	/**
 	 * Returns the source for the given instrument and month.
@@ -42,7 +49,7 @@ public interface IPtfSourceSet {
 	 * @param create true to create the source if it does not exist.
 	 * @return the source.
 	 */
-	IPtfSource getSource(LocalDate month, boolean create);
+	IPtfSource getSource(LocalDate date, boolean create);
 
 	IPriceCandleStreamSource asStreamSource(LocalDateTime from, LocalDateTime to);
 

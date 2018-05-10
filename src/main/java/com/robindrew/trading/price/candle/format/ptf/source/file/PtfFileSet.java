@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
 
 import com.robindrew.common.io.Files;
@@ -46,8 +47,8 @@ public class PtfFileSet implements IPtfFileSet {
 	}
 
 	@Override
-	public Set<IPtfFile> getSources() {
-		Set<IPtfFile> files = new TreeSet<>();
+	public SortedSet<IPtfFile> getSources() {
+		SortedSet<IPtfFile> files = new TreeSet<>();
 		for (File directory : directorySet) {
 			if (directory.exists()) {
 				for (File file : Files.listContents(directory, FILENAME_FILTER)) {
@@ -60,36 +61,36 @@ public class PtfFileSet implements IPtfFileSet {
 	}
 
 	@Override
-	public IPtfFile getSource(LocalDate month, boolean create) {
-		String filename = PtfFormat.getFilename(month);
+	public IPtfFile getSource(LocalDate day, boolean create) {
+		String filename = PtfFormat.getFilename(day);
 
 		for (File directory : directorySet) {
 			File file = new File(directory, filename);
 			if (file.exists()) {
-				return new PtfFile(file, month);
+				return new PtfFile(file, day);
 			}
 		}
 
 		for (ITradeDataProvider provider : providers) {
 			File directory = getDirectory(provider, instrument, rootDirectory);
 			File file = new File(directory, filename);
-			return new PtfFile(file, month);
+			return new PtfFile(file, day);
 		}
 
 		throw new IllegalStateException("Should never reach this line!");
 	}
 
 	@Override
-	public IPtfFile getSource(LocalDate month) {
-		String filename = PtfFormat.getFilename(month);
+	public IPtfFile getSource(LocalDate day) {
+		String filename = PtfFormat.getFilename(day);
 
 		for (File directory : directorySet) {
 			File file = new File(directory, filename);
 			if (file.exists()) {
-				return new PtfFile(file, month);
+				return new PtfFile(file, day);
 			}
 		}
-		throw new IllegalArgumentException("File not found for instrument: " + getInstrument() + ", month: " + month);
+		throw new IllegalArgumentException("File not found for instrument: " + getInstrument() + ", month: " + day);
 	}
 
 	@Override
@@ -102,6 +103,15 @@ public class PtfFileSet implements IPtfFileSet {
 		Set<? extends IPtfSource> sources = getSources(from, to);
 		IPriceCandleStreamSource stream = new PtfSourcesStreamSource(sources);
 		return new PriceCandleFilteredStreamSource(stream, new PriceCandleDateTimeFilter(from, to));
+	}
+
+	@Override
+	public SortedSet<LocalDate> getDays() {
+		TreeSet<LocalDate> months = new TreeSet<>();
+		for (IPtfFile file : getSources()) {
+			months.add(file.getDay());
+		}
+		return months;
 	}
 
 }

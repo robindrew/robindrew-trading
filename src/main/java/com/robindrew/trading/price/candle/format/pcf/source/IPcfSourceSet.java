@@ -3,11 +3,18 @@ package com.robindrew.trading.price.candle.format.pcf.source;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
+import java.util.SortedSet;
 
 import com.robindrew.trading.IInstrument;
 import com.robindrew.trading.price.candle.io.stream.source.IPriceCandleStreamSource;
 
 public interface IPcfSourceSet {
+
+	/**
+	 * Returns the available months of prices.
+	 * @return the available months of prices.
+	 */
+	SortedSet<LocalDate> getMonths();
 
 	/**
 	 * Returns the underyling instrument.

@@ -3,6 +3,7 @@ package com.robindrew.trading.price.candle.format.ptf.source.file;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
+import java.util.SortedSet;
 
 import com.robindrew.trading.price.candle.format.ptf.source.IPtfSourceSet;
 
@@ -13,7 +14,7 @@ public interface IPtfFileSet extends IPtfSourceSet {
 	 * @return the sources.
 	 */
 	@Override
-	Set<IPtfFile> getSources();
+	SortedSet<IPtfFile> getSources();
 
 	/**
 	 * Returns all the existing sources for the given instrument.

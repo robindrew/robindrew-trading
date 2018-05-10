@@ -1,6 +1,6 @@
 package com.robindrew.trading.price.candle.format.ptf.source;
 
-import static com.robindrew.trading.provider.TradeDataProvider.FXCM;
+import static com.robindrew.trading.provider.TradeDataProvider.HISTDATA;
 
 import java.io.File;
 import java.util.Set;
@@ -33,8 +33,8 @@ public class PtfToPcfConverter {
 		IPcfFileManager pcf = new PcfFileManager(new File(toDir));
 
 		PtfToPcfConverter converter = new PtfToPcfConverter(ptf, pcf);
-		for (IInstrument instrument : ptf.getInstruments(FXCM)) {
-			converter.convert(FXCM, instrument);
+		for (IInstrument instrument : ptf.getInstruments(HISTDATA)) {
+			converter.convert(HISTDATA, instrument);
 		}
 	}
 

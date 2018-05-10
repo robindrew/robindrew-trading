@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
 
 import com.robindrew.common.io.Files;
@@ -102,6 +103,15 @@ public class PcfFileSet implements IPcfFileSet {
 		Set<? extends IPcfSource> sources = getSources(from, to);
 		IPriceCandleStreamSource stream = new PcfSourcesStreamSource(sources);
 		return new PriceCandleFilteredStreamSource(stream, new PriceCandleDateTimeFilter(from, to));
+	}
+
+	@Override
+	public SortedSet<LocalDate> getMonths() {
+		TreeSet<LocalDate> months = new TreeSet<>();
+		for (IPcfFile file : getSources()) {
+			months.add(file.getMonth());
+		}
+		return months;
 	}
 
 }
