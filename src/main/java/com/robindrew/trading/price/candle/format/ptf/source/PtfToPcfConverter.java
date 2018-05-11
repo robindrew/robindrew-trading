@@ -1,6 +1,6 @@
 package com.robindrew.trading.price.candle.format.ptf.source;
 
-import static com.robindrew.trading.provider.TradeDataProvider.HISTDATA;
+import static com.robindrew.trading.provider.TradeDataProvider.FXCM;
 
 import java.io.File;
 import java.util.Set;
@@ -8,6 +8,7 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.robindrew.common.lang.Args;
 import com.robindrew.common.util.Check;
 import com.robindrew.trading.IInstrument;
 import com.robindrew.trading.price.candle.PriceCandles;
@@ -25,16 +26,18 @@ public class PtfToPcfConverter {
 
 	private static final Logger log = LoggerFactory.getLogger(PtfToPcfConverter.class);
 
-	public static void main(String[] args) {
-		String fromDir = "C:\\development\\data\\converted\\ptf";
-		String toDir = "C:\\development\\data\\converted\\pcf";
+	public static void main(String[] array) {
+		Args args = new Args(array);
+
+		String fromDir = args.get("-f"); // "C:\\development\\data\\converted\\ptf"
+		String toDir = args.get("-t"); // "C:\\development\\data\\converted\\pcf";
 
 		IPtfSourceManager ptf = new PtfFileManager(new File(fromDir));
 		IPcfFileManager pcf = new PcfFileManager(new File(toDir));
 
 		PtfToPcfConverter converter = new PtfToPcfConverter(ptf, pcf);
-		for (IInstrument instrument : ptf.getInstruments(HISTDATA)) {
-			converter.convert(HISTDATA, instrument);
+		for (IInstrument instrument : ptf.getInstruments(FXCM)) {
+			converter.convert(FXCM, instrument);
 		}
 	}
 
@@ -57,23 +60,27 @@ public class PtfToPcfConverter {
 			return;
 		}
 
-		// Get the sources for the instrument
-		IPriceCandleStreamSource source = new PtfSourcesStreamSource(sources);
-
 		// We are converting to minute price candles
 		IPriceInterval interval = PriceIntervals.MINUTELY;
-		source = new PriceCandleIntervalStreamSource(source, interval);
 
-		// Output directory
-		File directory = pcf.getDirectory(provider, instrument);
-		if (directory.exists()) {
-			log.info("Output directory already exists, skipping: {}", directory);
-			return;
-		}
-		directory.mkdirs();
+		// Get the sources for the instrument
+		try (IPriceCandleStreamSource source = createSource(sources, interval)) {
 
-		try (PcfFileStreamSink sink = new PcfFileStreamSink(directory)) {
-			PriceCandles.pipe(source, sink);
+			// Output directory
+			File directory = pcf.getDirectory(provider, instrument);
+			if (directory.exists()) {
+				log.info("Output directory already exists, skipping: {}", directory);
+				return;
+			}
+			directory.mkdirs();
+
+			try (PcfFileStreamSink sink = new PcfFileStreamSink(directory)) {
+				PriceCandles.pipe(source, sink);
+			}
 		}
+	}
+
+	private IPriceCandleStreamSource createSource(Set<? extends IPtfSource> sources, IPriceInterval interval) {
+		return new PriceCandleIntervalStreamSource(new PtfSourcesStreamSource(sources), interval);
 	}
 }

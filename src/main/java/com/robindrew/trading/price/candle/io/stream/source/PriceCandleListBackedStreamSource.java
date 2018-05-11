@@ -1,9 +1,9 @@
 package com.robindrew.trading.price.candle.io.stream.source;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import com.google.common.collect.ImmutableList;
 import com.robindrew.trading.price.candle.IPriceCandle;
 
 public class PriceCandleListBackedStreamSource implements IPriceCandleStreamSource {
@@ -21,7 +21,7 @@ public class PriceCandleListBackedStreamSource implements IPriceCandleStreamSour
 		}
 
 		this.name = name;
-		this.list = ImmutableList.copyOf(candles);
+		this.list = new ArrayList<>(candles);
 	}
 
 	public PriceCandleListBackedStreamSource(Collection<? extends IPriceCandle> candles) {
@@ -35,6 +35,7 @@ public class PriceCandleListBackedStreamSource implements IPriceCandleStreamSour
 
 	@Override
 	public void close() {
+		index = 0;
 		list.clear();
 	}
 

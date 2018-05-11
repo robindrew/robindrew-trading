@@ -57,6 +57,7 @@ public class PtfSourcesStreamSource implements IPriceCandleStreamSource {
 			if (candle != null) {
 				return candle;
 			}
+			currentSource.close();
 			currentSource = null;
 		}
 

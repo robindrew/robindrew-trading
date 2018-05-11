@@ -14,10 +14,10 @@ import com.robindrew.common.util.Check;
 import com.robindrew.trading.price.candle.checker.PriceCandleSortedChecker;
 import com.robindrew.trading.price.candle.filter.PriceCandleDateFilter;
 import com.robindrew.trading.price.candle.filter.PriceCandleDateTimeFilter;
-import com.robindrew.trading.price.candle.format.pcf.source.file.PcfFileStreamSink;
 import com.robindrew.trading.price.candle.interval.TimeUnitInterval;
 import com.robindrew.trading.price.candle.io.list.source.IPriceCandleListSource;
 import com.robindrew.trading.price.candle.io.stream.PriceCandleStreamPipe;
+import com.robindrew.trading.price.candle.io.stream.sink.IPriceCandleStreamSink;
 import com.robindrew.trading.price.candle.io.stream.source.IPriceCandleStreamSource;
 import com.robindrew.trading.price.candle.io.stream.source.PriceCandleCheckerStreamSource;
 import com.robindrew.trading.price.candle.io.stream.source.PriceCandleFilteredStreamSource;
@@ -139,7 +139,7 @@ public class PriceCandles {
 		return new PriceCandleIntervalStreamSource(source, new TimeUnitInterval(interval, unit));
 	}
 
-	public static void pipe(IPriceCandleStreamSource source, PcfFileStreamSink sink) {
+	public static void pipe(IPriceCandleStreamSource source, IPriceCandleStreamSink sink) {
 		new PriceCandleStreamPipe(source, sink).pipe();
 	}
 
