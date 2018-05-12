@@ -13,7 +13,7 @@ public interface IPcfFileSet extends IPcfSourceSet {
 	 * @return the sources.
 	 */
 	@Override
-	Set<IPcfFile> getSources();
+	Set<? extends IPcfFile> getSources();
 
 	/**
 	 * Returns all the existing sources for the given instrument.
@@ -22,7 +22,7 @@ public interface IPcfFileSet extends IPcfSourceSet {
 	 * @return the sources.
 	 */
 	@Override
-	Set<IPcfFile> getSources(LocalDateTime from, LocalDateTime to);
+	Set<? extends IPcfFile> getSources(LocalDateTime from, LocalDateTime to);
 
 	/**
 	 * Returns the source for the given instrument and month.

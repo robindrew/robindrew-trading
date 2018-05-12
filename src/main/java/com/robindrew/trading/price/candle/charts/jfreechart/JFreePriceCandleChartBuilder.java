@@ -26,15 +26,15 @@ import com.robindrew.trading.price.candle.PriceCandles;
 import com.robindrew.trading.price.candle.charts.IPriceCandleChart;
 import com.robindrew.trading.price.candle.charts.IPriceCandleChartBuilder;
 import com.robindrew.trading.price.candle.format.pcf.source.IPcfSource;
-import com.robindrew.trading.price.candle.format.pcf.source.IPcfSourceManager;
+import com.robindrew.trading.price.candle.format.pcf.source.IPcfSourceProviderManager;
 import com.robindrew.trading.price.candle.format.pcf.source.IPcfSourceSet;
-import com.robindrew.trading.price.candle.format.pcf.source.file.PcfFileManager;
+import com.robindrew.trading.price.candle.format.pcf.source.file.PcfFileProviderManager;
 import com.robindrew.trading.price.candle.interval.PriceIntervals;
 import com.robindrew.trading.price.candle.io.stream.source.IPriceCandleStreamSource;
 import com.robindrew.trading.price.candle.io.stream.source.PriceCandleIntervalStreamSource;
 import com.robindrew.trading.price.candle.io.stream.source.PriceCandleStreamSourceBuilder;
-import com.robindrew.trading.provider.ITradeDataProvider;
-import com.robindrew.trading.provider.TradeDataProvider;
+import com.robindrew.trading.provider.ITradingProvider;
+import com.robindrew.trading.provider.TradingProvider;
 
 public class JFreePriceCandleChartBuilder implements IPriceCandleChartBuilder {
 
@@ -128,10 +128,10 @@ public class JFreePriceCandleChartBuilder implements IPriceCandleChartBuilder {
 
 	public static void main(String[] args) {
 		IInstrument instrument = Instruments.GBP_USD;
-		ITradeDataProvider provider = TradeDataProvider.ACTIVETICK;
+		ITradingProvider provider = TradingProvider.ACTIVETICK;
 
 		File directory = new File("C:\\development\\repository\\git\\robindrew-public\\robindrew-trading-data\\data\\pcf");
-		IPcfSourceManager source = new PcfFileManager(directory, provider);
+		IPcfSourceProviderManager source = new PcfFileProviderManager(directory, provider);
 		IPcfSourceSet set = source.getSourceSet(instrument);
 		LocalDateTime from = LocalDateTime.of(2018, 02, 01, 0, 0);
 		LocalDateTime to = LocalDateTime.of(2018, 02, 28, 23, 59);

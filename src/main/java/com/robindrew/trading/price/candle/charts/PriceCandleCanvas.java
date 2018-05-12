@@ -21,17 +21,17 @@ import com.robindrew.common.image.Images;
 import com.robindrew.trading.Instruments;
 import com.robindrew.trading.price.candle.IPriceCandle;
 import com.robindrew.trading.price.candle.PriceCandles;
-import com.robindrew.trading.price.candle.format.ptf.source.IPtfSource;
-import com.robindrew.trading.price.candle.format.ptf.source.IPtfSourceManager;
-import com.robindrew.trading.price.candle.format.ptf.source.IPtfSourceSet;
-import com.robindrew.trading.price.candle.format.ptf.source.PtfSourcesStreamSource;
-import com.robindrew.trading.price.candle.format.ptf.source.file.PtfFileManager;
+import com.robindrew.trading.price.candle.format.pcf.source.IPcfSource;
+import com.robindrew.trading.price.candle.format.pcf.source.IPcfSourceProviderManager;
+import com.robindrew.trading.price.candle.format.pcf.source.IPcfSourceSet;
+import com.robindrew.trading.price.candle.format.pcf.source.PcfSourcesStreamSource;
+import com.robindrew.trading.price.candle.format.pcf.source.file.PcfFileProviderManager;
 import com.robindrew.trading.price.candle.interval.IPriceInterval;
 import com.robindrew.trading.price.candle.interval.PriceIntervals;
 import com.robindrew.trading.price.candle.io.stream.source.IPriceCandleStreamSource;
 import com.robindrew.trading.price.candle.io.stream.source.PriceCandleIntervalStreamSource;
 import com.robindrew.trading.price.decimal.Decimals;
-import com.robindrew.trading.provider.TradeDataProvider;
+import com.robindrew.trading.provider.TradingProvider;
 
 public class PriceCandleCanvas {
 
@@ -40,15 +40,16 @@ public class PriceCandleCanvas {
 	public static void main(String[] args) throws Throwable {
 
 		String directory = "C:\\development\\data\\converted";
-		IPtfSourceManager manager = new PtfFileManager(new File(directory), TradeDataProvider.FXCM);
-		IPtfSourceSet set = manager.getSourceSet(Instruments.USD_JPY);
+		IPcfSourceProviderManager manager = new PcfFileProviderManager(new File(directory), TradingProvider.FXCM);
+		IPcfSourceSet set = manager.getSourceSet(Instruments.USD_JPY);
+		System.out.println(set.getSources());
 
 		LocalDateTime from = LocalDateTime.of(2017, 1, 1, 0, 0);
 		LocalDateTime to = LocalDateTime.of(2017, 12, 31, 23, 59);
-		Set<? extends IPtfSource> sources = set.getSources(from, to);
+		Set<? extends IPcfSource> sources = set.getSources(from, to);
 
 		IPriceInterval interval = PriceIntervals.daily(2);
-		IPriceCandleStreamSource source = new PtfSourcesStreamSource(sources);
+		IPriceCandleStreamSource source = new PcfSourcesStreamSource(sources);
 		source = new PriceCandleIntervalStreamSource(source, interval);
 		List<IPriceCandle> candles = PriceCandles.drainToList(source);
 

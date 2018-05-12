@@ -4,6 +4,6 @@ import com.robindrew.trading.IInstrument;
 
 public interface ITradeDataProviderInstrument extends IInstrument {
 
-	ITradeDataProvider getProvider();
+	ITradingProvider getProvider();
 
 }

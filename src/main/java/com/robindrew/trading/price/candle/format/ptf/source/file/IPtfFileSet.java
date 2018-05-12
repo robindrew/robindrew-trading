@@ -14,7 +14,7 @@ public interface IPtfFileSet extends IPtfSourceSet {
 	 * @return the sources.
 	 */
 	@Override
-	SortedSet<IPtfFile> getSources();
+	SortedSet<? extends IPtfFile> getSources();
 
 	/**
 	 * Returns all the existing sources for the given instrument.
@@ -23,7 +23,7 @@ public interface IPtfFileSet extends IPtfSourceSet {
 	 * @return the sources.
 	 */
 	@Override
-	Set<IPtfFile> getSources(LocalDateTime from, LocalDateTime to);
+	Set<? extends IPtfFile> getSources(LocalDateTime from, LocalDateTime to);
 
 	/**
 	 * Returns the source for the given instrument and month.

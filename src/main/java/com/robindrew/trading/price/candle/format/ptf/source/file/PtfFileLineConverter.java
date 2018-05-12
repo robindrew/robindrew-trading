@@ -16,7 +16,7 @@ import com.robindrew.trading.price.candle.checker.PriceCandleRangeChecker;
 import com.robindrew.trading.price.candle.filter.PriceCandleConsecutiveFilter;
 import com.robindrew.trading.price.candle.format.ptf.PtfFormat;
 import com.robindrew.trading.price.candle.format.ptf.source.IPtfSource;
-import com.robindrew.trading.price.candle.format.ptf.source.IPtfSourceManager;
+import com.robindrew.trading.price.candle.format.ptf.source.IPtfSourceProviderManager;
 import com.robindrew.trading.price.candle.interval.IPriceInterval;
 import com.robindrew.trading.price.candle.interval.PriceIntervals;
 import com.robindrew.trading.price.candle.io.list.filter.PriceCandleListDuplicateFilter;
@@ -39,14 +39,14 @@ public class PtfFileLineConverter {
 
 	private final IPriceCandleLineParser parser;
 	private final ILineFilter filter;
-	private final IPtfSourceManager manager;
+	private final IPtfSourceProviderManager manager;
 	private boolean verify = true;
 	private int loggingFrequency = 1000;
 	private int multiplier = 0;
 	private int minPrice = 1;
 	private int maxPrice = Integer.MAX_VALUE;
 
-	public PtfFileLineConverter(IPtfSourceManager manager, IPriceCandleLineParser parser, ILineFilter filter) {
+	public PtfFileLineConverter(IPtfSourceProviderManager manager, IPriceCandleLineParser parser, ILineFilter filter) {
 		this.manager = Check.notNull("manager", manager);
 		this.parser = Check.notNull("parser", parser);
 		this.filter = Check.notNull("filter", filter);

@@ -1,6 +1,6 @@
 package com.robindrew.trading.provider;
 
-public interface ITradeDataProvider {
+public interface ITradingProvider {
 
 	String name();
 }

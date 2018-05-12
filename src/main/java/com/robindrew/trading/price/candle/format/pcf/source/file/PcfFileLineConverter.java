@@ -15,7 +15,7 @@ import com.robindrew.trading.price.candle.PriceCandleDateComparator;
 import com.robindrew.trading.price.candle.filter.PriceCandleConsecutiveFilter;
 import com.robindrew.trading.price.candle.format.pcf.PcfFormat;
 import com.robindrew.trading.price.candle.format.pcf.source.IPcfSource;
-import com.robindrew.trading.price.candle.format.pcf.source.IPcfSourceManager;
+import com.robindrew.trading.price.candle.format.pcf.source.IPcfSourceProviderManager;
 import com.robindrew.trading.price.candle.interval.IPriceInterval;
 import com.robindrew.trading.price.candle.interval.PriceIntervals;
 import com.robindrew.trading.price.candle.io.list.filter.PriceCandleListDuplicateFilter;
@@ -35,14 +35,15 @@ public class PcfFileLineConverter {
 
 	private static final Logger log = LoggerFactory.getLogger(PcfFileLineConverter.class);
 
+	private final IPcfSourceProviderManager manager;
 	private final IPriceCandleLineParser parser;
 	private final ILineFilter filter;
-	private final IPcfSourceManager manager;
+
 	private boolean verify = true;
 	private int loggingFrequency = 1000;
 	private int multiplier = 0;
 
-	public PcfFileLineConverter(IPcfSourceManager manager, IPriceCandleLineParser parser, ILineFilter filter) {
+	public PcfFileLineConverter(IPcfSourceProviderManager manager, IPriceCandleLineParser parser, ILineFilter filter) {
 		this.manager = Check.notNull("manager", manager);
 		this.parser = Check.notNull("parser", parser);
 		this.filter = Check.notNull("filter", filter);

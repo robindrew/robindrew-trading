@@ -1,12 +1,10 @@
 package com.robindrew.trading.price.candle.format.ptf.source.file;
 
 import static com.robindrew.trading.price.candle.format.ptf.PtfFormat.FILENAME_FILTER;
-import static com.robindrew.trading.price.candle.format.ptf.source.file.PtfFileManager.getDirectory;
 
 import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -21,24 +19,32 @@ import com.robindrew.trading.price.candle.format.ptf.source.PtfSources;
 import com.robindrew.trading.price.candle.format.ptf.source.PtfSourcesStreamSource;
 import com.robindrew.trading.price.candle.io.stream.source.IPriceCandleStreamSource;
 import com.robindrew.trading.price.candle.io.stream.source.PriceCandleFilteredStreamSource;
-import com.robindrew.trading.provider.ITradeDataProvider;
+import com.robindrew.trading.provider.ITradingProvider;
 
 public class PtfFileSet implements IPtfFileSet {
 
-	private final IInstrument instrument;
 	private final File rootDirectory;
-	private final Set<File> directorySet = new LinkedHashSet<>();
-	private final Set<ITradeDataProvider> providers;
+	private final ITradingProvider provider;
+	private final IInstrument instrument;
+	private final File providerDirectory;
 
-	public PtfFileSet(IInstrument instrument, File rootDirectory, Set<ITradeDataProvider> providers) {
-		this.instrument = Check.notNull("instrument", instrument);
+	public PtfFileSet(File rootDirectory, ITradingProvider provider, IInstrument instrument) {
 		this.rootDirectory = Check.existsDirectory("rootDirectory", rootDirectory);
-		this.providers = Check.notEmpty("providers", providers);
+		this.provider = Check.notEmpty("provider", provider);
+		this.instrument = Check.notNull("instrument", instrument);
+		this.providerDirectory = new File(rootDirectory, provider.name());
 
-		for (ITradeDataProvider provider : providers) {
-			File instrumentDir = getDirectory(provider, instrument, rootDirectory);
-			directorySet.add(instrumentDir);
+		if (!providerDirectory.exists()) {
+			throw new IllegalStateException("Provider directory does not exist: '" + providerDirectory + "'");
 		}
+	}
+
+	public File getRootDirectory() {
+		return rootDirectory;
+	}
+
+	public ITradingProvider getProvider() {
+		return provider;
 	}
 
 	@Override
@@ -47,50 +53,30 @@ public class PtfFileSet implements IPtfFileSet {
 	}
 
 	@Override
-	public SortedSet<IPtfFile> getSources() {
+	public SortedSet<? extends IPtfFile> getSources() {
 		SortedSet<IPtfFile> files = new TreeSet<>();
-		for (File directory : directorySet) {
-			if (directory.exists()) {
-				for (File file : Files.listContents(directory, FILENAME_FILTER)) {
-					IPtfFile pcf = new PtfFile(file);
-					files.add(pcf);
-				}
-			}
+		for (File file : Files.listContents(providerDirectory, FILENAME_FILTER)) {
+			IPtfFile pcf = new PtfFile(file);
+			files.add(pcf);
 		}
 		return files;
 	}
 
 	@Override
-	public IPtfFile getSource(LocalDate day, boolean create) {
-		String filename = PtfFormat.getFilename(day);
-
-		for (File directory : directorySet) {
-			File file = new File(directory, filename);
-			if (file.exists()) {
-				return new PtfFile(file, day);
-			}
-		}
-
-		for (ITradeDataProvider provider : providers) {
-			File directory = getDirectory(provider, instrument, rootDirectory);
-			File file = new File(directory, filename);
-			return new PtfFile(file, day);
-		}
-
-		throw new IllegalStateException("Should never reach this line!");
+	public IPtfFile getSource(LocalDate month, boolean create) {
+		String filename = PtfFormat.getFilename(month);
+		File file = new File(providerDirectory, filename);
+		return new PtfFile(file, month);
 	}
 
 	@Override
-	public IPtfFile getSource(LocalDate day) {
-		String filename = PtfFormat.getFilename(day);
-
-		for (File directory : directorySet) {
-			File file = new File(directory, filename);
-			if (file.exists()) {
-				return new PtfFile(file, day);
-			}
+	public IPtfFile getSource(LocalDate month) {
+		String filename = PtfFormat.getFilename(month);
+		File file = new File(providerDirectory, filename);
+		if (file.exists()) {
+			return new PtfFile(file, month);
 		}
-		throw new IllegalArgumentException("File not found for instrument: " + getInstrument() + ", month: " + day);
+		throw new IllegalArgumentException("File not found for instrument: " + getInstrument() + ", month: " + month);
 	}
 
 	@Override

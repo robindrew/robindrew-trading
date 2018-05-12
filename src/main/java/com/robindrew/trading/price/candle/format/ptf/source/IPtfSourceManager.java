@@ -2,21 +2,15 @@ package com.robindrew.trading.price.candle.format.ptf.source;
 
 import java.util.Set;
 
-import com.robindrew.trading.IInstrument;
-import com.robindrew.trading.provider.ITradeDataProvider;
+import com.robindrew.trading.price.candle.format.IPriceFormat;
+import com.robindrew.trading.provider.ITradingProvider;
 
 public interface IPtfSourceManager {
 
-	Set<IInstrument> getInstruments();
+	IPriceFormat getFormat();
 
-	Set<IInstrument> getInstruments(ITradeDataProvider provider);
+	Set<? extends IPtfSourceProviderManager> getProviders();
 
-	Set<ITradeDataProvider> getProviders();
-
-	IPtfSourceSet getSourceSet(IInstrument instrument);
-
-	IPtfSourceSet getSourceSet(IInstrument instrument, ITradeDataProvider provider);
-
-	IInstrument getInstrument(ITradeDataProvider provider, String name);
+	IPtfSourceProviderManager getProvider(ITradingProvider provider);
 
 }

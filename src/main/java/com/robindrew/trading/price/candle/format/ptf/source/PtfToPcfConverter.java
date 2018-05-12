@@ -1,7 +1,5 @@
 package com.robindrew.trading.price.candle.format.ptf.source;
 
-import static com.robindrew.trading.provider.TradeDataProvider.FXCM;
-
 import java.io.File;
 import java.util.Set;
 
@@ -12,15 +10,17 @@ import com.robindrew.common.lang.Args;
 import com.robindrew.common.util.Check;
 import com.robindrew.trading.IInstrument;
 import com.robindrew.trading.price.candle.PriceCandles;
-import com.robindrew.trading.price.candle.format.pcf.source.file.IPcfFileManager;
-import com.robindrew.trading.price.candle.format.pcf.source.file.PcfFileManager;
+import com.robindrew.trading.price.candle.format.pcf.source.file.IPcfFileProviderManager;
+import com.robindrew.trading.price.candle.format.pcf.source.file.PcfFileProviderManager;
 import com.robindrew.trading.price.candle.format.pcf.source.file.PcfFileStreamSink;
-import com.robindrew.trading.price.candle.format.ptf.source.file.PtfFileManager;
+import com.robindrew.trading.price.candle.format.ptf.source.file.IPtfFileProviderManager;
+import com.robindrew.trading.price.candle.format.ptf.source.file.PtfFileProviderManager;
 import com.robindrew.trading.price.candle.interval.IPriceInterval;
 import com.robindrew.trading.price.candle.interval.PriceIntervals;
 import com.robindrew.trading.price.candle.io.stream.source.IPriceCandleStreamSource;
 import com.robindrew.trading.price.candle.io.stream.source.PriceCandleIntervalStreamSource;
-import com.robindrew.trading.provider.ITradeDataProvider;
+import com.robindrew.trading.provider.ITradingProvider;
+import com.robindrew.trading.provider.TradingProvider;
 
 public class PtfToPcfConverter {
 
@@ -32,29 +32,31 @@ public class PtfToPcfConverter {
 		String fromDir = args.get("-f"); // "C:\\development\\data\\converted\\ptf"
 		String toDir = args.get("-t"); // "C:\\development\\data\\converted\\pcf";
 
-		IPtfSourceManager ptf = new PtfFileManager(new File(fromDir));
-		IPcfFileManager pcf = new PcfFileManager(new File(toDir));
+		ITradingProvider provider = TradingProvider.FXCM;
+		
+		IPtfFileProviderManager ptf = new PtfFileProviderManager(new File(fromDir), provider);
+		IPcfFileProviderManager pcf = new PcfFileProviderManager(new File(toDir), provider);
 
 		PtfToPcfConverter converter = new PtfToPcfConverter(ptf, pcf);
-		for (IInstrument instrument : ptf.getInstruments(FXCM)) {
-			converter.convert(FXCM, instrument);
+		for (IInstrument instrument : ptf.getInstruments()) {
+			converter.convert(instrument);
 		}
 	}
 
-	private final IPtfSourceManager ptf;
-	private final IPcfFileManager pcf;
+	private final IPtfFileProviderManager ptf;
+	private final IPcfFileProviderManager pcf;
 
-	public PtfToPcfConverter(IPtfSourceManager ptf, IPcfFileManager pcf) {
+	public PtfToPcfConverter(IPtfFileProviderManager ptf, IPcfFileProviderManager pcf) {
 		this.ptf = Check.notNull("ptf", ptf);
 		this.pcf = Check.notNull("pcf", pcf);
 	}
 
-	public void convert(ITradeDataProvider provider, IInstrument instrument) {
+	public void convert(IInstrument instrument) {
 
 		// Get the instrument
 		log.info("Converting Instrument: {}", instrument);
 
-		IPtfSourceSet set = ptf.getSourceSet(instrument, provider);
+		IPtfSourceSet set = ptf.getSourceSet(instrument);
 		Set<? extends IPtfSource> sources = set.getSources();
 		if (sources.isEmpty()) {
 			return;
@@ -67,7 +69,7 @@ public class PtfToPcfConverter {
 		try (IPriceCandleStreamSource source = createSource(sources, interval)) {
 
 			// Output directory
-			File directory = pcf.getDirectory(provider, instrument);
+			File directory = pcf.getDirectory(instrument);
 			if (directory.exists()) {
 				log.info("Output directory already exists, skipping: {}", directory);
 				return;
