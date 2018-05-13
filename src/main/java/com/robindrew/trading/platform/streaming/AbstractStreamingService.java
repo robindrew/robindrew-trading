@@ -19,7 +19,13 @@ public abstract class AbstractStreamingService<I extends IInstrument> extends Ab
 	}
 
 	@Override
+	public Set<I> getSubscribed() {
+		return ImmutableSet.copyOf(streamMap.keySet());
+	}
+
+	@Override
 	public boolean isSubscribed(I instrument) {
+		Check.notNull("instrument", instrument);
 		return streamMap.containsKey(instrument);
 	}
 
@@ -36,6 +42,8 @@ public abstract class AbstractStreamingService<I extends IInstrument> extends Ab
 
 	@Override
 	public IInstrumentPriceStream<I> getPriceStream(I instrument) {
+		Check.notNull("instrument", instrument);
+
 		IInstrumentPriceStream<I> stream = streamMap.get(instrument);
 		if (stream == null) {
 			throw new IllegalStateException("No stream registered for instrument: " + instrument);

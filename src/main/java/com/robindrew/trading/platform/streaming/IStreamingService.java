@@ -15,8 +15,12 @@ public interface IStreamingService<I extends IInstrument> extends ITradingServic
 
 	boolean unsubscribe(I instrument);
 
+	Set<I> getSubscribed();
+
 	Set<IInstrumentPriceStream<I>> getPriceStreams();
 
 	IInstrumentPriceStream<I> getPriceStream(I instrument);
+
+	void close();
 
 }
