@@ -30,6 +30,16 @@ import com.robindrew.common.util.Check;
  */
 public class TransactionLog extends AbstractTransactionLog implements ITransactionLog, Runnable {
 
+	private static File createDirectory(File directory) {
+		if (!directory.exists()) {
+			Check.existsDirectory("directory", directory.getParentFile());
+			if (!directory.mkdir()) {
+				throw new IllegalArgumentException("Unable to create directory: " + directory);
+			}
+		}
+		return directory;
+	}
+
 	private static final Logger log = LoggerFactory.getLogger(TransactionLog.class);
 
 	private final File directory;
@@ -37,7 +47,7 @@ public class TransactionLog extends AbstractTransactionLog implements ITransacti
 	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss,S");
 
 	public TransactionLog(File directory) {
-		this.directory = Check.existsDirectory("directory", directory);
+		this.directory = createDirectory(directory);
 	}
 
 	public LoopingRunnableThread start() {
