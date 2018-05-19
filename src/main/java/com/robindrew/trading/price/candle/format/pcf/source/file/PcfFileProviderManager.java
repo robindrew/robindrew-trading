@@ -53,7 +53,8 @@ public class PcfFileProviderManager implements IPcfFileProviderManager {
 
 	@Override
 	public IPcfSourceSet getSourceSet(IInstrument instrument) {
-		return new PcfFileSet(rootDirectory, provider, instrument);
+		File directory = getDirectory(instrument);
+		return new PcfFileSet(directory, provider, instrument);
 	}
 
 	@Override

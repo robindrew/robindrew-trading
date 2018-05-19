@@ -23,24 +23,14 @@ import com.robindrew.trading.provider.ITradingProvider;
 
 public class PtfFileSet implements IPtfFileSet {
 
-	private final File rootDirectory;
+	private final File directory;
 	private final ITradingProvider provider;
 	private final IInstrument instrument;
-	private final File providerDirectory;
 
-	public PtfFileSet(File rootDirectory, ITradingProvider provider, IInstrument instrument) {
-		this.rootDirectory = Check.existsDirectory("rootDirectory", rootDirectory);
-		this.provider = Check.notEmpty("provider", provider);
+	public PtfFileSet(File directory, ITradingProvider provider, IInstrument instrument) {
+		this.directory = Check.existsDirectory("directory", directory);
+		this.provider = Check.notNull("provider", provider);
 		this.instrument = Check.notNull("instrument", instrument);
-		this.providerDirectory = new File(rootDirectory, provider.name());
-
-		if (!providerDirectory.exists()) {
-			throw new IllegalStateException("Provider directory does not exist: '" + providerDirectory + "'");
-		}
-	}
-
-	public File getRootDirectory() {
-		return rootDirectory;
 	}
 
 	public ITradingProvider getProvider() {
@@ -55,7 +45,7 @@ public class PtfFileSet implements IPtfFileSet {
 	@Override
 	public SortedSet<? extends IPtfFile> getSources() {
 		SortedSet<IPtfFile> files = new TreeSet<>();
-		for (File file : Files.listContents(providerDirectory, FILENAME_FILTER)) {
+		for (File file : Files.listContents(directory, FILENAME_FILTER)) {
 			IPtfFile pcf = new PtfFile(file);
 			files.add(pcf);
 		}
@@ -65,14 +55,14 @@ public class PtfFileSet implements IPtfFileSet {
 	@Override
 	public IPtfFile getSource(LocalDate month, boolean create) {
 		String filename = PtfFormat.getFilename(month);
-		File file = new File(providerDirectory, filename);
+		File file = new File(directory, filename);
 		return new PtfFile(file, month);
 	}
 
 	@Override
 	public IPtfFile getSource(LocalDate month) {
 		String filename = PtfFormat.getFilename(month);
-		File file = new File(providerDirectory, filename);
+		File file = new File(directory, filename);
 		if (file.exists()) {
 			return new PtfFile(file, month);
 		}

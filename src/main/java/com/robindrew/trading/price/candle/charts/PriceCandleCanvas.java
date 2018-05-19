@@ -264,7 +264,7 @@ public class PriceCandleCanvas {
 		Stopwatch timer = Stopwatch.createStarted();
 		byte[] bytes = Images.toGif(image);
 		timer.stop();
-		log.info("Serialized {} to GIF in {}", bytes(bytes), timer);
+		log.debug("Serialized {} to GIF in {}", bytes(bytes), timer);
 		return bytes;
 	}
 
@@ -272,7 +272,7 @@ public class PriceCandleCanvas {
 		Stopwatch timer = Stopwatch.createStarted();
 		byte[] bytes = Images.toPng(image);
 		timer.stop();
-		log.info("Serialized {} to PNG in {}", bytes(bytes), timer);
+		log.debug("Serialized {} to PNG in {}", bytes(bytes), timer);
 		return bytes;
 	}
 
@@ -280,14 +280,14 @@ public class PriceCandleCanvas {
 		Stopwatch timer = Stopwatch.createStarted();
 		Images.writeAsGif(image, new File(filename));
 		timer.stop();
-		log.info("Wrote {} in {}", filename, timer);
+		log.debug("Wrote {} in {}", filename, timer);
 	}
 
 	public void writeAsPng(String filename) throws IOException {
 		Stopwatch timer = Stopwatch.createStarted();
 		Images.writeAsPng(image, new File(filename));
 		timer.stop();
-		log.info("Wrote {} in {}", filename, timer);
+		log.debug("Wrote {} in {}", filename, timer);
 	}
 
 }

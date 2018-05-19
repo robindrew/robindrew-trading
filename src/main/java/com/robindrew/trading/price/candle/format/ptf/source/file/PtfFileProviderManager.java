@@ -53,7 +53,8 @@ public class PtfFileProviderManager implements IPtfFileProviderManager {
 
 	@Override
 	public IPtfSourceSet getSourceSet(IInstrument instrument) {
-		return new PtfFileSet(rootDirectory, provider, instrument);
+		File directory = getDirectory(instrument);
+		return new PtfFileSet(directory, provider, instrument);
 	}
 
 	@Override
