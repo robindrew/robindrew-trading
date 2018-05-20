@@ -7,6 +7,10 @@ import com.robindrew.trading.trade.cash.ICash;
 
 public class Balance {
 
+	public static Balance fromCash(int amount) {
+		return new Balance(new Cash(amount));
+	}
+
 	private volatile ICash balance;
 
 	public Balance(ICash funds) {
