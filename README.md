@@ -18,6 +18,7 @@ Sub Project | Description | Type
 [robindrew-trading-histdata-data](https://github.com/robindrew/robindrew-trading-histdata-data) | HistData | PCF Data
 [robindrew-trading-oanda](https://github.com/robindrew/robindrew-trading-oanda) | OANDA | Provider
 [robindrew-trading-oanda-trader](https://github.com/robindrew/robindrew-trading-oanda-trader) | OANDA | Service
+[robindrew-trading-cityindex](https://github.com/robindrew/robindrew-trading-cityindex) | City Index | Provider
 
 Note: I no longer actively maintain the ActiveTick projects, if someone else is interested in accessing them, please contact me directly.
 
