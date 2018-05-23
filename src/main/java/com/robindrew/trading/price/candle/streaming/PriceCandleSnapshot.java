@@ -3,8 +3,7 @@ package com.robindrew.trading.price.candle.streaming;
 import static com.robindrew.trading.trade.TradeDirection.BUY;
 import static com.robindrew.trading.trade.TradeDirection.SELL;
 
-import java.util.Optional;
-
+import com.google.common.base.Optional;
 import com.robindrew.common.util.Check;
 import com.robindrew.trading.price.candle.IPriceCandle;
 import com.robindrew.trading.trade.TradeDirection;
@@ -38,7 +37,7 @@ public class PriceCandleSnapshot implements IPriceCandleSnapshot {
 
 	@Override
 	public Optional<IPriceCandle> getPrevious() {
-		return Optional.ofNullable(previous);
+		return Optional.fromNullable(previous);
 	}
 
 	@Override

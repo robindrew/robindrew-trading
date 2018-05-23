@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableSet;
 import com.robindrew.common.collect.copyonwrite.CopyOnWriteMap;
 import com.robindrew.common.lang.reflect.field.FieldLister;
@@ -31,10 +32,10 @@ public class InstrumentRegistry implements IInstrumentRegistry {
 	}
 
 	@SuppressWarnings("unchecked")
-	public <I extends IInstrument> I get(IInstrument instrument, Class<I> type) {
+	public <I extends IInstrument> Optional<I> get(IInstrument instrument, Class<I> type) {
 		Registry<I> registry = (Registry<I>) registryMap.get(type);
 		if (registry == null) {
-			throw new IllegalArgumentException("Type not registered: " + type);
+			return Optional.absent();
 		}
 		return registry.get(instrument);
 	}
@@ -71,13 +72,13 @@ public class InstrumentRegistry implements IInstrumentRegistry {
 			return ImmutableSet.copyOf(instruments);
 		}
 
-		public I get(IInstrument instrument) {
+		public Optional<I> get(IInstrument instrument) {
 			for (I element : instruments) {
 				if (element.matches(instrument)) {
-					return element;
+					return Optional.of(element);
 				}
 			}
-			throw new IllegalArgumentException("Unable to find a match for " + instrument + " in type " + type);
+			return Optional.absent();
 		}
 	}
 }

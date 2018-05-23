@@ -53,7 +53,7 @@ public class Instrument implements IInstrument {
 
 	@Override
 	public int hashCode() {
-		return name.hashCode() + type.hashCode();
+		return (name.hashCode() + type.hashCode()) * 1999;
 	}
 
 	@Override

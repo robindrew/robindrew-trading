@@ -1,7 +1,6 @@
 package com.robindrew.trading.price.candle.streaming;
 
-import java.util.Optional;
-
+import com.google.common.base.Optional;
 import com.robindrew.trading.price.candle.IPriceCandle;
 import com.robindrew.trading.trade.TradeDirection;
 

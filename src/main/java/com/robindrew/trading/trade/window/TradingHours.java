@@ -1,7 +1,8 @@
 package com.robindrew.trading.trade.window;
 
 import java.time.LocalTime;
-import java.util.Optional;
+
+import com.google.common.base.Optional;
 
 public class TradingHours implements ITradingHours {
 
@@ -27,11 +28,11 @@ public class TradingHours implements ITradingHours {
 	}
 
 	public Optional<LocalTime> getOpenTime() {
-		return Optional.ofNullable(openTime);
+		return Optional.fromNullable(openTime);
 	}
 
 	public Optional<LocalTime> getCloseTime() {
-		return Optional.ofNullable(closeTime);
+		return Optional.fromNullable(closeTime);
 	}
 
 	@Override
