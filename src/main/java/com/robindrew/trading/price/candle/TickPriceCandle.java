@@ -145,4 +145,9 @@ public class TickPriceCandle extends AbstractPriceCandle implements ITickPriceCa
 		// This is a single tick!
 		return 1;
 	}
+
+	@Override
+	public IPriceCandle withDecimalPlaces(int decimalPlaces) {
+		return new TickPriceCandle(bidPrice, askPrice, timestamp, decimalPlaces);
+	}
 }

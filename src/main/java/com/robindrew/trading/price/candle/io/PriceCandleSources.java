@@ -49,9 +49,6 @@ public class PriceCandleSources {
 		}
 	}
 
-	public static void writeCandlesToLineFile(IPriceCandleStreamSource source, File file) {
-	}
-
 	public static void writeCandlesToDataFile(File toFile, List<IPriceCandle> candleList) {
 		if (candleList.isEmpty()) {
 			throw new IllegalArgumentException("candleList is empty");

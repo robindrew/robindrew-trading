@@ -35,10 +35,14 @@ public class PriceCandleLineFormatter implements IPriceCandleLineFormatter {
 	}
 
 	private void formatCandle(StringBuilder line, ITickPriceCandle candle) {
+
 		// Tick
 		line.append(toLocalDateTime(candle.getTimestamp())).append(',');
 		line.append(candle.getBidPrice()).append(',');
-		line.append(candle.getAskPrice());
+		line.append(candle.getAskPrice()).append(',');
+
+		// Decimal Places
+		line.append(candle.getDecimalPlaces());
 	}
 
 	private void formatCandle(StringBuilder line, MidPriceCandle candle) {
@@ -52,6 +56,9 @@ public class PriceCandleLineFormatter implements IPriceCandleLineFormatter {
 		line.append(candle.getMidHighPrice()).append(',');
 		line.append(candle.getMidLowPrice()).append(',');
 		line.append(candle.getMidClosePrice()).append(',');
+
+		// Decimal Places
+		line.append(candle.getDecimalPlaces()).append(',');
 
 		// Volume
 		line.append(candle.getTickVolume());
@@ -74,6 +81,9 @@ public class PriceCandleLineFormatter implements IPriceCandleLineFormatter {
 		line.append(candle.getAskHighPrice()).append(',');
 		line.append(candle.getAskLowPrice()).append(',');
 		line.append(candle.getAskClosePrice()).append(',');
+
+		// Decimal Places
+		line.append(candle.getDecimalPlaces()).append(',');
 
 		// Volume
 		line.append(candle.getTickVolume());

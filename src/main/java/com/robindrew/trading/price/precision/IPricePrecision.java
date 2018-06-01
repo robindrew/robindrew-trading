@@ -2,6 +2,8 @@ package com.robindrew.trading.price.precision;
 
 import java.math.BigDecimal;
 
+import com.robindrew.trading.price.candle.IPriceCandle;
+
 public interface IPricePrecision {
 
 	int getDecimalPlaces();
@@ -10,4 +12,5 @@ public interface IPricePrecision {
 
 	BigDecimal toBigDecimal(int price);
 
+	IPriceCandle normalize(IPriceCandle candle);
 }

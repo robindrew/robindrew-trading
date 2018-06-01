@@ -182,4 +182,9 @@ public class PriceCandle extends AbstractPriceCandle {
 	public long getTickVolume() {
 		return tickVolume;
 	}
+
+	@Override
+	public IPriceCandle withDecimalPlaces(int decimalPlaces) {
+		return new PriceCandle(bidOpenPrice, bidHighPrice, bidLowPrice, bidClosePrice, askOpenPrice, askHighPrice, askLowPrice, askClosePrice, openTime, closeTime, decimalPlaces, tickVolume);
+	}
 }

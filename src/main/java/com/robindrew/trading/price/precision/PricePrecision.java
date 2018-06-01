@@ -2,6 +2,7 @@ package com.robindrew.trading.price.precision;
 
 import java.math.BigDecimal;
 
+import com.robindrew.trading.price.candle.IPriceCandle;
 import com.robindrew.trading.price.decimal.Decimals;
 
 public class PricePrecision implements IPricePrecision {
@@ -27,4 +28,8 @@ public class PricePrecision implements IPricePrecision {
 		return Decimals.toBigDecimal(price, decimalPlaces);
 	}
 
+	@Override
+	public IPriceCandle normalize(IPriceCandle candle) {
+		return candle.withDecimalPlaces(decimalPlaces);
+	}
 }

@@ -67,4 +67,6 @@ public interface IPriceCandle {
 
 	boolean containsPrice(int price);
 
+	IPriceCandle withDecimalPlaces(int decimalPlaces);
+	
 }

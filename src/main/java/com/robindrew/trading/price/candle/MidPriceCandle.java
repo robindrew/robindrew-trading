@@ -155,4 +155,9 @@ public class MidPriceCandle extends AbstractPriceCandle {
 	public long getTickVolume() {
 		return tickVolume;
 	}
+
+	@Override
+	public IPriceCandle withDecimalPlaces(int decimalPlaces) {
+		return new MidPriceCandle(openPrice, highPrice, lowPrice, closePrice, openTime, closeTime, decimalPlaces, tickVolume);
+	}
 }
