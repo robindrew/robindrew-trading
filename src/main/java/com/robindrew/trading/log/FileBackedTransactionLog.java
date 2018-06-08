@@ -11,15 +11,11 @@ import java.io.Writer;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.BlockingDeque;
-import java.util.concurrent.LinkedBlockingDeque;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.robindrew.common.concurrent.LoopingRunnableThread;
 import com.robindrew.common.date.Dates;
 import com.robindrew.common.text.Strings;
 import com.robindrew.common.util.Check;
@@ -28,7 +24,7 @@ import com.robindrew.common.util.Check;
  * The Transaction Log is intended as a file-backed log for recording details of every transaction you execute.
  * Specifically the orders and trades you place and close or cancel, and the response to each request.
  */
-public class TransactionLog extends AbstractTransactionLog implements ITransactionLog, Runnable {
+public class FileBackedTransactionLog extends WriteBehindTransactionLog {
 
 	private static File createDirectory(File directory) {
 		if (!directory.exists()) {
@@ -40,36 +36,21 @@ public class TransactionLog extends AbstractTransactionLog implements ITransacti
 		return directory;
 	}
 
-	private static final Logger log = LoggerFactory.getLogger(TransactionLog.class);
+	private static final Logger log = LoggerFactory.getLogger(FileBackedTransactionLog.class);
 
 	private final File directory;
-	private final BlockingDeque<Entry> entryQueue = new LinkedBlockingDeque<>();
-	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss,S");
+	private volatile DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss,S");
 
-	public TransactionLog(File directory) {
+	public FileBackedTransactionLog(File directory) {
 		this.directory = createDirectory(directory);
 	}
 
-	public LoopingRunnableThread start() {
-		LoopingRunnableThread thread = new LoopingRunnableThread("TransactionLog", this);
-		thread.start();
-		return thread;
+	public void setFormatter(DateTimeFormatter formatter) {
+		this.formatter = Check.notNull("formatter", formatter);
 	}
 
 	@Override
-	public void run() {
-		try {
-			List<Entry> list = new ArrayList<>();
-			entryQueue.drainTo(list);
-			if (!list.isEmpty()) {
-				writeEntries(list);
-			}
-		} catch (Exception e) {
-			log.warn("Exception while writing entries", e);
-		}
-	}
-
-	private void writeEntries(List<Entry> list) throws IOException {
+	protected void writeEntries(List<Entry> list) throws IOException {
 		File currentFile = null;
 		Writer currentWriter = null;
 		for (Entry entry : list) {
@@ -129,11 +110,6 @@ public class TransactionLog extends AbstractTransactionLog implements ITransacti
 	private File getFile(Entry entry) {
 		LocalDate date = Dates.toLocalDateTime(entry.getTimestamp()).toLocalDate();
 		return new File(directory, "transaction." + date + ".log");
-	}
-
-	@Override
-	protected void log(Entry entry) {
-		entryQueue.add(entry);
 	}
 
 }
