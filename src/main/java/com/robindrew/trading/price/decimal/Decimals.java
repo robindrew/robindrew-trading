@@ -190,4 +190,8 @@ public class Decimals {
 		return floating;
 	}
 
+	public static int roundToInt(double value) {
+		return (int) (value + 0.5);
+	}
+
 }

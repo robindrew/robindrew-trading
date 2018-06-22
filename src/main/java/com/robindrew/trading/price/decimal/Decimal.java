@@ -32,6 +32,7 @@ public class Decimal implements IDecimal {
 		}
 	}
 
+	@Override
 	public Decimal setDecimalPlaces(int decimalPlaces) {
 		if (getDecimalPlaces() == decimalPlaces) {
 			return this;
@@ -47,7 +48,7 @@ public class Decimal implements IDecimal {
 	}
 
 	private final int value;
-	private int decimalPlaces;
+	private final int decimalPlaces;
 
 	public Decimal(int value, int decimalPlaces) {
 		if (value <= 0) {
@@ -62,6 +63,10 @@ public class Decimal implements IDecimal {
 
 	public Decimal(BigDecimal value, int decimalPlaces) {
 		this(Decimals.toBigInt(value, decimalPlaces), decimalPlaces);
+	}
+
+	public Decimal(double value, int decimalPlaces) {
+		this(Decimals.toInt(value, decimalPlaces), decimalPlaces);
 	}
 
 	@Override
@@ -89,8 +94,26 @@ public class Decimal implements IDecimal {
 		return Decimals.toBigDecimal(value, decimalPlaces);
 	}
 
+	@Override
 	public String toString() {
 		return Decimals.toString(value, decimalPlaces);
+	}
+
+	@Override
+	public int hashCode() {
+		return 1999 * (value + decimalPlaces);
+	}
+
+	@Override
+	public boolean equals(Object object) {
+		if (object == this) {
+			return true;
+		}
+		if (object instanceof Decimal) {
+			Decimal that = (Decimal) object;
+			return this.getValue() == that.getValue() && this.getDecimalPlaces() == that.getDecimalPlaces();
+		}
+		return false;
 	}
 
 }

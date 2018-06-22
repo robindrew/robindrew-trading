@@ -28,6 +28,8 @@ import com.robindrew.trading.price.candle.io.stream.source.iterator.PriceCandleS
 import com.robindrew.trading.price.candle.line.parser.IPriceCandleLineParser;
 import com.robindrew.trading.price.candle.line.parser.PriceCandleLineFile;
 import com.robindrew.trading.price.candle.merger.PriceCandleMerger;
+import com.robindrew.trading.price.decimal.Decimal;
+import com.robindrew.trading.price.decimal.Decimals;
 
 public class PriceCandles {
 
@@ -64,11 +66,20 @@ public class PriceCandles {
 		return (count <= 1) ? total : (total / count);
 	}
 
-	public static double getSmoothingConstant(int periods) {
-		if (periods < 1) {
-			throw new IllegalArgumentException("periods=" + periods);
+	public static Decimal getAverage(Collection<? extends IPriceCandle> candles) {
+		Check.notEmpty("candles", candles);
+
+		int count = candles.size();
+
+		double total = 0;
+		int decimalPlaces = 0;
+		for (IPriceCandle candle : candles) {
+			total += candle.getMidClosePrice();
+			decimalPlaces = candle.getDecimalPlaces();
 		}
-		return 2.0f / (periods + 1);
+
+		int average = Decimals.roundToInt(total / count);
+		return new Decimal(average, decimalPlaces);
 	}
 
 	public static int getChange(IPriceCandle previous, IPriceCandle current) {
