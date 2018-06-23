@@ -1,6 +1,8 @@
 package com.robindrew.trading.platform;
 
-public class TradingPlatformException extends RuntimeException {
+import com.robindrew.trading.TradingException;
+
+public class TradingPlatformException extends TradingException {
 
 	private static final long serialVersionUID = -2483351416434414621L;
 
