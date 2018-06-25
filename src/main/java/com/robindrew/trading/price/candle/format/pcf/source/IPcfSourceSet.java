@@ -51,6 +51,12 @@ public interface IPcfSourceSet {
 	 */
 	IPcfSource getSource(LocalDate month, boolean create);
 
+	/**
+	 * Returns this as a stream source over the given date range.
+	 * @param from the date to stream candles from.
+	 * @param to the date to stream candles to.
+	 * @return the source.
+	 */
 	IPriceCandleStreamSource asStreamSource(LocalDateTime from, LocalDateTime to);
 
 }
