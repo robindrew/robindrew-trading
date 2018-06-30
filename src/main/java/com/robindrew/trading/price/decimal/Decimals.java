@@ -161,6 +161,10 @@ public class Decimals {
 		return toBigInt(value, decimalPlaces, true);
 	}
 
+	public static int toBigInt(BigDecimal value) {
+		return toBigInt(value, value.scale(), false);
+	}
+
 	public static int toBigInt(BigDecimal value, int decimalPlaces, boolean checkPlaces) {
 		BigDecimal multiplyDouble = value.multiply(MULTIPLES[decimalPlaces]);
 

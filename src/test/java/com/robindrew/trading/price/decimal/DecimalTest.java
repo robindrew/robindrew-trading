@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class DecimalFormatTest {
+public class DecimalTest {
 
 	@Test
 	public void testToString() {
@@ -43,6 +43,20 @@ public class DecimalFormatTest {
 		BigDecimal actualDecimal = Decimals.toBigDecimal(value, decimalPlaces);
 
 		Assert.assertEquals(expectedDecimal, actualDecimal);
+	}
+
+	@Test
+	public void testFromBigDecimal() {
+		testFromBigDecimal(new Decimal(1234, 0), "1234");
+		testFromBigDecimal(new Decimal(1234, 1), "123.4");
+		testFromBigDecimal(new Decimal(1234, 2), "12.34");
+		testFromBigDecimal(new Decimal(1234, 3), "1.234");
+		testFromBigDecimal(new Decimal(1234, 4), "0.1234");
+	}
+
+	private static void testFromBigDecimal(Decimal decimal, String textValue) {
+		BigDecimal value = new BigDecimal(textValue);
+		Assert.assertEquals(decimal, new Decimal(value));
 	}
 
 	@Test

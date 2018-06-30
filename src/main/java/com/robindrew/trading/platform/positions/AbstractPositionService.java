@@ -11,7 +11,6 @@ import com.robindrew.trading.platform.AbstractTradingService;
 import com.robindrew.trading.position.IPosition;
 import com.robindrew.trading.position.closed.IClosedPosition;
 import com.robindrew.trading.position.order.IPositionOrder;
-import com.robindrew.trading.price.precision.IPricePrecision;
 import com.robindrew.trading.provider.ITradingProvider;
 
 public class AbstractPositionService extends AbstractTradingService implements IPositionService {
@@ -39,11 +38,6 @@ public class AbstractPositionService extends AbstractTradingService implements I
 			}
 		}
 		return positions;
-	}
-
-	@Override
-	public IPricePrecision getPrecision(IInstrument instrument) {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override

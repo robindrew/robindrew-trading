@@ -9,11 +9,8 @@ import com.robindrew.trading.platform.ITradingService;
 import com.robindrew.trading.position.IPosition;
 import com.robindrew.trading.position.closed.IClosedPosition;
 import com.robindrew.trading.position.order.IPositionOrder;
-import com.robindrew.trading.price.precision.IPricePrecision;
 
 public interface IPositionService extends ITradingService {
-
-	IPricePrecision getPrecision(IInstrument instrument);
 
 	List<? extends IPosition> getAllPositions();
 

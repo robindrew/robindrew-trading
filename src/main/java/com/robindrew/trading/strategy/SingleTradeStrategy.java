@@ -50,7 +50,7 @@ public abstract class SingleTradeStrategy<I extends IInstrument> extends Abstrac
 
 	public void checkOpenPosition(IPriceCandle candle) {
 
-		IPricePrecision precision = getPositionService().getPrecision(getInstrument());
+		IPricePrecision precision = getInstrument().getPrecision();
 		IPosition position = getOpenPosition();
 
 		int high = candle.getMidHighPrice();

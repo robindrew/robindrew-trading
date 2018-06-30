@@ -32,6 +32,48 @@ public class Decimal implements IDecimal {
 		}
 	}
 
+	public static Decimal add(IDecimal decimal1, IDecimal decimal2) {
+		int decimalPlaces1 = decimal1.getDecimalPlaces();
+		int decimalPlaces2 = decimal2.getDecimalPlaces();
+
+		int value1 = decimal1.getValue();
+		int value2 = decimal2.getValue();
+
+		// Decimal places match?
+		if (decimalPlaces1 == decimalPlaces2) {
+			return new Decimal(value1 + value2, decimalPlaces1);
+		}
+
+		if (decimalPlaces1 > decimalPlaces2) {
+			decimal2 = decimal2.setDecimalPlaces(decimalPlaces1);
+			return add(decimal1, decimal2);
+		} else {
+			decimal1 = decimal1.setDecimalPlaces(decimalPlaces2);
+			return add(decimal1, decimal2);
+		}
+	}
+
+	public static Decimal subtract(IDecimal decimal1, IDecimal decimal2) {
+		int decimalPlaces1 = decimal1.getDecimalPlaces();
+		int decimalPlaces2 = decimal2.getDecimalPlaces();
+
+		int value1 = decimal1.getValue();
+		int value2 = decimal2.getValue();
+
+		// Decimal places match?
+		if (decimalPlaces1 == decimalPlaces2) {
+			return new Decimal(value1 - value2, decimalPlaces1);
+		}
+
+		if (decimalPlaces1 > decimalPlaces2) {
+			decimal2 = decimal2.setDecimalPlaces(decimalPlaces1);
+			return subtract(decimal1, decimal2);
+		} else {
+			decimal1 = decimal1.setDecimalPlaces(decimalPlaces2);
+			return subtract(decimal1, decimal2);
+		}
+	}
+
 	@Override
 	public Decimal setDecimalPlaces(int decimalPlaces) {
 		if (getDecimalPlaces() == decimalPlaces) {
@@ -67,6 +109,18 @@ public class Decimal implements IDecimal {
 
 	public Decimal(double value, int decimalPlaces) {
 		this(Decimals.toInt(value, decimalPlaces), decimalPlaces);
+	}
+
+	public Decimal(int value) {
+		this(value, 0);
+	}
+
+	public Decimal(BigDecimal value) {
+		this(value, value.scale());
+	}
+
+	public Decimal(String value) {
+		this(new BigDecimal(value));
 	}
 
 	@Override
@@ -114,6 +168,33 @@ public class Decimal implements IDecimal {
 			return this.getValue() == that.getValue() && this.getDecimalPlaces() == that.getDecimalPlaces();
 		}
 		return false;
+	}
+
+	public Decimal multiply(IDecimal decimal) {
+		return multiply(this, decimal);
+	}
+
+	public Decimal add(IDecimal decimal) {
+		return add(this, decimal);
+	}
+
+	public Decimal subtract(IDecimal decimal) {
+		return subtract(this, decimal);
+	}
+
+	@Override
+	public IDecimal add(BigDecimal value) {
+		return add(new Decimal(value));
+	}
+
+	@Override
+	public IDecimal subtract(BigDecimal value) {
+		return subtract(new Decimal(value));
+	}
+
+	@Override
+	public IDecimal multiply(BigDecimal value) {
+		return multiply(new Decimal(value));
 	}
 
 }
