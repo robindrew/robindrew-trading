@@ -1,4 +1,4 @@
-package com.robindrew.trading.trade.balance;
+package com.robindrew.trading.trade.money;
 
 import static com.robindrew.common.util.Check.notNull;
 
@@ -71,6 +71,30 @@ public class Money implements IMoney {
 	@Override
 	public void multiply(BigDecimal value) {
 		multiply(new Decimal(value));
+	}
+
+	@Override
+	public void add(IMoney value) {
+		if (!getCurrency().equals(value.getCurrency())) {
+			throw new IllegalArgumentException("currencies do not match: this=" + this + ", value=" + value);
+		}
+		add(value.getValue());
+	}
+
+	@Override
+	public void subtract(IMoney value) {
+		if (!getCurrency().equals(value.getCurrency())) {
+			throw new IllegalArgumentException("currencies do not match: this=" + this + ", value=" + value);
+		}
+		subtract(value.getValue());
+	}
+
+	@Override
+	public void multiply(IMoney value) {
+		if (!getCurrency().equals(value.getCurrency())) {
+			throw new IllegalArgumentException("currencies do not match: this=" + this + ", value=" + value);
+		}
+		multiply(value.getValue());
 	}
 
 }

@@ -1,4 +1,4 @@
-package com.robindrew.trading.trade.balance;
+package com.robindrew.trading.trade.money;
 
 import java.math.BigDecimal;
 
@@ -24,5 +24,11 @@ public interface IMoney {
 	void subtract(IDecimal value);
 
 	void multiply(IDecimal value);
+
+	void add(IMoney value);
+
+	void subtract(IMoney value);
+
+	void multiply(IMoney value);
 
 }

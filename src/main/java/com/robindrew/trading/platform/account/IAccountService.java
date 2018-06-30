@@ -1,7 +1,7 @@
 package com.robindrew.trading.platform.account;
 
 import com.robindrew.trading.platform.ITradingService;
-import com.robindrew.trading.trade.balance.IMoney;
+import com.robindrew.trading.trade.money.IMoney;
 
 public interface IAccountService extends ITradingService {
 
