@@ -1,0 +1,3 @@
+rootProject.name = 'robindrew-trading'
+include 'robindrew-common'
+project(":robindrew-common").projectDir = file('/../robindrew-common')
