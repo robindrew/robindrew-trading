@@ -1,244 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="output" path="bin/default"/>
-	<classpathentry output="bin/main" kind="src" path="src/main/java">
-		<attributes>
-			<attribute name="gradle_scope" value="main"/>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry output="bin/main" kind="src" path="src/main/resources">
-		<attributes>
-			<attribute name="gradle_scope" value="main"/>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry output="bin/test" kind="src" path="src/test/java">
-		<attributes>
-			<attribute name="gradle_scope" value="test"/>
-			<attribute name="gradle_used_by_scope" value="test"/>
-		</attributes>
-	</classpathentry>
+	<classpathentry path="bin" kind="output"/>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="src" path="src/main/resources"/>
+	<classpathentry kind="src" path="src/test/java"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8/"/>
 	<classpathentry kind="src" path="/robindrew-common"/>
-	<classpathentry kind="lib" path="C:/Users/Robin/.m2/repository/uk/org/lidalia/sysout-over-slf4j/1.0.2/sysout-over-slf4j-1.0.2.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.slf4j/log4j-over-slf4j/1.7.25/42a10e06ab88cbe5f31253ffb8c0bca96b34f81d/log4j-over-slf4j-1.7.25-sources.jar" kind="lib" path="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.slf4j/log4j-over-slf4j/1.7.25/a87bb47468f47ee7aabbd54f93e133d4215769c3/log4j-over-slf4j-1.7.25.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Robin/.m2/repository/ch/qos/logback/logback-classic/1.2.3/logback-classic-1.2.3.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Robin/.m2/repository/org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/com.google.guava/guava/20.0/9c8493c7991464839b612d7547d6c263adf08f75/guava-20.0-sources.jar" kind="lib" path="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/com.google.guava/guava/20.0/89507701249388e1ed5ddcf8c41f4ce1be7831ef/guava-20.0.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.8.5/c5b4c491aecb72e7c32a78da0b5c6b9cda8dee0f/gson-2.8.5-sources.jar" kind="lib" path="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.8.5/f645ed69d595b24d4cf8b3fbb64cc505bede8829/gson-2.8.5.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpclient/4.5.2/b9f9e3e5255b6ddc3bf21be05428c7a60d00e042/httpclient-4.5.2-sources.jar" kind="lib" path="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpclient/4.5.2/733db77aa8d9b2d68015189df76ab06304406e50/httpclient-4.5.2.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.jfree/jfreechart/1.0.19/5aae69aa497ce4ea82b59317102a09c5abc91ba1/jfreechart-1.0.19-sources.jar" kind="lib" path="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.jfree/jfreechart/1.0.19/ba9ee7dbb2e4c57a6901c79f614ed2dea9cc0e20/jfreechart-1.0.19.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpcore/4.4.4/c5c19e3e6af6b452def290cde12a3ee4c35c893c/httpcore-4.4.4-sources.jar" kind="lib" path="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpcore/4.4.4/b31526a230871fbe285fbcbe2813f9c0839ae9b0/httpcore-4.4.4.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Robin/.m2/repository/commons-logging/commons-logging/1.2/commons-logging-1.2.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Robin/.m2/repository/commons-codec/commons-codec/1.11/commons-codec-1.11.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.jfree/jcommon/1.0.23/76c1fec968d3f6e55cf9bea2855ad33d085a6b6/jcommon-1.0.23-sources.jar" kind="lib" path="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.jfree/jcommon/1.0.23/a316f336ca996e0c6bec4e4fbd49be8f5e1c3968/jcommon-1.0.23.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-lang3/3.0/d48f964b56a931ec2712ce5d411a40d114a69753/commons-lang3-3.0-sources.jar" kind="lib" path="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-lang3/3.0/8873bd0bb5cb9ee37f1b04578eb7e26fcdd44cb0/commons-lang3-3.0.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Robin/.m2/repository/org/apache/velocity/velocity/1.7/velocity-1.7.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Robin/.m2/repository/org/simpleframework/simple-xml/2.7.1/simple-xml-2.7.1.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.websocket/websocket-server/9.4.8.v20171121/719780704f730579644feea9f134d90b9e9f7237/websocket-server-9.4.8.v20171121-sources.jar" kind="lib" path="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.websocket/websocket-server/9.4.8.v20171121/c6ae10f65664d90e24dede5dec23098f5f4c3a58/websocket-server-9.4.8.v20171121.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Robin/.m2/repository/org/eclipse/jetty/jetty-servlet/9.4.8.v20171121/jetty-servlet-9.4.8.v20171121.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Robin/.m2/repository/org/eclipse/jetty/jetty-security/9.4.8.v20171121/jetty-security-9.4.8.v20171121.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Robin/.m2/repository/org/eclipse/jetty/jetty-server/9.4.8.v20171121/jetty-server-9.4.8.v20171121.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Robin/.m2/repository/com/thoughtworks/xstream/xstream/1.4.10/xstream-1.4.10.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Robin/.m2/repository/commons-io/commons-io/2.6/commons-io-2.6.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Robin/.m2/repository/org/mockito/mockito-core/2.13.0/mockito-core-2.13.0.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/commons-collections/commons-collections/3.2.1/fa095ef874374e5b2a11f8b06c26a5d68c7cb3a4/commons-collections-3.2.1-sources.jar" kind="lib" path="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/commons-collections/commons-collections/3.2.1/761ea405b9b37ced573d2df0d1e3a4e0f9edc668/commons-collections-3.2.1.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/commons-lang/commons-lang/2.4/2b8c4b3035e45520ef42033e823c7d33e4b4402c/commons-lang-2.4-sources.jar" kind="lib" path="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/commons-lang/commons-lang/2.4/16313e02a793435009f1e458fa4af5d879f6fb11/commons-lang-2.4.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Robin/.m2/repository/stax/stax/1.2.0/stax-1.2.0.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Robin/.m2/repository/stax/stax-api/1.0.1/stax-api-1.0.1.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Robin/.m2/repository/xpp3/xpp3/1.1.3.3/xpp3-1.1.3.3.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.websocket/websocket-servlet/9.4.8.v20171121/506291a3350f2e8489476956d4fa8b58a29f1429/websocket-servlet-9.4.8.v20171121-sources.jar" kind="lib" path="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.websocket/websocket-servlet/9.4.8.v20171121/9061f66101a8654ae1a55a3336438473f1b00713/websocket-servlet-9.4.8.v20171121.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Robin/.m2/repository/javax/servlet/javax.servlet-api/3.1.0/javax.servlet-api-3.1.0.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.websocket/websocket-client/9.4.8.v20171121/4d808ddf4528b8666314f266b865ebc8f4c0f676/websocket-client-9.4.8.v20171121-sources.jar" kind="lib" path="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.websocket/websocket-client/9.4.8.v20171121/f83fc3fbd52109a57d09b3ef88b715a36e8acdb4/websocket-client-9.4.8.v20171121.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-client/9.4.8.v20171121/bf31f6e1035e38f28904cb346dcf682e25368be0/jetty-client-9.4.8.v20171121-sources.jar" kind="lib" path="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-client/9.4.8.v20171121/e93cac2ce46e81ee8b36288cf7e19d3bac82d536/jetty-client-9.4.8.v20171121.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Robin/.m2/repository/org/eclipse/jetty/jetty-http/9.4.8.v20171121/jetty-http-9.4.8.v20171121.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.websocket/websocket-common/9.4.8.v20171121/faa7caf4cfb6e6a90ebb368339457d0281f85fb5/websocket-common-9.4.8.v20171121-sources.jar" kind="lib" path="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.websocket/websocket-common/9.4.8.v20171121/82cd6d9caa68baf6557176159e6e5c37faed0e9b/websocket-common-9.4.8.v20171121.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Robin/.m2/repository/org/eclipse/jetty/jetty-io/9.4.8.v20171121/jetty-io-9.4.8.v20171121.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Robin/.m2/repository/xmlpull/xmlpull/1.1.3.1/xmlpull-1.1.3.1.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Robin/.m2/repository/xpp3/xpp3_min/1.1.4c/xpp3_min-1.1.4c.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Robin/.m2/repository/ch/qos/logback/logback-core/1.2.3/logback-core-1.2.3.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Robin/.m2/repository/net/bytebuddy/byte-buddy/1.7.9/byte-buddy-1.7.9.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Robin/.m2/repository/net/bytebuddy/byte-buddy-agent/1.7.9/byte-buddy-agent-1.7.9.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Robin/.m2/repository/org/objenesis/objenesis/2.6/objenesis-2.6.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-xml/9.4.8.v20171121/59e30884b43f91ea6715425621ea47368ba0b927/jetty-xml-9.4.8.v20171121-sources.jar" kind="lib" path="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-xml/9.4.8.v20171121/b0d6f87f580a9bd7fa9aaf9b7448bf63cf0ac34f/jetty-xml-9.4.8.v20171121.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Robin/.m2/repository/org/eclipse/jetty/jetty-util/9.4.8.v20171121/jetty-util-9.4.8.v20171121.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.websocket/websocket-api/9.4.8.v20171121/3e68cf3965b05f5c81704a6e98bef7f479f8b0b6/websocket-api-9.4.8.v20171121-sources.jar" kind="lib" path="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.websocket/websocket-api/9.4.8.v20171121/6d889f9a8b5fd2a573c6d1d518c7e119a6d8c170/websocket-api-9.4.8.v20171121.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="main,test"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/junit/junit/4.4/c6fcccd240bf9a32bb6f16917a70a416b0d249a8/junit-4.4-sources.jar" kind="lib" path="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/junit/junit/4.4/8f35ee1f35d2dadbb5029991449ee90c1bab4d4a/junit-4.4.jar">
-		<attributes>
-			<attribute name="gradle_used_by_scope" value="test"/>
-		</attributes>
-	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/Robin/.m2/repository/uk/org/lidalia/sysout-over-slf4j/1.0.2/sysout-over-slf4j-1.0.2.jar"/>
+	<classpathentry sourcepath="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.slf4j/log4j-over-slf4j/1.7.25/42a10e06ab88cbe5f31253ffb8c0bca96b34f81d/log4j-over-slf4j-1.7.25-sources.jar" kind="lib" path="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.slf4j/log4j-over-slf4j/1.7.25/a87bb47468f47ee7aabbd54f93e133d4215769c3/log4j-over-slf4j-1.7.25.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Robin/.m2/repository/ch/qos/logback/logback-classic/1.2.3/logback-classic-1.2.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Robin/.m2/repository/org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25.jar"/>
+	<classpathentry sourcepath="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/com.google.guava/guava/20.0/9c8493c7991464839b612d7547d6c263adf08f75/guava-20.0-sources.jar" kind="lib" path="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/com.google.guava/guava/20.0/89507701249388e1ed5ddcf8c41f4ce1be7831ef/guava-20.0.jar"/>
+	<classpathentry sourcepath="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.8.5/c5b4c491aecb72e7c32a78da0b5c6b9cda8dee0f/gson-2.8.5-sources.jar" kind="lib" path="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.8.5/f645ed69d595b24d4cf8b3fbb64cc505bede8829/gson-2.8.5.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Robin/.m2/repository/org/apache/httpcomponents/httpclient/4.5.2/httpclient-4.5.2.jar"/>
+	<classpathentry sourcepath="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.jfree/jfreechart/1.0.19/5aae69aa497ce4ea82b59317102a09c5abc91ba1/jfreechart-1.0.19-sources.jar" kind="lib" path="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.jfree/jfreechart/1.0.19/ba9ee7dbb2e4c57a6901c79f614ed2dea9cc0e20/jfreechart-1.0.19.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Robin/.m2/repository/org/apache/httpcomponents/httpcore/4.4.4/httpcore-4.4.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Robin/.m2/repository/commons-logging/commons-logging/1.2/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Robin/.m2/repository/commons-codec/commons-codec/1.11/commons-codec-1.11.jar"/>
+	<classpathentry sourcepath="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.jfree/jcommon/1.0.23/76c1fec968d3f6e55cf9bea2855ad33d085a6b6/jcommon-1.0.23-sources.jar" kind="lib" path="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.jfree/jcommon/1.0.23/a316f336ca996e0c6bec4e4fbd49be8f5e1c3968/jcommon-1.0.23.jar"/>
+	<classpathentry sourcepath="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-lang3/3.0/d48f964b56a931ec2712ce5d411a40d114a69753/commons-lang3-3.0-sources.jar" kind="lib" path="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-lang3/3.0/8873bd0bb5cb9ee37f1b04578eb7e26fcdd44cb0/commons-lang3-3.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Robin/.m2/repository/org/apache/velocity/velocity/1.7/velocity-1.7.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Robin/.m2/repository/org/simpleframework/simple-xml/2.7.1/simple-xml-2.7.1.jar"/>
+	<classpathentry sourcepath="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.websocket/websocket-server/9.4.8.v20171121/719780704f730579644feea9f134d90b9e9f7237/websocket-server-9.4.8.v20171121-sources.jar" kind="lib" path="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.websocket/websocket-server/9.4.8.v20171121/c6ae10f65664d90e24dede5dec23098f5f4c3a58/websocket-server-9.4.8.v20171121.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Robin/.m2/repository/org/eclipse/jetty/jetty-servlet/9.4.8.v20171121/jetty-servlet-9.4.8.v20171121.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Robin/.m2/repository/org/eclipse/jetty/jetty-security/9.4.8.v20171121/jetty-security-9.4.8.v20171121.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Robin/.m2/repository/org/eclipse/jetty/jetty-server/9.4.8.v20171121/jetty-server-9.4.8.v20171121.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Robin/.m2/repository/com/thoughtworks/xstream/xstream/1.4.10/xstream-1.4.10.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Robin/.m2/repository/commons-io/commons-io/2.6/commons-io-2.6.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Robin/.m2/repository/org/mockito/mockito-core/2.13.0/mockito-core-2.13.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Robin/.m2/repository/commons-collections/commons-collections/3.2.1/commons-collections-3.2.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Robin/.m2/repository/commons-lang/commons-lang/2.4/commons-lang-2.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Robin/.m2/repository/stax/stax/1.2.0/stax-1.2.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Robin/.m2/repository/stax/stax-api/1.0.1/stax-api-1.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Robin/.m2/repository/xpp3/xpp3/1.1.3.3/xpp3-1.1.3.3.jar"/>
+	<classpathentry sourcepath="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.websocket/websocket-servlet/9.4.8.v20171121/506291a3350f2e8489476956d4fa8b58a29f1429/websocket-servlet-9.4.8.v20171121-sources.jar" kind="lib" path="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.websocket/websocket-servlet/9.4.8.v20171121/9061f66101a8654ae1a55a3336438473f1b00713/websocket-servlet-9.4.8.v20171121.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Robin/.m2/repository/javax/servlet/javax.servlet-api/3.1.0/javax.servlet-api-3.1.0.jar"/>
+	<classpathentry sourcepath="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.websocket/websocket-client/9.4.8.v20171121/4d808ddf4528b8666314f266b865ebc8f4c0f676/websocket-client-9.4.8.v20171121-sources.jar" kind="lib" path="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.websocket/websocket-client/9.4.8.v20171121/f83fc3fbd52109a57d09b3ef88b715a36e8acdb4/websocket-client-9.4.8.v20171121.jar"/>
+	<classpathentry sourcepath="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-client/9.4.8.v20171121/bf31f6e1035e38f28904cb346dcf682e25368be0/jetty-client-9.4.8.v20171121-sources.jar" kind="lib" path="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-client/9.4.8.v20171121/e93cac2ce46e81ee8b36288cf7e19d3bac82d536/jetty-client-9.4.8.v20171121.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Robin/.m2/repository/org/eclipse/jetty/jetty-http/9.4.8.v20171121/jetty-http-9.4.8.v20171121.jar"/>
+	<classpathentry sourcepath="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.websocket/websocket-common/9.4.8.v20171121/faa7caf4cfb6e6a90ebb368339457d0281f85fb5/websocket-common-9.4.8.v20171121-sources.jar" kind="lib" path="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.websocket/websocket-common/9.4.8.v20171121/82cd6d9caa68baf6557176159e6e5c37faed0e9b/websocket-common-9.4.8.v20171121.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Robin/.m2/repository/org/eclipse/jetty/jetty-io/9.4.8.v20171121/jetty-io-9.4.8.v20171121.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Robin/.m2/repository/xmlpull/xmlpull/1.1.3.1/xmlpull-1.1.3.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Robin/.m2/repository/xpp3/xpp3_min/1.1.4c/xpp3_min-1.1.4c.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Robin/.m2/repository/ch/qos/logback/logback-core/1.2.3/logback-core-1.2.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Robin/.m2/repository/net/bytebuddy/byte-buddy/1.7.9/byte-buddy-1.7.9.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Robin/.m2/repository/net/bytebuddy/byte-buddy-agent/1.7.9/byte-buddy-agent-1.7.9.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Robin/.m2/repository/org/objenesis/objenesis/2.6/objenesis-2.6.jar"/>
+	<classpathentry sourcepath="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-xml/9.4.8.v20171121/59e30884b43f91ea6715425621ea47368ba0b927/jetty-xml-9.4.8.v20171121-sources.jar" kind="lib" path="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-xml/9.4.8.v20171121/b0d6f87f580a9bd7fa9aaf9b7448bf63cf0ac34f/jetty-xml-9.4.8.v20171121.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Robin/.m2/repository/org/eclipse/jetty/jetty-util/9.4.8.v20171121/jetty-util-9.4.8.v20171121.jar"/>
+	<classpathentry sourcepath="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.websocket/websocket-api/9.4.8.v20171121/3e68cf3965b05f5c81704a6e98bef7f479f8b0b6/websocket-api-9.4.8.v20171121-sources.jar" kind="lib" path="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.websocket/websocket-api/9.4.8.v20171121/6d889f9a8b5fd2a573c6d1d518c7e119a6d8c170/websocket-api-9.4.8.v20171121.jar"/>
+	<classpathentry sourcepath="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/junit/junit/4.4/c6fcccd240bf9a32bb6f16917a70a416b0d249a8/junit-4.4-sources.jar" kind="lib" path="C:/Users/Robin/.gradle/caches/modules-2/files-2.1/junit/junit/4.4/8f35ee1f35d2dadbb5029991449ee90c1bab4d4a/junit-4.4.jar"/>
 </classpath>
