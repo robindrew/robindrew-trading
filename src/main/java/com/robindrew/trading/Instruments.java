@@ -216,6 +216,9 @@ public class Instruments {
 	/** XPT_USD (Platinum). */
 	public static final IInstrument XPT_USD = new Instrument("XPTUSD", CURRENCIES);
 
+	/** BTC/USD. */
+	public static final IInstrument BTC_USD = new Instrument("BTCUSD", CURRENCIES);
+
 	/** Bitcoin. */
 	public static final IInstrument BITCOIN = new Instrument("BITCOIN", CURRENCIES);
 	/** Ether. */
