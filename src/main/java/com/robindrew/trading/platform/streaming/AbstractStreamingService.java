@@ -61,6 +61,8 @@ public abstract class AbstractStreamingService<I extends IInstrument> extends Ab
 		if (streamMap.putIfAbsent(instrument, stream) != null) {
 			log.warn("Stream already registered for instrument: {}", instrument);
 			return false;
+		} else {
+			log.info("[Register Stream] {}", instrument);
 		}
 		return true;
 	}
