@@ -216,8 +216,16 @@ public class Instruments {
 	/** XPT_USD (Platinum). */
 	public static final IInstrument XPT_USD = new Instrument("XPTUSD", CURRENCIES);
 
-	/** BTC/USD. */
+	/** BTC/USD (Bitcoin). */
 	public static final IInstrument BTC_USD = new Instrument("BTCUSD", CURRENCIES);
+	/** LTC/USD (Litecoin). */
+	public static final IInstrument LTC_USD = new Instrument("LTCUSD", CURRENCIES);
+	/** ETH/USD (Etherium). */
+	public static final IInstrument ETH_USD = new Instrument("ETHUSD", CURRENCIES);
+	/** BCH/USD (Bitcoin Cash). */
+	public static final IInstrument BCH_USD = new Instrument("BCHUSD", CURRENCIES);
+	/** XRP/USD (Ripple). */
+	public static final IInstrument XRP_USD = new Instrument("XRPUSD", CURRENCIES);
 
 	/** Bitcoin. */
 	public static final IInstrument BITCOIN = new Instrument("BITCOIN", CURRENCIES);
