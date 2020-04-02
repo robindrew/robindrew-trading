@@ -12,9 +12,9 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Lists;
 import com.robindrew.trading.price.candle.IPriceCandle;
-import com.robindrew.trading.price.candle.ITickPriceCandle;
 import com.robindrew.trading.price.candle.io.stream.source.IPriceCandleStreamSource;
 import com.robindrew.trading.price.candle.io.stream.source.PriceCandleListBackedStreamSource;
+import com.robindrew.trading.price.candle.tick.ITickPriceCandle;
 
 public class PtfSourcesStreamSource implements IPriceCandleStreamSource {
 

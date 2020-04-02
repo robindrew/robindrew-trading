@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import com.google.common.base.Optional;
 import com.robindrew.trading.price.candle.IPriceCandle;
-import com.robindrew.trading.price.candle.TickPriceCandle;
+import com.robindrew.trading.price.candle.tick.TickPriceCandle;
 import com.robindrew.trading.price.decimal.Decimal;
 import com.robindrew.trading.price.indicator.SimpleMovingAverage;
 

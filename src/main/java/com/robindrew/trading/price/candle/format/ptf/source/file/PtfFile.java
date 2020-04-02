@@ -9,14 +9,14 @@ import com.google.common.io.Files;
 import com.robindrew.common.util.Check;
 import com.robindrew.trading.price.candle.format.PriceFormat;
 import com.robindrew.trading.price.candle.format.ptf.PtfFormat;
-import com.robindrew.trading.price.candle.format.ptf.source.PtfSource;
+import com.robindrew.trading.price.candle.format.ptf.source.ByteStreamPtfSource;
 
-public class PtfFile extends PtfSource implements IPtfFile {
+public class PtfFile extends ByteStreamPtfSource implements IPtfFile {
 
 	private final File file;
 
-	public PtfFile(File file, LocalDate month) {
-		super(file.getAbsolutePath(), month);
+	public PtfFile(File file, LocalDate day) {
+		super(file.getAbsolutePath(), day);
 		this.file = Check.notNull("file", file);
 	}
 

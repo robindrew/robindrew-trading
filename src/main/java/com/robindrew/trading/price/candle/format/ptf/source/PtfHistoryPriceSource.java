@@ -8,11 +8,11 @@ import java.util.Set;
 import com.robindrew.common.util.Check;
 import com.robindrew.trading.IInstrument;
 import com.robindrew.trading.price.candle.IPriceCandle;
-import com.robindrew.trading.price.candle.ITickPriceCandle;
 import com.robindrew.trading.price.candle.interval.IPriceInterval;
 import com.robindrew.trading.price.candle.io.stream.source.IPriceCandleStreamSource;
 import com.robindrew.trading.price.candle.io.stream.source.PriceCandleIntervalStreamSource;
 import com.robindrew.trading.price.candle.io.stream.source.PriceCandleStreamSourceBuilder;
+import com.robindrew.trading.price.candle.tick.ITickPriceCandle;
 import com.robindrew.trading.price.history.IInstrumentPriceHistory;
 
 public class PtfHistoryPriceSource implements IInstrumentPriceHistory {

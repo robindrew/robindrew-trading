@@ -1,19 +1,22 @@
-package com.robindrew.trading.price.candle;
+package com.robindrew.trading.price.candle.tick;
 
 import static com.robindrew.common.date.Dates.toLocalDateTime;
 
-import com.robindrew.common.concurrent.Immutable;
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import com.robindrew.trading.price.Mid;
+import com.robindrew.trading.price.candle.AbstractPriceCandle;
+import com.robindrew.trading.price.candle.IPriceCandle;
 
-@Immutable
-public class TickPriceCandle extends AbstractPriceCandle implements ITickPriceCandle {
+public class CachedTickPriceCandle extends AbstractPriceCandle implements ITickPriceCandle {
 
-	private final int bidPrice;
-	private final int askPrice;
-	private final long timestamp;
-	private final byte decimalPlaces;
+	private final AtomicBoolean active = new AtomicBoolean(false);
+	private int bidPrice;
+	private int askPrice;
+	private long timestamp;
+	private byte decimalPlaces;
 
-	public TickPriceCandle(int bidPrice, int askPrice, long timestamp, int decimalPlaces) {
+	public void set(int bidPrice, int askPrice, long timestamp, int decimalPlaces) {
 		if (bidPrice <= 0) {
 			throw new IllegalArgumentException("bidPrice=" + bidPrice);
 		}
@@ -22,6 +25,11 @@ public class TickPriceCandle extends AbstractPriceCandle implements ITickPriceCa
 		}
 		if (decimalPlaces < 0 || decimalPlaces > 8) {
 			throw new IllegalArgumentException("decimalPlaces=" + decimalPlaces);
+		}
+
+		// Check 'active' flag
+		if (!active.compareAndSet(false, true)) {
+			throw new IllegalStateException("Attempt to set active candle");
 		}
 
 		this.bidPrice = bidPrice;
@@ -148,6 +156,12 @@ public class TickPriceCandle extends AbstractPriceCandle implements ITickPriceCa
 
 	@Override
 	public IPriceCandle withDecimalPlaces(int decimalPlaces) {
-		return new TickPriceCandle(bidPrice, askPrice, timestamp, decimalPlaces);
+		throw new UnsupportedOperationException();
+	}
+
+	public void release() {
+		if (!active.compareAndSet(true, false)) {
+			throw new IllegalStateException("Attempt to release inactive candle");
+		}
 	}
 }

@@ -3,8 +3,8 @@ package com.robindrew.trading.price.candle.line.formatter;
 import static com.robindrew.common.date.Dates.toLocalDateTime;
 
 import com.robindrew.trading.price.candle.IPriceCandle;
-import com.robindrew.trading.price.candle.ITickPriceCandle;
 import com.robindrew.trading.price.candle.MidPriceCandle;
+import com.robindrew.trading.price.candle.tick.ITickPriceCandle;
 
 public class PriceCandleLineFormatter implements IPriceCandleLineFormatter {
 

@@ -9,9 +9,9 @@ import com.google.common.io.Files;
 import com.robindrew.common.util.Check;
 import com.robindrew.trading.price.candle.format.PriceFormat;
 import com.robindrew.trading.price.candle.format.pcf.PcfFormat;
-import com.robindrew.trading.price.candle.format.pcf.source.PcfSource;
+import com.robindrew.trading.price.candle.format.pcf.source.ByteStreamPcfSource;
 
-public class PcfFile extends PcfSource implements IPcfFile {
+public class PcfFile extends ByteStreamPcfSource implements IPcfFile {
 
 	private final File file;
 

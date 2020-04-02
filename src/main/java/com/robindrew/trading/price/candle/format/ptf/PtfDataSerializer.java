@@ -7,10 +7,21 @@ import java.util.List;
 import com.robindrew.common.io.data.IDataReader;
 import com.robindrew.common.io.data.IDataSerializer;
 import com.robindrew.common.io.data.IDataWriter;
-import com.robindrew.trading.price.candle.ITickPriceCandle;
-import com.robindrew.trading.price.candle.TickPriceCandle;
+import com.robindrew.trading.price.candle.tick.ITickPriceCandle;
+import com.robindrew.trading.price.candle.tick.ITickPriceCandleFactory;
+import com.robindrew.trading.price.candle.tick.TickPriceCandleFactory;
 
 public class PtfDataSerializer implements IDataSerializer<List<ITickPriceCandle>> {
+
+	private final ITickPriceCandleFactory candleFactory;
+
+	public PtfDataSerializer(ITickPriceCandleFactory candleFactory) {
+		this.candleFactory = candleFactory;
+	}
+
+	public PtfDataSerializer() {
+		this(new TickPriceCandleFactory());
+	}
 
 	@Override
 	public List<ITickPriceCandle> readObject(IDataReader reader) throws IOException {
@@ -30,7 +41,7 @@ public class PtfDataSerializer implements IDataSerializer<List<ITickPriceCandle>
 			int bidPrice = reader.readDynamicInt() + basePrice;
 			int askPrice = reader.readDynamicInt() + basePrice;
 
-			ITickPriceCandle tick = new TickPriceCandle(bidPrice, askPrice, instantTime, decimalPlaces);
+			ITickPriceCandle tick = candleFactory.create(bidPrice, askPrice, instantTime, decimalPlaces);
 			list.add(tick);
 
 			basePrice = bidPrice;

@@ -23,20 +23,21 @@ import com.robindrew.common.io.data.IDataWriter;
 import com.robindrew.common.util.Check;
 import com.robindrew.common.util.Java;
 import com.robindrew.trading.price.candle.IPriceCandle;
-import com.robindrew.trading.price.candle.ITickPriceCandle;
 import com.robindrew.trading.price.candle.format.ptf.PtfDataSerializer;
 import com.robindrew.trading.price.candle.format.ptf.PtfFormat;
+import com.robindrew.trading.price.candle.tick.ITickPriceCandle;
+import com.robindrew.trading.price.candle.tick.ITickPriceCandleFactory;
+import com.robindrew.trading.price.candle.tick.TickPriceCandleFactory;
 
-public abstract class PtfSource implements IPtfSource {
+public abstract class ByteStreamPtfSource implements IPtfSource {
 
-	private static final Logger log = LoggerFactory.getLogger(PtfSource.class);
+	private static final Logger log = LoggerFactory.getLogger(ByteStreamPtfSource.class);
 
 	private final String name;
 	private final LocalDate day;
-	private final IDataSerializer<List<ITickPriceCandle>> serializer = new PtfDataSerializer();
 	private volatile SoftReference<List<ITickPriceCandle>> cached = new SoftReference<>(null);
 
-	protected PtfSource(String name, LocalDate day) {
+	protected ByteStreamPtfSource(String name, LocalDate day) {
 		this.name = Check.notEmpty("name", name);
 		this.day = Check.notNull("day", day);
 	}
@@ -99,6 +100,7 @@ public abstract class PtfSource implements IPtfSource {
 
 		log.debug("Writing PTF file: {}", getName());
 		Stopwatch timer = Stopwatch.createStarted();
+		PtfDataSerializer serializer = new PtfDataSerializer();
 		try (IDataWriter writer = new DataWriter(toByteSink().openBufferedStream())) {
 			serializer.writeObject(writer, candles);
 		} catch (IOException e) {
@@ -122,6 +124,11 @@ public abstract class PtfSource implements IPtfSource {
 
 	@Override
 	public List<ITickPriceCandle> read() {
+		return read(new TickPriceCandleFactory());
+	}
+
+	@Override
+	public List<ITickPriceCandle> read(ITickPriceCandleFactory factory) {
 		List<ITickPriceCandle> candles = cached.get();
 		if (candles != null) {
 			return candles;
@@ -129,6 +136,7 @@ public abstract class PtfSource implements IPtfSource {
 
 		log.info("Reading PTF file: {}", getName());
 		Stopwatch timer = Stopwatch.createStarted();
+		PtfDataSerializer serializer = new PtfDataSerializer(factory);
 		try (IDataReader reader = new DataReader(toByteSource().openBufferedStream())) {
 			candles = serializer.readObject(reader);
 		} catch (IOException e) {

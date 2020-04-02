@@ -1,5 +1,7 @@
 package com.robindrew.trading.price.candle.interval;
 
+import static com.robindrew.trading.price.candle.PriceCandles.pipe;
+
 import java.io.File;
 
 import org.slf4j.Logger;
@@ -8,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import com.robindrew.common.util.Java;
 import com.robindrew.trading.price.candle.checker.PriceCandleSanityChecker;
 import com.robindrew.trading.price.candle.io.line.sink.FileLineSink;
-import com.robindrew.trading.price.candle.io.stream.PriceCandleStreamPipe;
 import com.robindrew.trading.price.candle.io.stream.sink.IPriceCandleStreamSink;
 import com.robindrew.trading.price.candle.io.stream.sink.PriceCandleLineStreamSink;
 import com.robindrew.trading.price.candle.io.stream.source.IPriceCandleStreamSource;
@@ -45,7 +46,7 @@ public class PriceIntervalConverter {
 			try (IPriceCandleStreamSource intervalSource = new PriceCandleIntervalStreamSource(files, interval)) {
 				try (IPriceCandleStreamSource checkerSource = new PriceCandleCheckerStreamSource(intervalSource, new PriceCandleSanityChecker(maxPercentDiff))) {
 					try (IPriceCandleStreamSink sink = new PriceCandleLineStreamSink(new FileLineSink(destinationFile))) {
-						new PriceCandleStreamPipe(checkerSource, sink).pipe();
+						pipe(checkerSource, sink);
 						return true;
 					}
 				}

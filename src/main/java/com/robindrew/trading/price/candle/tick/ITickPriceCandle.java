@@ -1,4 +1,6 @@
-package com.robindrew.trading.price.candle;
+package com.robindrew.trading.price.candle.tick;
+
+import com.robindrew.trading.price.candle.IPriceCandle;
 
 public interface ITickPriceCandle extends IPriceCandle {
 

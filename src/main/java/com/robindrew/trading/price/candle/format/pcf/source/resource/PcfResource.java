@@ -8,9 +8,9 @@ import com.google.common.io.ByteSource;
 import com.google.common.io.Resources;
 import com.robindrew.trading.price.candle.format.PriceFormat;
 import com.robindrew.trading.price.candle.format.pcf.PcfFormat;
-import com.robindrew.trading.price.candle.format.pcf.source.PcfSource;
+import com.robindrew.trading.price.candle.format.pcf.source.ByteStreamPcfSource;
 
-public class PcfResource extends PcfSource implements IPcfResource {
+public class PcfResource extends ByteStreamPcfSource implements IPcfResource {
 
 	public PcfResource(String resourceName, LocalDate month) {
 		super(resourceName, month);

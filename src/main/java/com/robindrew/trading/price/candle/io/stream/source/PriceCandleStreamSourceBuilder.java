@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Set;
 
 import com.robindrew.trading.price.candle.IPriceCandle;
-import com.robindrew.trading.price.candle.ITickPriceCandle;
 import com.robindrew.trading.price.candle.PriceCandleDateComparator;
 import com.robindrew.trading.price.candle.checker.IPriceCandleChecker;
 import com.robindrew.trading.price.candle.checker.PriceCandleSanityChecker;
@@ -32,6 +31,7 @@ import com.robindrew.trading.price.candle.io.list.source.PriceCandleListSourceBu
 import com.robindrew.trading.price.candle.modifier.IPriceCandleModifier;
 import com.robindrew.trading.price.candle.modifier.PriceCandleDivideModifier;
 import com.robindrew.trading.price.candle.modifier.PriceCandleMultiplyModifier;
+import com.robindrew.trading.price.candle.tick.ITickPriceCandle;
 
 public class PriceCandleStreamSourceBuilder implements IPriceCandleStreamSourceBuilder {
 

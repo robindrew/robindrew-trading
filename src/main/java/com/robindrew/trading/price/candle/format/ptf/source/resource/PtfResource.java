@@ -8,12 +8,12 @@ import com.google.common.io.ByteSource;
 import com.google.common.io.Resources;
 import com.robindrew.trading.price.candle.format.PriceFormat;
 import com.robindrew.trading.price.candle.format.ptf.PtfFormat;
-import com.robindrew.trading.price.candle.format.ptf.source.PtfSource;
+import com.robindrew.trading.price.candle.format.ptf.source.ByteStreamPtfSource;
 
-public class PtfResource extends PtfSource implements IPtfResource {
+public class PtfResource extends ByteStreamPtfSource implements IPtfResource {
 
-	public PtfResource(String resourceName, LocalDate month) {
-		super(resourceName, month);
+	public PtfResource(String resourceName, LocalDate day) {
+		super(resourceName, day);
 	}
 
 	public PtfResource(String resourceName) {
