@@ -226,6 +226,10 @@ public class Instruments {
 	public static final IInstrument BCH_USD = new Instrument("BCHUSD", CURRENCIES);
 	/** XRP/USD (Ripple). */
 	public static final IInstrument XRP_USD = new Instrument("XRPUSD", CURRENCIES);
+	/** EOS/USD (EOS). */
+	public static final IInstrument EOS_USD = new Instrument("EOSUSD", CURRENCIES);
+	/** XLM/USD (Stellar). */
+	public static final IInstrument XLM_USD = new Instrument("XLMUSD", CURRENCIES);
 
 	/** Bitcoin. */
 	public static final IInstrument BITCOIN = new Instrument("BITCOIN", CURRENCIES);

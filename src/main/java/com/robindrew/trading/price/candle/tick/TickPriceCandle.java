@@ -37,6 +37,7 @@ public class TickPriceCandle extends AbstractPriceCandle implements ITickPriceCa
 		StringBuilder builder = new StringBuilder();
 		builder.append("TickPriceCandle[");
 		builder.append(toLocalDateTime(getTimestamp())).append('|');
+		builder.append(getDecimalPlaces()).append('|');
 		builder.append(getBidPrice()).append('|');
 		builder.append(getAskPrice()).append(']');
 		return builder.toString();

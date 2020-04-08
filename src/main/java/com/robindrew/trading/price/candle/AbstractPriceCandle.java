@@ -34,6 +34,7 @@ public abstract class AbstractPriceCandle implements IPriceCandle {
 		builder.append("PriceCandle[");
 		builder.append(toLocalDateTime(getOpenTime())).append('|');
 		builder.append(toLocalDateTime(getCloseTime())).append('|');
+		builder.append(getDecimalPlaces()).append('|');
 		builder.append(getBidOpenPrice()).append('|');
 		builder.append(getAskOpenPrice()).append('|');
 		builder.append(getBidHighPrice()).append('|');
