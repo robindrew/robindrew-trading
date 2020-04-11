@@ -5,7 +5,7 @@ import java.util.Set;
 import com.robindrew.trading.price.candle.format.IPriceFormat;
 import com.robindrew.trading.provider.ITradingProvider;
 
-public interface IPcfSourceManager {
+public interface IPcfSourceProviderLocator {
 
 	IPriceFormat getFormat();
 

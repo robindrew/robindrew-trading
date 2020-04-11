@@ -5,6 +5,7 @@ import static com.robindrew.trading.price.candle.format.pcf.PcfFormat.FILENAME_F
 import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -82,12 +83,28 @@ public class PcfFileSet implements IPcfFileSet {
 	}
 
 	@Override
+	public IPriceCandleStreamSource asStreamSource() {
+		Set<? extends IPcfSource> sources = getSources();
+		return new PcfSourcesStreamSource(sources);
+	}
+
+	@Override
 	public SortedSet<LocalDate> getMonths() {
 		TreeSet<LocalDate> months = new TreeSet<>();
 		for (IPcfFile file : getSources()) {
 			months.add(file.getMonth());
 		}
 		return months;
+	}
+
+	@Override
+	public Iterator<IPcfSource> iterator() {
+		Set<IPcfSource> files = new TreeSet<>();
+		for (File file : Files.listContents(directory, FILENAME_FILTER)) {
+			IPcfFile pcf = new PcfFile(file);
+			files.add(pcf);
+		}
+		return files.iterator();
 	}
 
 }

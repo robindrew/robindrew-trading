@@ -11,7 +11,6 @@ import com.robindrew.trading.Instrument;
 import com.robindrew.trading.InstrumentType;
 import com.robindrew.trading.price.candle.format.IPriceFormat;
 import com.robindrew.trading.price.candle.format.PriceFormat;
-import com.robindrew.trading.price.candle.format.pcf.source.IPcfSourceSet;
 import com.robindrew.trading.provider.ITradingProvider;
 
 public class PcfFileProviderManager implements IPcfFileProviderManager {
@@ -52,7 +51,7 @@ public class PcfFileProviderManager implements IPcfFileProviderManager {
 	}
 
 	@Override
-	public IPcfSourceSet getSourceSet(IInstrument instrument) {
+	public PcfFileSet getSourceSet(IInstrument instrument) {
 		File directory = getDirectory(instrument);
 		return new PcfFileSet(directory, provider, instrument);
 	}

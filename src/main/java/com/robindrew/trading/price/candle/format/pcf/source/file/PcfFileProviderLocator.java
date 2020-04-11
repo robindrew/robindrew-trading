@@ -20,9 +20,9 @@ import com.robindrew.trading.price.candle.format.pcf.source.IPcfSourceProviderMa
 import com.robindrew.trading.provider.ITradingProvider;
 import com.robindrew.trading.provider.TradingProvider;
 
-public class PcfFileManager implements IPcfFileManager {
+public class PcfFileProviderLocator implements IPcfFileProviderLocator {
 
-	private static final Logger log = LoggerFactory.getLogger(PcfFileManager.class);
+	private static final Logger log = LoggerFactory.getLogger(PcfFileProviderLocator.class);
 
 	public static File getDirectory(File directory, ITradingProvider provider, IInstrument instrument) {
 		File providerDir = new File(directory, provider.name());
@@ -48,7 +48,7 @@ public class PcfFileManager implements IPcfFileManager {
 	private final File rootDirectory;
 	private final Set<IPcfFileProviderManager> providers;
 
-	public PcfFileManager(File directory) {
+	public PcfFileProviderLocator(File directory) {
 		this.rootDirectory = Check.notNull("directory", directory);
 
 		Set<IPcfFileProviderManager> providers = new LinkedHashSet<>();

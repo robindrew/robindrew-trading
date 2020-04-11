@@ -8,7 +8,7 @@ import java.util.SortedSet;
 import com.robindrew.trading.IInstrument;
 import com.robindrew.trading.price.candle.io.stream.source.IPriceCandleStreamSource;
 
-public interface IPcfSourceSet {
+public interface IPcfSourceSet extends Iterable<IPcfSource> {
 
 	/**
 	 * Returns the available months of prices.
@@ -58,5 +58,11 @@ public interface IPcfSourceSet {
 	 * @return the source.
 	 */
 	IPriceCandleStreamSource asStreamSource(LocalDateTime from, LocalDateTime to);
+
+	/**
+	 * Returns this as a stream source.
+	 * @return the source.
+	 */
+	IPriceCandleStreamSource asStreamSource();
 
 }

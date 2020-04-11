@@ -7,6 +7,10 @@ import com.robindrew.trading.price.decimal.Decimals;
 
 public class PricePrecision implements IPricePrecision {
 
+	public static PricePrecision withDecimalPlaces(int decimalPlaces) {
+		return new PricePrecision(decimalPlaces);
+	}
+	
 	private final int decimalPlaces;
 
 	public PricePrecision(int decimalPlaces) {
