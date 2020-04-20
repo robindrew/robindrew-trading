@@ -2,18 +2,24 @@ package com.robindrew.trading.trade;
 
 public enum TradeDirection {
 
-	BUY, SELL;
+	BUY(true), SELL(false);
+
+	private final boolean buy;
+
+	private TradeDirection(boolean buy) {
+		this.buy = buy;
+	}
 
 	public boolean isBuy() {
-		return name().equals("BUY");
+		return buy;
 	}
 
 	public boolean isSell() {
-		return name().equals("SELL");
+		return !buy;
 	}
 
 	public TradeDirection invert() {
-		return isBuy() ? SELL : BUY;
+		return buy ? SELL : BUY;
 	}
 
 	public static TradeDirection getTradeType(double price, double stopLoss) {

@@ -16,8 +16,8 @@ public interface IPositionOrder {
 
 	BigDecimal getTradeSize();
 
-	int getProfitLimitDistance();
+	BigDecimal getProfitLimitDistance();
 
-	int getStopLossDistance();
+	BigDecimal getStopLossDistance();
 
 }

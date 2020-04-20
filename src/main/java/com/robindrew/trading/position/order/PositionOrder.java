@@ -12,10 +12,10 @@ public class PositionOrder implements IPositionOrder {
 	private final TradeDirection direction;
 	private final CurrencyCode tradeCurrency;
 	private final BigDecimal tradeSize;
-	private final int stopLossDistance;
-	private final int profitLimitDistance;
+	private final BigDecimal stopLossDistance;
+	private final BigDecimal profitLimitDistance;
 
-	public PositionOrder(IInstrument instrument, TradeDirection direction, CurrencyCode tradeCurrency, BigDecimal tradeSize, int stopLossDistance, int profitLimitDistance) {
+	public PositionOrder(IInstrument instrument, TradeDirection direction, CurrencyCode tradeCurrency, BigDecimal tradeSize, BigDecimal stopLossDistance, BigDecimal profitLimitDistance) {
 		this.instrument = instrument;
 		this.direction = direction;
 		this.tradeCurrency = tradeCurrency;
@@ -45,12 +45,12 @@ public class PositionOrder implements IPositionOrder {
 	}
 
 	@Override
-	public int getStopLossDistance() {
+	public BigDecimal getStopLossDistance() {
 		return stopLossDistance;
 	}
 
 	@Override
-	public int getProfitLimitDistance() {
+	public BigDecimal getProfitLimitDistance() {
 		return profitLimitDistance;
 	}
 
