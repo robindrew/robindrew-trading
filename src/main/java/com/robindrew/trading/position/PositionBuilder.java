@@ -22,32 +22,32 @@ public class PositionBuilder {
 	private BigDecimal stopLossPrice = null;
 	private BigDecimal tradeSize = null;
 
-	public PositionBuilder setId(String id) {
+	public PositionBuilder id(String id) {
 		this.id = Check.notEmpty("id", id);
 		return this;
 	}
 
-	public PositionBuilder setInstrument(IInstrument instrument) {
+	public PositionBuilder instrument(IInstrument instrument) {
 		this.instrument = Check.notNull("instrument", instrument);
 		return this;
 	}
 
-	public PositionBuilder setDirection(TradeDirection direction) {
+	public PositionBuilder direction(TradeDirection direction) {
 		this.direction = Check.notNull("direction", direction);
 		return this;
 	}
 
-	public PositionBuilder setCurrency(CurrencyCode currency) {
+	public PositionBuilder currency(CurrencyCode currency) {
 		this.currency = Check.notNull("currency", currency);
 		return this;
 	}
 
-	public PositionBuilder setOpenDate(LocalDateTime date) {
+	public PositionBuilder openDate(LocalDateTime date) {
 		this.openDate = Check.notNull("date", date);
 		return this;
 	}
 
-	public PositionBuilder setOpenPrice(BigDecimal price) {
+	public PositionBuilder openPrice(BigDecimal price) {
 		if (price.doubleValue() <= 0.0) {
 			throw new IllegalArgumentException("price=" + price);
 		}
@@ -55,7 +55,7 @@ public class PositionBuilder {
 		return this;
 	}
 
-	public PositionBuilder setStopLossPrice(BigDecimal price) {
+	public PositionBuilder stopLossPrice(BigDecimal price) {
 		if (price.doubleValue() <= 0.0) {
 			throw new IllegalArgumentException("price=" + price);
 		}
@@ -63,7 +63,7 @@ public class PositionBuilder {
 		return this;
 	}
 
-	public PositionBuilder setProfitLimitPrice(BigDecimal price) {
+	public PositionBuilder profitLimitPrice(BigDecimal price) {
 		if (price.doubleValue() <= 0.0) {
 			throw new IllegalArgumentException("price=" + price);
 		}
@@ -71,7 +71,7 @@ public class PositionBuilder {
 		return this;
 	}
 
-	public PositionBuilder setTradeSize(BigDecimal tradeSize) {
+	public PositionBuilder tradeSize(BigDecimal tradeSize) {
 		if (tradeSize.doubleValue() <= 0.0) {
 			throw new IllegalArgumentException("tradeSize=" + tradeSize);
 		}

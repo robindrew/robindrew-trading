@@ -1,6 +1,9 @@
 package com.robindrew.trading.price.candle.io.stream.sink;
 
-import com.robindrew.common.util.Check;
+import static com.robindrew.common.util.Check.notEmpty;
+
+import java.util.Optional;
+
 import com.robindrew.trading.price.candle.IPriceCandle;
 import com.robindrew.trading.price.candle.streaming.IStreamingCandlePrice;
 import com.robindrew.trading.price.candle.streaming.PriceCandleSnapshot;
@@ -12,19 +15,23 @@ public class LatestPriceCandleSink implements IPriceCandleStreamSink {
 	private final StreamingPriceCandle price = new StreamingPriceCandle();
 
 	public LatestPriceCandleSink(String name) {
-		this.name = Check.notEmpty("name", name);
+		this.name = notEmpty("name", name);
 	}
 
 	public IStreamingCandlePrice getPrice() {
 		return price;
 	}
 
-	public IPriceCandle getLatestCandle() {
+	public boolean hasLatestCandle() {
+		return price.getUpdateCount() > 0;
+	}
+
+	public Optional<IPriceCandle> getLatestCandle() {
 		PriceCandleSnapshot snapshot = price.getSnapshot();
-		if (snapshot != null) {
-			return (IPriceCandle) snapshot.getLatest();
+		if (snapshot == null) {
+			return Optional.empty();
 		}
-		return null;
+		return Optional.of((IPriceCandle) snapshot.getLatest());
 	}
 
 	@Override
