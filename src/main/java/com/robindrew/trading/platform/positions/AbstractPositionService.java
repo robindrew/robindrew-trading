@@ -55,4 +55,13 @@ public class AbstractPositionService extends AbstractTradingService implements I
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
+	public List<? extends IClosedPosition> closeAllPositions() {
+		List<IClosedPosition> closed = new ArrayList<>();
+		for(IPosition position: getAllPositions()) {
+			closed.add(closePosition(position));
+		}
+		return closed;
+	}
+
 }

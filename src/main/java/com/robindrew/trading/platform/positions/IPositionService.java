@@ -20,6 +20,8 @@ public interface IPositionService extends ITradingService {
 
 	Map<IPosition, IClosedPosition> closePositions(Collection<? extends IPosition> positions);
 
+	List<? extends IClosedPosition> closeAllPositions();
+
 	IPosition openPosition(IPositionOrder order);
 
 }
