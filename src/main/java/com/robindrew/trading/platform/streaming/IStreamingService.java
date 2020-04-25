@@ -7,15 +7,15 @@ import com.robindrew.trading.platform.ITradingService;
 
 public interface IStreamingService<I extends IInstrument> extends ITradingService, AutoCloseable {
 
-	boolean isSubscribed(I instrument);
+	boolean isSubscribedInstrument(I instrument);
 
-	boolean supports(I instrument);
+	boolean canStreamPrices(I instrument);
 
-	boolean subscribe(I instrument);
+	boolean subscribeToPrices(I instrument);
 
-	boolean unsubscribe(I instrument);
+	boolean unsubscribeFromPrices(I instrument);
 
-	Set<I> getSubscribed();
+	Set<I> getSubscribedInstruments();
 
 	Set<IInstrumentPriceStream<I>> getPriceStreams();
 

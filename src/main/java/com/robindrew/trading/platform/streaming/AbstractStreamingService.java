@@ -24,18 +24,18 @@ public abstract class AbstractStreamingService<I extends IInstrument> extends Ab
 	}
 
 	@Override
-	public Set<I> getSubscribed() {
+	public Set<I> getSubscribedInstruments() {
 		return ImmutableSet.copyOf(streamMap.keySet());
 	}
 
 	@Override
-	public boolean isSubscribed(I instrument) {
+	public boolean isSubscribedInstrument(I instrument) {
 		Check.notNull("instrument", instrument);
 		return streamMap.containsKey(instrument);
 	}
 
 	@Override
-	public boolean supports(I instrument) {
+	public boolean canStreamPrices(I instrument) {
 		Check.notNull("instrument", instrument);
 		return streamMap.containsKey(instrument);
 	}
