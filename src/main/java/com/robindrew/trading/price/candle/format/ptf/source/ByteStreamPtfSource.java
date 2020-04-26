@@ -18,7 +18,6 @@ import com.google.common.io.ByteSource;
 import com.robindrew.common.io.data.DataReader;
 import com.robindrew.common.io.data.DataWriter;
 import com.robindrew.common.io.data.IDataReader;
-import com.robindrew.common.io.data.IDataSerializer;
 import com.robindrew.common.io.data.IDataWriter;
 import com.robindrew.common.util.Check;
 import com.robindrew.common.util.Java;

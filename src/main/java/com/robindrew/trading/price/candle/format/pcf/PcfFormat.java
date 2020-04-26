@@ -10,6 +10,7 @@ import java.time.temporal.ChronoField;
 
 import com.google.common.io.PatternFilenameFilter;
 import com.robindrew.trading.price.candle.IPriceCandle;
+import com.robindrew.trading.price.candle.format.ptf.PtfFormat;
 import com.robindrew.trading.price.candle.interval.IPriceInterval;
 import com.robindrew.trading.price.candle.interval.PriceIntervals;
 
