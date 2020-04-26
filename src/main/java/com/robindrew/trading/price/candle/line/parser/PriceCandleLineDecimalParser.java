@@ -42,8 +42,8 @@ public class PriceCandleLineDecimalParser implements IPriceCandleLineParser {
 		if (line.indexOf(',') == line.lastIndexOf(',')) {
 
 			LocalDateTime date = LocalDateTime.parse(tokenizer.next(false));
-			int bidPrice = Decimals.toInt(tokenizer.next(false), decimalPlaces, checkPlaces);
-			int askPrice = Decimals.toInt(tokenizer.next(false), decimalPlaces, checkPlaces);
+			int bidPrice = Decimals.stringToInt(tokenizer.next(false), decimalPlaces, checkPlaces);
+			int askPrice = Decimals.stringToInt(tokenizer.next(false), decimalPlaces, checkPlaces);
 
 			return new TickPriceCandle(bidPrice, askPrice, toMillis(date), decimalPlaces);
 		}
@@ -55,10 +55,10 @@ public class PriceCandleLineDecimalParser implements IPriceCandleLineParser {
 		LocalDateTime closeDate = LocalDateTime.parse(tokenizer.next(false));
 
 		// Prices
-		int open = Decimals.toInt(tokenizer.next(false), decimalPlaces, checkPlaces);
-		int high = Decimals.toInt(tokenizer.next(false), decimalPlaces, checkPlaces);
-		int low = Decimals.toInt(tokenizer.next(false), decimalPlaces, checkPlaces);
-		int close = Decimals.toInt(tokenizer.next(false), decimalPlaces, checkPlaces);
+		int open = Decimals.stringToInt(tokenizer.next(false), decimalPlaces, checkPlaces);
+		int high = Decimals.stringToInt(tokenizer.next(false), decimalPlaces, checkPlaces);
+		int low = Decimals.stringToInt(tokenizer.next(false), decimalPlaces, checkPlaces);
+		int close = Decimals.stringToInt(tokenizer.next(false), decimalPlaces, checkPlaces);
 
 		long tickVolume = Long.parseLong(tokenizer.next(false));
 

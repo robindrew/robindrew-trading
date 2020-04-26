@@ -18,7 +18,7 @@ public class ExponentialMovingAverage implements IPriceCandleStreamIndicator<Dec
 	}
 
 	private static int nextExponentialMovingAverage(int nextPrice, int previousPrice, double smoothingConstant) {
-		return Decimals.roundToInt(((nextPrice - previousPrice) * smoothingConstant) + previousPrice);
+		return Decimals.roundDoubleToInt(((nextPrice - previousPrice) * smoothingConstant) + previousPrice);
 	}
 
 	private final int periods;

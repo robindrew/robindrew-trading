@@ -19,8 +19,11 @@ public class Decimals {
 
 	/**
 	 * Optimised method for converting a Decimal to a String.
-	 * @param value the decimal value.
-	 * @param decimalPlaces the number of decimal places.
+	 * 
+	 * @param value
+	 *            the decimal value.
+	 * @param decimalPlaces
+	 *            the number of decimal places.
 	 * @return the string equivalent.
 	 */
 	public static String toString(int value, int decimalPlaces) {
@@ -107,20 +110,20 @@ public class Decimals {
 		return places;
 	}
 
-	public static int toInt(String text, int decimalPlaces) {
-		return toInt(text, decimalPlaces, true);
+	public static int stringToInt(String text, int decimalPlaces) {
+		return stringToInt(text, decimalPlaces, true);
 	}
 
-	public static int toInt(String text, int decimalPlaces, boolean checkPlaces) {
+	public static int stringToInt(String text, int decimalPlaces, boolean checkPlaces) {
 		double value = Double.parseDouble(text);
-		return toInt(value, decimalPlaces, checkPlaces);
+		return doubleToInt(value, decimalPlaces, checkPlaces);
 	}
 
-	public static int toInt(double value, int decimalPlaces) {
-		return toInt(value, decimalPlaces, true);
+	public static int doubleToInt(double value, int decimalPlaces) {
+		return doubleToInt(value, decimalPlaces, true);
 	}
 
-	public static int toInt(double value, int decimalPlaces, boolean checkPlaces) {
+	public static int doubleToInt(double value, int decimalPlaces, boolean checkPlaces) {
 		double multiplyDouble = value;
 		for (int i = 0; i < decimalPlaces; i++) {
 			multiplyDouble *= 10;
@@ -143,7 +146,8 @@ public class Decimals {
 		// Truncate to integer (and check we haven't lost any digits!)
 		int roundedInt = (int) roundedLong;
 		if (roundedInt != roundedLong) {
-			throw new IllegalArgumentException("Digits lost when rounding to integer, value=" + value + ", decimalPlaces=" + decimalPlaces);
+			throw new IllegalArgumentException(
+					"Digits lost when rounding to integer, value=" + value + ", decimalPlaces=" + decimalPlaces);
 		}
 		return roundedInt;
 	}
@@ -166,6 +170,10 @@ public class Decimals {
 	}
 
 	public static int toBigInt(BigDecimal value, int decimalPlaces, boolean checkPlaces) {
+		if (decimalPlaces < 0) {
+			throw new IllegalArgumentException("decimalPlaces=" + decimalPlaces);
+		}
+
 		BigDecimal multiplyDouble = value.multiply(MULTIPLES[decimalPlaces]);
 
 		long roundedLong = multiplyDouble.toBigInteger().longValue();
@@ -173,12 +181,17 @@ public class Decimals {
 		// Truncate to integer (and check we haven't lost any digits!)
 		int roundedInt = (int) roundedLong;
 		if (roundedInt != roundedLong) {
-			throw new IllegalArgumentException("Digits lost when rounding to integer, value=" + value + ", decimalPlaces=" + decimalPlaces);
+			throw new IllegalArgumentException(
+					"Digits lost when rounding to integer, value=" + value + ", decimalPlaces=" + decimalPlaces);
 		}
 		return roundedInt;
 	}
 
-	public static float toFloat(int value, int decimalPlaces) {
+	public static float decimalToFloat(int value, int decimalPlaces) {
+		if (decimalPlaces < 0) {
+			throw new IllegalArgumentException("decimalPlaces=" + decimalPlaces);
+		}
+
 		float floating = value;
 		for (int i = 0; i < decimalPlaces; i++) {
 			floating /= 10.0f;
@@ -186,7 +199,11 @@ public class Decimals {
 		return floating;
 	}
 
-	public static double toDouble(int value, int decimalPlaces) {
+	public static double decimalToDouble(int value, int decimalPlaces) {
+		if (decimalPlaces < 0) {
+			throw new IllegalArgumentException("decimalPlaces=" + decimalPlaces);
+		}
+
 		double floating = value;
 		for (int i = 0; i < decimalPlaces; i++) {
 			floating /= 10.0;
@@ -194,8 +211,12 @@ public class Decimals {
 		return floating;
 	}
 
-	public static int roundToInt(double value) {
+	public static int roundDoubleToInt(double value) {
 		return (int) (value + 0.5);
+	}
+
+	public static int decimalToInt(int value, int decimalPlaces) {
+		return roundDoubleToInt(decimalToDouble(value, decimalPlaces));
 	}
 
 }

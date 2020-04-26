@@ -14,6 +14,9 @@ import com.robindrew.trading.position.order.IPositionOrder;
 import com.robindrew.trading.price.candle.IPriceCandle;
 import com.robindrew.trading.price.precision.IPricePrecision;
 
+/**
+ * Base class for any strategy that has only one open position at any given time.
+ */
 public abstract class SingleTradeStrategy<I extends IInstrument> extends AbstractTradingStrategy<I> {
 
 	private static final Logger log = LoggerFactory.getLogger(SingleTradeStrategy.class);
@@ -44,7 +47,7 @@ public abstract class SingleTradeStrategy<I extends IInstrument> extends Abstrac
 	}
 
 	public void openPosition(IPositionOrder order) {
-		IPosition position = getPositionService().openPosition(order);
+		IPosition position = getPlatform().getPositionService().openPosition(order);
 		setOpenPosition(position);
 	}
 
@@ -73,7 +76,7 @@ public abstract class SingleTradeStrategy<I extends IInstrument> extends Abstrac
 
 	public void closeOpenPosition(LocalDateTime closeDate, BigDecimal expectedClosePrice) {
 		IPosition position = openPosition.getAndSet(null);
-		getPositionService().closePosition(position);
+		getPlatform().getPositionService().closePosition(position);
 	}
 
 }

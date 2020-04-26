@@ -120,7 +120,7 @@ public class RelativeStrengthIndex implements IPriceCandleStreamIndicator<Decima
 		double strength = getRelativeStrength(averageGain, averageLoss);
 		double rsi = getRelativeStrengthIndex(strength);
 
-		int value = Decimals.toInt(rsi, 2, false);
+		int value = Decimals.doubleToInt(rsi, 2, false);
 		return Optional.of(new Decimal(value, 2));
 	}
 }

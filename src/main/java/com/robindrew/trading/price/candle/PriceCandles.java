@@ -33,6 +33,51 @@ import com.robindrew.trading.price.decimal.Decimals;
 
 public class PriceCandles {
 
+	public static int getWorstDistance(IPriceCandle candle1, IPriceCandle candle2, boolean round) {
+		if (candle1.getDecimalPlaces() != candle2.getDecimalPlaces()) {
+			throw new IllegalStateException("decimal places do not match: candle1=" + candle1 + ", candle2=" + candle2);
+		}
+
+		int high1 = getHighestPrice(candle1);
+		int low1 = getLowestPrice(candle1);
+
+		int high2 = getHighestPrice(candle2);
+		int low2 = getLowestPrice(candle2);
+
+		// First candle higher?
+		if (high1 >= high2 && low1 >= low2) {
+			int distance = high1 - low2;
+			if (round) {
+				distance = Decimals.doubleToInt(distance, candle1.getDecimalPlaces());
+			}
+			return distance;
+		}
+
+		// Second candle higher?
+		if (high2 >= high1 && low2 >= low1) {
+			int distance = high2 - low1;
+			if (round) {
+				distance = Decimals.doubleToInt(distance, candle1.getDecimalPlaces());
+			}
+			return distance;
+		}
+
+		// Covers odd cases, including one candle containing the other
+		return 0;
+	}
+
+	public static int getHighestPrice(IPriceCandle candle) {
+		int ask = candle.getAskHighPrice();
+		int bid = candle.getBidHighPrice();
+		return bid > ask ? bid : ask;
+	}
+
+	public static int getLowestPrice(IPriceCandle candle) {
+		int ask = candle.getAskLowPrice();
+		int bid = candle.getBidLowPrice();
+		return bid < ask ? bid : ask;
+	}
+
 	public static IPriceCandle merge(IPriceCandle candle1, IPriceCandle candle2) {
 		return new PriceCandleMerger().merge(candle1, candle2);
 	}
@@ -59,7 +104,8 @@ public class PriceCandles {
 		if (candle.isTick()) {
 			return candle.getMidClosePrice();
 		}
-		return (candle.getMidHighPrice() + candle.getMidLowPrice() + candle.getMidClosePrice() + candle.getMidClosePrice()) / 4.0;
+		return (candle.getMidHighPrice() + candle.getMidLowPrice() + candle.getMidClosePrice()
+				+ candle.getMidClosePrice()) / 4.0;
 	}
 
 	public static double getAverage(double total, int count) {
@@ -78,7 +124,7 @@ public class PriceCandles {
 			decimalPlaces = candle.getDecimalPlaces();
 		}
 
-		int average = Decimals.roundToInt(total / count);
+		int average = Decimals.roundDoubleToInt(total / count);
 		return new Decimal(average, decimalPlaces);
 	}
 
@@ -134,11 +180,13 @@ public class PriceCandles {
 		return list;
 	}
 
-	public static IPriceCandleStreamSource filterByDates(IPriceCandleStreamSource source, LocalDateTime from, LocalDateTime to) {
+	public static IPriceCandleStreamSource filterByDates(IPriceCandleStreamSource source, LocalDateTime from,
+			LocalDateTime to) {
 		return new PriceCandleFilteredStreamSource(source, new PriceCandleDateTimeFilter(from, to));
 	}
 
-	public static IPriceCandleStreamSource filterByDates(IPriceCandleStreamSource source, LocalDate from, LocalDate to) {
+	public static IPriceCandleStreamSource filterByDates(IPriceCandleStreamSource source, LocalDate from,
+			LocalDate to) {
 		return new PriceCandleFilteredStreamSource(source, new PriceCandleDateFilter(from, to));
 	}
 

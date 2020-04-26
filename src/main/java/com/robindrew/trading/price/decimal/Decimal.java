@@ -108,7 +108,7 @@ public class Decimal implements IDecimal {
 	}
 
 	public Decimal(double value, int decimalPlaces) {
-		this(Decimals.toInt(value, decimalPlaces), decimalPlaces);
+		this(Decimals.doubleToInt(value, decimalPlaces), decimalPlaces);
 	}
 
 	public Decimal(int value) {
@@ -135,12 +135,12 @@ public class Decimal implements IDecimal {
 
 	@Override
 	public double doubleValue() {
-		return Decimals.toDouble(value, decimalPlaces);
+		return Decimals.decimalToDouble(value, decimalPlaces);
 	}
 
 	@Override
 	public float floatValue() {
-		return Decimals.toFloat(value, decimalPlaces);
+		return Decimals.decimalToFloat(value, decimalPlaces);
 	}
 
 	@Override

@@ -8,6 +8,16 @@ import org.junit.Test;
 public class DecimalTest {
 
 	@Test
+	public void testToInt() {
+		testToInt(123, 1234, 1);
+		testToInt(1234, 1234, 0);
+	}
+
+	private static void testToInt(int expected, int value, int decimalPlaces) {
+		Assert.assertEquals(expected, Decimals.decimalToInt(value, decimalPlaces));
+	}
+
+	@Test
 	public void testToString() {
 
 		testToString("1234", 1234, 0);
@@ -18,11 +28,9 @@ public class DecimalTest {
 		testToString("0.01234", 1234, 5);
 	}
 
-	private void testToString(String expected, int value, int decimalPlaces) {
-
+	private static void testToString(String expected, int value, int decimalPlaces) {
 		String bigDecimal = new BigDecimal(expected).toPlainString();
 		String intDecimal = Decimals.toString(value, decimalPlaces);
-
 		Assert.assertEquals(bigDecimal, intDecimal);
 	}
 
@@ -37,11 +45,9 @@ public class DecimalTest {
 		testToBigDecimal("0.01234", 1234, 5);
 	}
 
-	private void testToBigDecimal(String expected, int value, int decimalPlaces) {
-
+	private static void testToBigDecimal(String expected, int value, int decimalPlaces) {
 		BigDecimal expectedDecimal = new BigDecimal(expected);
 		BigDecimal actualDecimal = Decimals.toBigDecimal(value, decimalPlaces);
-
 		Assert.assertEquals(expectedDecimal, actualDecimal);
 	}
 
@@ -70,10 +76,8 @@ public class DecimalTest {
 		testToDouble(0.01234, 1234, 5);
 	}
 
-	private void testToDouble(double expected, int value, int decimalPlaces) {
-
-		double actual = Decimals.toDouble(value, decimalPlaces);
-
+	private static void testToDouble(double expected, int value, int decimalPlaces) {
+		double actual = Decimals.decimalToDouble(value, decimalPlaces);
 		Assert.assertEquals(expected, actual, 0.0001);
 	}
 

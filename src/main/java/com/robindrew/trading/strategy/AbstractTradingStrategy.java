@@ -3,7 +3,6 @@ package com.robindrew.trading.strategy;
 import com.robindrew.common.util.Check;
 import com.robindrew.trading.IInstrument;
 import com.robindrew.trading.platform.ITradingPlatform;
-import com.robindrew.trading.platform.positions.IPositionService;
 
 public abstract class AbstractTradingStrategy<I extends IInstrument> implements ITradingStrategy<I> {
 
@@ -30,11 +29,6 @@ public abstract class AbstractTradingStrategy<I extends IInstrument> implements 
 	@Override
 	public final ITradingPlatform<I> getPlatform() {
 		return platform;
-	}
-
-	@Override
-	public final IPositionService getPositionService() {
-		return platform.getPositionService();
 	}
 
 }
