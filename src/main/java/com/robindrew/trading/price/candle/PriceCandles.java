@@ -47,7 +47,7 @@ public class PriceCandles {
 		int low2 = getLowestPrice(candle2);
 
 		// First candle higher?
-		if (high1 >= high2 && low1 >= low2) {
+		if (high1 > high2 && low1 > low2) {
 			int distance = high1 - low2;
 			if (round) {
 				distance = decimalToInt(distance, candle1.getDecimalPlaces());
@@ -56,7 +56,7 @@ public class PriceCandles {
 		}
 
 		// Second candle higher?
-		if (high2 >= high1 && low2 >= low1) {
+		if (high2 > high1 && low2 > low1) {
 			int distance = high2 - low1;
 			if (round) {
 				distance = decimalToInt(distance, candle1.getDecimalPlaces());
