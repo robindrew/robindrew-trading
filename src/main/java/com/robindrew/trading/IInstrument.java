@@ -1,6 +1,8 @@
 package com.robindrew.trading;
 
-import com.robindrew.trading.price.precision.IPricePrecision;
+import java.util.Optional;
+
+import com.robindrew.trading.price.range.IPriceRange;
 
 public interface IInstrument extends Comparable<IInstrument> {
 
@@ -14,5 +16,5 @@ public interface IInstrument extends Comparable<IInstrument> {
 
 	boolean matches(IInstrument instrument);
 
-	IPricePrecision getPrecision();
+	Optional<IPriceRange> getRange();
 }

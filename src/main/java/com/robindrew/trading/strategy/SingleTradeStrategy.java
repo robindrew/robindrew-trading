@@ -7,23 +7,23 @@ import java.util.concurrent.atomic.AtomicReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.robindrew.trading.IInstrument;
 import com.robindrew.trading.platform.ITradingPlatform;
 import com.robindrew.trading.position.IPosition;
 import com.robindrew.trading.position.order.IPositionOrder;
 import com.robindrew.trading.price.candle.IPriceCandle;
 import com.robindrew.trading.price.precision.IPricePrecision;
+import com.robindrew.trading.provider.ITradingInstrument;
 
 /**
  * Base class for any strategy that has only one open position at any given time.
  */
-public abstract class SingleTradeStrategy<I extends IInstrument> extends AbstractTradingStrategy<I> {
+public abstract class SingleTradeStrategy<I extends ITradingInstrument> extends AbstractTradingStrategy<I> {
 
 	private static final Logger log = LoggerFactory.getLogger(SingleTradeStrategy.class);
 
 	private final AtomicReference<IPosition> openPosition = new AtomicReference<IPosition>();
 
-	protected SingleTradeStrategy(String name, ITradingPlatform<I> platform, IInstrument instrument) {
+	protected SingleTradeStrategy(String name, ITradingPlatform<I> platform, I instrument) {
 		super(name, platform, instrument);
 	}
 

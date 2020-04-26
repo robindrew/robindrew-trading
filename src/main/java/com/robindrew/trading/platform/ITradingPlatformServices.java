@@ -6,6 +6,6 @@ import com.robindrew.trading.platform.positions.IPositionService;
 import com.robindrew.trading.platform.streaming.IStreamingService;
 import com.robindrew.trading.price.history.IHistoryService;
 
-public interface ITradingInterface<I extends IInstrument> extends IAccountService, IPositionService, IHistoryService, IStreamingService<I> {
+public interface ITradingPlatformServices<I extends IInstrument> extends IAccountService, IPositionService, IHistoryService, IStreamingService<I> {
 
 }

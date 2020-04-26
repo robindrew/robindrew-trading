@@ -13,13 +13,14 @@ import com.robindrew.trading.position.closed.IClosedPosition;
 import com.robindrew.trading.position.order.IPositionOrder;
 import com.robindrew.trading.price.history.IInstrumentPriceHistory;
 import com.robindrew.trading.provider.ITradingProvider;
+import com.robindrew.trading.provider.ITradingInstrument;
 import com.robindrew.trading.trade.currency.Currency;
 
-public class TradingInterface<I extends IInstrument> implements ITradingInterface<I> {
+public class TradingPlatformServices<I extends ITradingInstrument> implements ITradingPlatformServices<I> {
 
 	private final ITradingPlatform<I> platform;
 
-	public TradingInterface(ITradingPlatform<I> platform) {
+	public TradingPlatformServices(ITradingPlatform<I> platform) {
 		this.platform = Check.notNull("platform", platform);
 	}
 

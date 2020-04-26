@@ -1,8 +1,16 @@
 package com.robindrew.trading;
 
+import static com.robindrew.common.util.Java.propagate;
 import static com.robindrew.trading.InstrumentType.COMMODITIES;
 import static com.robindrew.trading.InstrumentType.CURRENCIES;
 import static com.robindrew.trading.InstrumentType.INDICES;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.util.List;
+
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableList.Builder;
 
 public class Instruments {
 
@@ -594,6 +602,25 @@ public class Instruments {
 			default:
 				throw new IllegalArgumentException("Unknown instrument: '" + name + "'");
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public static <I extends Instrument> List<I> fromFields(Class<I> type) {
+		Builder<I> list = ImmutableList.builder();
+		for (Field field : type.getDeclaredFields()) {
+			if (!Modifier.isStatic(field.getModifiers())) {
+				continue;
+			}
+			if (field.getType().equals(type)) {
+				try {
+					I instrument = (I) field.get(null);
+					list.add(instrument);
+				} catch (Exception e) {
+					throw propagate(e);
+				}
+			}
+		}
+		return list.build();
 	}
 
 }

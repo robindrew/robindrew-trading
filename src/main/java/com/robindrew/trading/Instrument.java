@@ -1,26 +1,38 @@
 package com.robindrew.trading;
 
+import java.util.Optional;
+
 import org.apache.commons.lang3.builder.CompareToBuilder;
 
 import com.robindrew.common.util.Check;
-import com.robindrew.trading.price.precision.IPricePrecision;
+import com.robindrew.trading.price.range.IPriceRange;
 
 public class Instrument implements IInstrument {
 
 	private final String name;
 	private final InstrumentType type;
 	private final IInstrument underlying;
+	private final Optional<IPriceRange> range;
 
 	public Instrument(String name, InstrumentType type) {
 		this.name = Check.notEmpty("name", name);
 		this.type = Check.notNull("type", type);
 		this.underlying = null;
+		this.range = Optional.empty();
+	}
+
+	public Instrument(String name, InstrumentType type, IPriceRange range) {
+		this.name = Check.notEmpty("name", name);
+		this.type = Check.notNull("type", type);
+		this.underlying = null;
+		this.range = Optional.of(range);
 	}
 
 	public Instrument(String name, IInstrument underlying) {
 		this.name = Check.notEmpty("name", name);
 		this.underlying = Check.notNull("underlying", underlying);
 		this.type = underlying.getType();
+		this.range = Optional.empty();
 	}
 
 	@Override
@@ -91,8 +103,8 @@ public class Instrument implements IInstrument {
 	}
 
 	@Override
-	public IPricePrecision getPrecision() {
-		throw new UnsupportedOperationException();
+	public Optional<IPriceRange> getRange() {
+		return range;
 	}
 
 }
