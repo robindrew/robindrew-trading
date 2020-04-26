@@ -9,8 +9,12 @@ public class DecimalTest {
 
 	@Test
 	public void testToInt() {
+		testToInt(12, 1234, 2);
 		testToInt(123, 1234, 1);
 		testToInt(1234, 1234, 0);
+		testToInt(12346, 123456, 1);
+		testToInt(12346, 12345678, 3);
+		testToInt(12, 12345678, 6);
 	}
 
 	private static void testToInt(int expected, int value, int decimalPlaces) {

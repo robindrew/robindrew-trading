@@ -191,6 +191,9 @@ public class Decimals {
 		if (decimalPlaces < 0) {
 			throw new IllegalArgumentException("decimalPlaces=" + decimalPlaces);
 		}
+		if (value == 0) {
+			return 0.0f;
+		}
 
 		float floating = value;
 		for (int i = 0; i < decimalPlaces; i++) {
@@ -203,6 +206,9 @@ public class Decimals {
 		if (decimalPlaces < 0) {
 			throw new IllegalArgumentException("decimalPlaces=" + decimalPlaces);
 		}
+		if (value == 0) {
+			return 0.0;
+		}
 
 		double floating = value;
 		for (int i = 0; i < decimalPlaces; i++) {
@@ -212,10 +218,16 @@ public class Decimals {
 	}
 
 	public static int roundDoubleToInt(double value) {
+		if (value == 0.0) {
+			return 0;
+		}
 		return (int) (value + 0.5);
 	}
 
 	public static int decimalToInt(int value, int decimalPlaces) {
+		if (value == 0) {
+			return 0;
+		}
 		return roundDoubleToInt(decimalToDouble(value, decimalPlaces));
 	}
 
