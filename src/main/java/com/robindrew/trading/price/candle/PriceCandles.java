@@ -1,5 +1,7 @@
 package com.robindrew.trading.price.candle;
 
+import static com.robindrew.trading.price.decimal.Decimals.decimalToInt;
+
 import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -33,7 +35,7 @@ import com.robindrew.trading.price.decimal.Decimals;
 
 public class PriceCandles {
 
-	public static int getWorstDistance(IPriceCandle candle1, IPriceCandle candle2, boolean round) {
+	public static int getPriceDistance(IPriceCandle candle1, IPriceCandle candle2, boolean round) {
 		if (candle1.getDecimalPlaces() != candle2.getDecimalPlaces()) {
 			throw new IllegalStateException("decimal places do not match: candle1=" + candle1 + ", candle2=" + candle2);
 		}
@@ -48,7 +50,7 @@ public class PriceCandles {
 		if (high1 >= high2 && low1 >= low2) {
 			int distance = high1 - low2;
 			if (round) {
-				distance = Decimals.doubleToInt(distance, candle1.getDecimalPlaces());
+				distance = decimalToInt(distance, candle1.getDecimalPlaces());
 			}
 			return distance;
 		}
@@ -57,7 +59,7 @@ public class PriceCandles {
 		if (high2 >= high1 && low2 >= low1) {
 			int distance = high2 - low1;
 			if (round) {
-				distance = Decimals.doubleToInt(distance, candle1.getDecimalPlaces());
+				distance = decimalToInt(distance, candle1.getDecimalPlaces());
 			}
 			return distance;
 		}
