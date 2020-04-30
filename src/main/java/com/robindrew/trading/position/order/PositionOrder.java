@@ -3,6 +3,7 @@ package com.robindrew.trading.position.order;
 import java.math.BigDecimal;
 
 import com.robindrew.common.locale.CurrencyCode;
+import com.robindrew.common.text.Strings;
 import com.robindrew.trading.IInstrument;
 import com.robindrew.trading.trade.TradeDirection;
 
@@ -52,6 +53,11 @@ public class PositionOrder implements IPositionOrder {
 	@Override
 	public BigDecimal getProfitLimitDistance() {
 		return profitLimitDistance;
+	}
+
+	@Override
+	public String toString() {
+		return Strings.toString(this);
 	}
 
 }

@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import com.robindrew.common.locale.CurrencyCode;
+import com.robindrew.common.text.Strings;
 import com.robindrew.common.util.Check;
 import com.robindrew.trading.IInstrument;
 import com.robindrew.trading.position.IPosition;
@@ -96,6 +97,11 @@ public class ClosedPosition implements IClosedPosition {
 	@Override
 	public boolean isLoss() {
 		return !isProfit();
+	}
+
+	@Override
+	public String toString() {
+		return Strings.toString(this);
 	}
 
 }

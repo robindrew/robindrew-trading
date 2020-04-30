@@ -11,6 +11,10 @@ import com.robindrew.trading.trade.TradeDirection;
 
 public class PositionOrderBuilder {
 
+	public static PositionOrderBuilder orderBuilder() {
+		return new PositionOrderBuilder();
+	}
+	
 	private IInstrument instrument = null;
 	private TradeDirection direction = null;
 	private CurrencyCode tradeCurrency = null;
@@ -41,6 +45,10 @@ public class PositionOrderBuilder {
 	public PositionOrderBuilder profitLimitPrice(BigDecimal distance) {
 		this.profitLimitDistance = Check.notNull("distance", distance);
 		return this;
+	}
+
+	public PositionOrderBuilder tradeSize(long tradeSize) {
+		return tradeSize(new BigDecimal(tradeSize));
 	}
 
 	public PositionOrderBuilder tradeSize(BigDecimal tradeSize) {
