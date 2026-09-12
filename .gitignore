@@ -1,4 +1,6 @@
 bin/
+.idea/
+.claude/
 .gradle/
 .settings/
 build/
