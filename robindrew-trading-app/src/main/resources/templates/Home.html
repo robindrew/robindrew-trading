@@ -1,0 +1,356 @@
+<html>
+
+
+<head>
+<title>${title}</title>
+
+<!-- CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+
+<!-- JavaScript -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js"></script>
+
+<style>
+body { padding-top: 10px; }
+a:link, a:visited a:link:active, a:visited:active {
+    text-decoration: none;
+}
+.home-cards {
+    margin-top: 10px;
+}
+.home-card {
+    display: block;
+    color: inherit;
+    margin-bottom: 20px;
+}
+.home-card .panel {
+    margin-bottom: 0;
+    transition: box-shadow 0.15s ease, border-color 0.15s ease;
+}
+.home-card:hover .panel,
+.home-card:focus .panel {
+    border-color: #337ab7;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+.home-card:hover,
+.home-card:focus {
+    color: inherit;
+    text-decoration: none;
+}
+.home-card-title {
+    margin-top: 0;
+}
+.home-card-title .glyphicon {
+    color: #337ab7;
+    margin-right: 8px;
+}
+.home-card-description {
+    color: #666;
+    margin-bottom: 0;
+}
+.ptf-instrument-row,
+.pcf-instrument-row {
+    cursor: pointer;
+}
+</style>
+
+
+</head>
+
+
+<body>
+
+<!-- START CONTAINER -->
+<div class="container">
+
+
+<!-- NAV BAR -->
+<nav class="navbar navbar-default">
+<div class="container-fluid">
+<div class="navbar-header">
+<a class="navbar-brand" href="/">Trading Manager</a>
+</div>
+<ul class="nav navbar-nav">
+<li class="active"><a href="/">Home</a></li>
+</ul>
+</div><!-- /.container-fluid -->
+</nav>
+<!-- NAV BAR -->
+
+
+<!-- START ROW -->
+<div class="row">
+
+<div class="col-md-12">
+
+<!-- TABS -->
+<ul class="nav nav-tabs" role="tablist">
+<li role="presentation" class="active"><a href="#Home_Tab" role="tab" data-toggle="tab">Home</a></li>
+<li role="presentation"><a href="#PTF_Tab" role="tab" data-toggle="tab">PTF</a></li>
+<li role="presentation"><a href="#PCF_Tab" role="tab" data-toggle="tab">PCF</a></li>
+</ul>
+
+<div class="tab-content">
+
+<!-- HOME TAB -->
+<div role="tabpanel" class="tab-pane active" id="Home_Tab">
+<div class="home-cards">
+<p>Welcome to the Trading Manager service, ${serviceName} #${serviceInstance}.</p>
+</div>
+</div>
+
+<!-- PTF TAB -->
+<div role="tabpanel" class="tab-pane" id="PTF_Tab">
+
+<!-- PTF LIST -->
+<div class="home-cards" id="PTF_List">
+
+<div class="panel panel-default">
+<div class="panel-heading">Format</div>
+<table class="table small table-hover table-striped table-bordered">
+<tr>
+<th>Name</th>
+<td>${ptfFormatName}</td>
+</tr>
+<tr>
+<th>Description</th>
+<td>PTF (Price Tick Format) is a compact binary tick format. Tick times are stored in UTC and files are split monthly. It is much faster to read than text-based formats, with a file size similar to (or better than) a compressed line format, since ticks are deserialized directly without decompression - the trade-off being that, as a binary format, it is not human readable.</td>
+</tr>
+<tr>
+<th>Root Directory</th>
+<td>${ptfRootDirectory}</td>
+</tr>
+#if($pcfHasUnconvertedInstruments)
+<tr>
+<th></th>
+<td><button id="PTF_ConvertAll_Button" type="button" class="btn btn-primary">Convert All</button></td>
+</tr>
+#end
+</table>
+</div>
+
+#foreach($provider in $ptfProviders)
+<div class="panel panel-info">
+<div class="panel-heading">${provider.getProvider()}</div>
+<table class="table small table-hover table-striped table-bordered">
+<tr>
+<th>Instrument</th>
+<th>Type</th>
+<th>PCF</th>
+</tr>
+#foreach($instrument in $provider.getInstruments())
+<tr class="ptf-instrument-row" data-provider="${provider.getProvider()}" data-instrument="${instrument.getName()}" data-pcf="$pcfFileManager.hasInstrument($provider.getProvider(), $instrument)">
+<td>${instrument.getName()}</td>
+<td>${instrument.getType()}</td>
+<td>#if($pcfFileManager.hasInstrument($provider.getProvider(), $instrument))<span class="text-success">Yes</span>#else<span class="text-danger">No</span>#end</td>
+</tr>
+#end
+</table>
+</div>
+#end
+
+</div>
+
+<!-- PTF DETAIL -->
+<div class="home-cards" id="PTF_Detail" style="display:none;">
+
+<button id="PTF_Back_Button" type="button" class="btn btn-default">
+<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Back
+</button>
+
+<button id="PTF_Convert_Button" type="button" class="btn btn-primary">
+Convert to PCF
+</button>
+
+<h4 id="PTF_Detail_Header"></h4>
+
+<table class="table small table-hover table-striped table-bordered">
+<tr>
+<th>File</th>
+<th>Day</th>
+<th>Size</th>
+</tr>
+<tbody id="PTF_Detail_Body"></tbody>
+</table>
+
+</div>
+
+</div>
+
+<!-- PCF TAB -->
+<div role="tabpanel" class="tab-pane" id="PCF_Tab">
+
+<!-- PCF LIST -->
+<div class="home-cards" id="PCF_List">
+
+<div class="panel panel-default">
+<div class="panel-heading">Format</div>
+<table class="table small table-hover table-striped table-bordered">
+<tr>
+<th>Name</th>
+<td>${pcfFormatName}</td>
+</tr>
+<tr>
+<th>Description</th>
+<td>PCF (Price Candle Format) is a compact binary minute-candle format, converted from PTF tick data. Candle times are in UTC and files are split monthly. Like PTF it is much faster to read than text-based formats, but as a binary format it is not human readable.</td>
+</tr>
+<tr>
+<th>Root Directory</th>
+<td>${pcfRootDirectory}</td>
+</tr>
+</table>
+</div>
+
+#foreach($provider in $pcfProviders)
+<div class="panel panel-info">
+<div class="panel-heading">${provider.getProvider()}</div>
+<table class="table small table-hover table-striped table-bordered">
+<tr>
+<th>Instrument</th>
+<th>Type</th>
+</tr>
+#foreach($instrument in $provider.getInstruments())
+<tr class="pcf-instrument-row" data-provider="${provider.getProvider()}" data-instrument="${instrument.getName()}">
+<td>${instrument.getName()}</td>
+<td>${instrument.getType()}</td>
+</tr>
+#end
+</table>
+</div>
+#end
+
+</div>
+
+<!-- PCF DETAIL -->
+<div class="home-cards" id="PCF_Detail" style="display:none;">
+
+<button id="PCF_Back_Button" type="button" class="btn btn-default">
+<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Back
+</button>
+
+<h4 id="PCF_Detail_Header"></h4>
+
+<table class="table small table-hover table-striped table-bordered">
+<tr>
+<th>File</th>
+<th>Month</th>
+<th>Size</th>
+</tr>
+<tbody id="PCF_Detail_Body"></tbody>
+</table>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+<!-- END ROW -->
+</div>
+
+<!-- END CONTAINER -->
+</div>
+
+
+<script>
+$(document).ready(function () {
+
+    var currentProvider = null;
+    var currentInstrument = null;
+    var currentRow = null;
+
+    $(".ptf-instrument-row").click(function () {
+        currentRow = $(this);
+        currentProvider = currentRow.data("provider");
+        currentInstrument = currentRow.data("instrument");
+
+        $("#PTF_Detail_Header").text(currentProvider + " / " + currentInstrument);
+        $("#PTF_Detail_Body").empty();
+        $("#PTF_Convert_Button").prop("disabled", false).text("Convert to PCF").toggle(!currentRow.data("pcf"));
+
+        $.getJSON("/ptf/" + currentProvider + "/" + currentInstrument + "/files", function (files) {
+            $.each(files, function (index, file) {
+                var row = $("<tr>");
+                row.append($("<td>").text(file.filename));
+                row.append($("<td>").text(file.day));
+                row.append($("<td>").text(file.size));
+                $("#PTF_Detail_Body").append(row);
+            });
+        });
+
+        $("#PTF_List").hide();
+        $("#PTF_Detail").show();
+    });
+
+    $("#PTF_Back_Button").click(function () {
+        $("#PTF_Detail").hide();
+        $("#PTF_List").show();
+    });
+
+    $("#PTF_Convert_Button").click(function () {
+        var button = $(this);
+        button.prop("disabled", true).text("Converting...");
+
+        $.post("/ptf/" + currentProvider + "/" + currentInstrument + "/convert")
+            .done(function (result) {
+                button.text(result.converted ? "Converted" : "Already Converted").hide();
+                if (currentRow) {
+                    currentRow.data("pcf", true);
+                    currentRow.find("td").last().html('<span class="text-success">Yes</span>');
+                }
+            })
+            .fail(function () {
+                button.prop("disabled", false).text("Convert Failed");
+            });
+    });
+
+    $(".pcf-instrument-row").click(function () {
+        var provider = $(this).data("provider");
+        var instrument = $(this).data("instrument");
+
+        $("#PCF_Detail_Header").text(provider + " / " + instrument);
+        $("#PCF_Detail_Body").empty();
+
+        $.getJSON("/pcf/" + provider + "/" + instrument + "/files", function (files) {
+            $.each(files, function (index, file) {
+                var row = $("<tr>");
+                row.append($("<td>").text(file.filename));
+                row.append($("<td>").text(file.month));
+                row.append($("<td>").text(file.size));
+                $("#PCF_Detail_Body").append(row);
+            });
+        });
+
+        $("#PCF_List").hide();
+        $("#PCF_Detail").show();
+    });
+
+    $("#PCF_Back_Button").click(function () {
+        $("#PCF_Detail").hide();
+        $("#PCF_List").show();
+    });
+
+    $("#PTF_ConvertAll_Button").click(function () {
+        var button = $(this);
+        button.prop("disabled", true).text("Converting All...");
+
+        $.post("/ptf/convert-all")
+            .done(function (result) {
+                button.text("Converted " + result.converted + " Instrument(s)");
+                setTimeout(function () {
+                    location.reload();
+                }, 1000);
+            })
+            .fail(function () {
+                button.prop("disabled", false).text("Convert All Failed");
+            });
+    });
+
+});
+</script>
+
+</body>
+</html>

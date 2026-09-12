@@ -1,0 +1,28 @@
+package com.robindrew.trading.price.candle.indicator.standard;
+
+import com.robindrew.trading.price.candle.IPriceCandle;
+import com.robindrew.trading.price.candle.indicator.ValueIndicator;
+import com.robindrew.trading.price.candle.interval.IPriceInterval;
+import java.util.List;
+
+/**
+ * Simple Moving Average (SMA).
+ * <p>
+ * Calculated by adding the closing price of each candle and then dividing the total by the number of time periods.
+ * </p>
+ */
+public class SmaIndicator extends ValueIndicator {
+
+    public SmaIndicator(String name, IPriceInterval interval, int capacity) {
+        super(name, interval, capacity);
+    }
+
+    @Override
+    protected void calculate(List<IPriceCandle> candles) {
+        long total = 0;
+        for (IPriceCandle candle : candles) {
+            total += candle.getMidClosePrice();
+        }
+        setValue(total / candles.size());
+    }
+}

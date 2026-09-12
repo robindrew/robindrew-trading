@@ -1,0 +1,51 @@
+apply plugin: 'java'
+apply plugin: 'io.freefair.lombok'
+apply plugin: 'com.google.cloud.tools.jib'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'com.diffplug.spotless'
+
+// LOMBOK
+lombok {
+	version = "$version_lombok"
+}
+
+// MAVEN REPOSITORIES
+apply from: "$rootDir/gradle/repositories.gradle"
+
+// MAVEN ARTIFACT PUBLISH
+apply from: "$rootDir/gradle/publish.gradle"
+
+// SPOTLESS
+spotless {
+    java {
+        removeUnusedImports()
+        palantirJavaFormat('2.51.0')
+    }
+}
+
+// DISABLE THE PLAIN JAR (SPRING BOOT)
+jar {
+    enabled = false
+}
+
+// UTF-8 ENCODING
+compileJava.options.encoding = 'UTF-8'
+
+// ENSURE SPOTLESS RUNS BEFORE COMPILE
+compileJava.dependsOn 'spotlessApply'
+
+// JAVA VERSION
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+// ENABLE JUNIT5
+test {
+    useJUnitPlatform()
+}
+
+// SPRING BOM
+dependencies {
+    implementation platform ("org.springframework.boot:spring-boot-dependencies:$version_spring_boot")
+}

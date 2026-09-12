@@ -1,0 +1,20 @@
+
+// MAVEN REPOSITORIES
+repositories {
+
+    // MAVEN CENTRAL
+    mavenCentral()
+
+    // GITHUB
+    maven {
+        url = uri("https://maven.pkg.github.com/robindrew/robindrew-core")
+
+        // Authentication
+        credentials {
+            // Use environment variables or project properties for credentials
+            // These will be picked up from the GitHub Secrets passed as environment variables
+            username System.getenv("MAVEN_USERNAME").toString() ?: project.findProperty("mavenUsername").toString()
+            password System.getenv("MAVEN_PASSWORD").toString() ?: project.findProperty("mavenPassword").toString()
+        }
+    }
+}

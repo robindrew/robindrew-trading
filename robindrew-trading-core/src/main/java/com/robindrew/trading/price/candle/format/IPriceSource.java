@@ -1,0 +1,22 @@
+package com.robindrew.trading.price.candle.format;
+
+import com.robindrew.trading.price.candle.IPriceCandle;
+import java.util.Collection;
+import java.util.List;
+
+public interface IPriceSource {
+
+    String getName();
+
+    PriceFormat getFormat();
+
+    List<? extends IPriceCandle> read();
+
+    void write(Collection<? extends IPriceCandle> candles);
+
+    int size();
+
+    boolean exists();
+
+    boolean create();
+}

@@ -1,0 +1,50 @@
+apply plugin: 'java-library'
+apply plugin: 'io.freefair.lombok'
+apply plugin: 'com.diffplug.spotless'
+
+// LOMBOK
+lombok {
+	version = "$version_lombok"
+}
+
+// MAVEN REPOSITORIES
+apply from: "$rootDir/gradle/repositories.gradle"
+
+// MAVEN ARTIFACT PUBLISH
+apply from: "$rootDir/gradle/publish.gradle"
+
+// HANDLING DUPLICATE FILES
+tasks.named('processTestResources') {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+// SPOTLESS
+spotless {
+    java {
+        removeUnusedImports()
+        palantirJavaFormat('2.51.0')
+    }
+}
+
+// UTF-8 ENCODING
+compileJava.options.encoding = 'UTF-8'
+
+// ENSURE SPOTLESS RUNS BEFORE COMPILE
+compileJava.dependsOn 'spotlessApply'
+
+// JAVA VERSION
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of("$javaLanguageVersion")
+    }
+}
+
+// ENABLE JUNIT5
+test {
+    useJUnitPlatform()
+}
+
+// SPRING BOM
+dependencies {
+    implementation platform ("org.springframework.boot:spring-boot-dependencies:$version_spring_boot")
+}

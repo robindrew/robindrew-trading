@@ -1,3 +1,5 @@
 rootProject.name = 'robindrew-trading'
-include 'robindrew-common'
-project(":robindrew-common").projectDir = file('/../robindrew-common')
+
+include 'robindrew-trading-app'
+include 'robindrew-trading-core'
+include 'robindrew-trading-backtest'

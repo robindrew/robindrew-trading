@@ -1,0 +1,31 @@
+package com.robindrew.trading.price.candle.io.list.filter;
+
+import com.robindrew.trading.price.candle.IPriceCandle;
+import com.robindrew.trading.price.candle.PriceCandleDateComparator;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
+public class PriceCandleListSortedFilter implements IPriceCandleListFilter {
+
+    private final Comparator<IPriceCandle> comparator;
+
+    public PriceCandleListSortedFilter(Comparator<IPriceCandle> comparator) {
+        if (comparator == null) {
+            throw new NullPointerException("comparator");
+        }
+        this.comparator = comparator;
+    }
+
+    public PriceCandleListSortedFilter() {
+        this(new PriceCandleDateComparator());
+    }
+
+    @Override
+    public List<IPriceCandle> filter(List<? extends IPriceCandle> candles) {
+        List<IPriceCandle> sorted = new ArrayList<>(candles);
+        Collections.sort(sorted, comparator);
+        return sorted;
+    }
+}

@@ -1,0 +1,26 @@
+
+// IMPORT JAVA LIBRARY CONFIG
+apply from: "$rootDir/gradle/java-library.gradle"
+
+// DEPENDENCIES (Which JAR files to download and host locally)
+dependencies {
+
+	// ROBINDREW
+	api "com.robindrew:robindrew-common:$version_robindrew_core"
+
+	// COMMON
+	api "com.google.guava:guava:$version_guava"
+	implementation "org.jfree:jfreechart:$version_jfreechart"
+	implementation "org.apache.httpcomponents:httpclient:$version_httpclient"
+	implementation "uk.org.lidalia:sysout-over-slf4j:$version_sysout_over_slf4j"
+
+	// SPRING BOM
+	implementation "org.slf4j:slf4j-api"
+	implementation "org.slf4j:log4j-over-slf4j"
+	implementation "org.apache.commons:commons-lang3"
+	implementation "com.fasterxml.jackson.core:jackson-databind"
+
+	// TESTING
+	testImplementation "org.springframework.boot:spring-boot-starter-test"
+
+}
