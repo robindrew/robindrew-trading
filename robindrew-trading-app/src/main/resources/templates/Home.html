@@ -11,6 +11,7 @@
 <!-- JavaScript -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js"></script>
+<script src="https://www.gstatic.com/charts/loader.js"></script>
 
 <style>
 body { padding-top: 10px; }
@@ -54,6 +55,16 @@ a:link, a:visited a:link:active, a:visited:active {
 .pcf-instrument-row {
     cursor: pointer;
 }
+.chart-controls {
+    margin-bottom: 15px;
+}
+.chart-controls .form-group {
+    margin-right: 15px;
+}
+#Chart_Div {
+    width: 100%;
+    height: 500px;
+}
 </style>
 
 
@@ -90,6 +101,7 @@ a:link, a:visited a:link:active, a:visited:active {
 <li role="presentation" class="active"><a href="#Home_Tab" role="tab" data-toggle="tab">Home</a></li>
 <li role="presentation"><a href="#PTF_Tab" role="tab" data-toggle="tab">PTF</a></li>
 <li role="presentation"><a href="#PCF_Tab" role="tab" data-toggle="tab">PCF</a></li>
+<li role="presentation"><a href="#Chart_Tab" role="tab" data-toggle="tab">Chart</a></li>
 </ul>
 
 <div class="tab-content">
@@ -245,6 +257,74 @@ Convert to PCF
 
 </div>
 
+<!-- CHART TAB -->
+<div role="tabpanel" class="tab-pane" id="Chart_Tab">
+
+<div class="home-cards">
+
+<form class="form-inline chart-controls" id="Chart_Form">
+
+<div class="form-group">
+<label for="Chart_Instrument_Select">Instrument</label><br/>
+<select id="Chart_Instrument_Select" class="form-control">
+<option value="">-- Select an instrument --</option>
+#foreach($provider in $pcfProviders)
+<optgroup label="${provider.getProvider()}">
+#foreach($instrument in $provider.getInstruments())
+<option value="${provider.getProvider()}|${instrument.getName()}">${instrument.getName()} (${instrument.getType()})</option>
+#end
+</optgroup>
+#end
+</select>
+</div>
+
+<div class="form-group">
+<label for="Chart_From">From</label><br/>
+<div class="input-group">
+<span class="input-group-btn">
+<button type="button" id="Chart_Back_Button" class="btn btn-default" disabled title="Back half the candle range">
+<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+</button>
+</span>
+<input type="text" id="Chart_From" class="form-control" placeholder="YYYY-MM-DD HH:mm" pattern="\d{4}-\d{2}-\d{2} \d{2}:\d{2}">
+<span class="input-group-btn">
+<button type="button" id="Chart_Forward_Button" class="btn btn-default" disabled title="Forward half the candle range">
+<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+</button>
+</span>
+</div>
+</div>
+
+<div class="form-group">
+<label for="Chart_Resolution_Amount">Resolution</label><br/>
+<input type="number" id="Chart_Resolution_Amount" class="form-control" style="width:80px;display:inline-block;" min="1" value="1">
+<select id="Chart_Resolution_Unit" class="form-control" style="width:110px;display:inline-block;">
+<option value="MINUTES">Minutes</option>
+<option value="HOURS" selected>Hours</option>
+<option value="DAYS">Days</option>
+</select>
+</div>
+
+<div class="form-group">
+<label for="Chart_Candle_Count">Candles</label><br/>
+<input type="number" id="Chart_Candle_Count" class="form-control" style="width:80px;" min="1" value="24">
+</div>
+
+<div class="form-group">
+<label>&nbsp;</label><br/>
+<button type="submit" id="Chart_Load_Button" class="btn btn-primary" disabled>Load Chart</button>
+</div>
+
+</form>
+
+<div id="Chart_Message" class="text-danger" style="display:none;"></div>
+
+<div id="Chart_Div"></div>
+
+</div>
+
+</div>
+
 </div>
 </div>
 
@@ -347,6 +427,242 @@ $(document).ready(function () {
             .fail(function () {
                 button.prop("disabled", false).text("Convert All Failed");
             });
+    });
+
+    // CHART TAB
+
+    var chart = null;
+    var chartsReady = false;
+    var wheelLoadTimer = null;
+
+    google.charts.load("current", { packages: ["corechart"] });
+    google.charts.setOnLoadCallback(function () {
+        chartsReady = true;
+        $("#Chart_Instrument_Select").prop("disabled", false);
+    });
+
+    $("#Chart_Instrument_Select").prop("disabled", true);
+
+    var DATE_TIME_LOCAL_PATTERN = /^(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2})$/;
+
+    function toDateTimeLocalValue(isoDateTime) {
+        // "2024-05-01T00:00:00" -> "2024-05-01 00:00"
+        return isoDateTime.substring(0, 10) + " " + isoDateTime.substring(11, 16);
+    }
+
+    function toIsoDateTime(dateTimeLocalValue) {
+        // "2024-05-01 00:00" -> "2024-05-01T00:00:00"
+        return dateTimeLocalValue.replace(" ", "T") + ":00";
+    }
+
+    var MILLIS_PER_UNIT = { MINUTES: 60 * 1000, HOURS: 60 * 60 * 1000, DAYS: 24 * 60 * 60 * 1000 };
+
+    // "Chart_From" is a naive wall-clock value with no timezone (matches the UTC-based candle times
+    // returned by the server), so this parses/formats via the UTC getters/Date.UTC rather than the
+    // local-timezone Date constructor, to avoid shifting the value by the browser's DST offset.
+    function parseDateTimeLocalAsUtcMillis(dateTimeLocalValue) {
+        var match = DATE_TIME_LOCAL_PATTERN.exec(dateTimeLocalValue);
+        if (!match) {
+            return NaN;
+        }
+        return Date.UTC(+match[1], +match[2] - 1, +match[3], +match[4], +match[5]);
+    }
+
+    function formatUtcMillisAsDateTimeLocal(millis) {
+        var date = new Date(millis);
+        function pad(number) {
+            return (number < 10 ? "0" : "") + number;
+        }
+        return (
+            date.getUTCFullYear() +
+            "-" +
+            pad(date.getUTCMonth() + 1) +
+            "-" +
+            pad(date.getUTCDate()) +
+            " " +
+            pad(date.getUTCHours()) +
+            ":" +
+            pad(date.getUTCMinutes())
+        );
+    }
+
+    function setChartControlsEnabled(enabled) {
+        $("#Chart_Load_Button, #Chart_Back_Button, #Chart_Forward_Button").prop("disabled", !enabled);
+    }
+
+    // Shifts "From" by directionSign * units resolution-steps (each step = amount * unit), updating
+    // the field only - the caller decides whether/when to reload the chart. Returns false (and leaves
+    // the field untouched) if "From" or the resolution isn't currently valid.
+    function shiftFromValue(directionSign, units) {
+        var value = $("#Chart_From").val();
+        var amount = parseFloat($("#Chart_Resolution_Amount").val());
+        var unit = $("#Chart_Resolution_Unit").val();
+
+        var startMillis = parseDateTimeLocalAsUtcMillis(value);
+        if (isNaN(startMillis) || !amount || !units) {
+            return false;
+        }
+
+        var shiftMillis = directionSign * units * amount * MILLIS_PER_UNIT[unit];
+        $("#Chart_From").val(formatUtcMillisAsDateTimeLocal(startMillis + shiftMillis));
+        return true;
+    }
+
+    function shiftFrom(directionSign, units) {
+        if (!shiftFromValue(directionSign, units)) {
+            showChartMessage("From must be in YYYY-MM-DD HH:mm format.");
+            return;
+        }
+        loadChart();
+    }
+
+    function showChartMessage(message) {
+        $("#Chart_Message").text(message).show();
+    }
+
+    function showChartError(xhr) {
+        var message = xhr.responseText && xhr.responseText.length < 300 ? xhr.responseText : "Failed to load chart data.";
+        showChartMessage(message);
+    }
+
+    function currentInstrumentSelection() {
+        var value = $("#Chart_Instrument_Select").val();
+        if (!value) {
+            return null;
+        }
+        var parts = value.split("|");
+        return { provider: parts[0], instrument: parts[1] };
+    }
+
+    // Clears the chart container and drops the chart instance so the next drawChart() call starts
+    // fresh. Only call this when NOT about to call chart.draw() - emptying the container out from
+    // under an existing chart instance and then calling draw() on it again silently fails, since
+    // Google Charts expects to manage/reuse its own previously rendered DOM.
+    function clearChart() {
+        $("#Chart_Div").empty();
+        chart = null;
+    }
+
+    function drawChart(candles) {
+        if (!candles.length) {
+            clearChart();
+            showChartMessage("No candle data available for the selected range/resolution.");
+            return;
+        }
+
+        var rows = [["Date", "low", "open", "close", "high"]];
+        $.each(candles, function (index, candle) {
+            rows.push([new Date(candle.time + "Z"), candle.low, candle.open, candle.close, candle.high]);
+        });
+
+        var data = google.visualization.arrayToDataTable(rows);
+        var options = {
+            legend: "none",
+            candlestick: {
+                fallingColor: { strokeWidth: 0, fill: "#a52714" },
+                risingColor: { strokeWidth: 0, fill: "#0f9d58" }
+            }
+        };
+
+        if (!chart) {
+            chart = new google.visualization.CandlestickChart(document.getElementById("Chart_Div"));
+        }
+        chart.draw(data, options);
+    }
+
+    function loadChart() {
+        if (!chartsReady) {
+            return;
+        }
+        var selection = currentInstrumentSelection();
+        if (!selection) {
+            return;
+        }
+
+        var fromValue = $("#Chart_From").val();
+        if (!DATE_TIME_LOCAL_PATTERN.test(fromValue)) {
+            $("#Chart_Div").empty();
+            showChartMessage("From must be in YYYY-MM-DD HH:mm format.");
+            return;
+        }
+
+        var from = toIsoDateTime(fromValue);
+        var amount = $("#Chart_Resolution_Amount").val();
+        var unit = $("#Chart_Resolution_Unit").val();
+        var count = $("#Chart_Candle_Count").val();
+
+        $("#Chart_Message").hide();
+
+        $.getJSON("/chart/" + selection.provider + "/" + selection.instrument + "/candles", {
+            from: from,
+            amount: amount,
+            unit: unit,
+            count: count
+        })
+            .done(function (candles) {
+                drawChart(candles);
+            })
+            .fail(function (xhr) {
+                clearChart();
+                showChartError(xhr);
+            });
+    }
+
+    $("#Chart_Instrument_Select").change(function () {
+        var selection = currentInstrumentSelection();
+        $("#Chart_Message").hide();
+        clearChart();
+
+        if (!selection) {
+            setChartControlsEnabled(false);
+            return;
+        }
+
+        $.getJSON("/chart/" + selection.provider + "/" + selection.instrument + "/default-from")
+            .done(function (range) {
+                $("#Chart_From").val(toDateTimeLocalValue(range.from));
+                setChartControlsEnabled(true);
+                loadChart();
+            })
+            .fail(function (xhr) {
+                setChartControlsEnabled(false);
+                showChartError(xhr);
+            });
+    });
+
+    $("#Chart_Form").submit(function (event) {
+        event.preventDefault();
+        loadChart();
+    });
+
+    $("#Chart_Back_Button").click(function () {
+        shiftFrom(-1, parseFloat($("#Chart_Candle_Count").val()) / 2);
+    });
+
+    $("#Chart_Forward_Button").click(function () {
+        shiftFrom(1, parseFloat($("#Chart_Candle_Count").val()) / 2);
+    });
+
+    // Scrolling over the chart pages it through time by one resolution unit at a time, rather than
+    // scrolling the page - reloading on every wheel tick would flood the server during a fast scroll
+    // gesture, so the actual reload is debounced until scrolling pauses.
+    $("#Chart_Div").on("wheel", function (event) {
+        if (!currentInstrumentSelection()) {
+            return;
+        }
+        var deltaY = event.originalEvent.deltaY;
+        if (!deltaY) {
+            return;
+        }
+
+        var directionSign = deltaY < 0 ? 1 : -1;
+        if (!shiftFromValue(directionSign, 1)) {
+            return;
+        }
+        event.preventDefault();
+
+        clearTimeout(wheelLoadTimer);
+        wheelLoadTimer = setTimeout(loadChart, 200);
     });
 
 });

@@ -7,6 +7,7 @@ import com.robindrew.trading.price.candle.format.pcf.source.IPcfSourceProviderMa
 import com.robindrew.trading.price.candle.format.pcf.source.file.IPcfFile;
 import com.robindrew.trading.price.candle.format.pcf.source.file.IPcfFileManager;
 import com.robindrew.trading.provider.TradingProvider;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class PcfController {
+
+    private static final DateTimeFormatter MONTH_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM");
 
     private final IPcfFileManager pcfFileManager;
 
@@ -33,7 +36,7 @@ public class PcfController {
             IPcfFile file = (IPcfFile) source;
             views.add(new PcfFileView(
                     file.getFile().getName(),
-                    file.getMonth().toString(),
+                    MONTH_FORMAT.format(file.getMonth()),
                     Strings.formatBytes(file.getFile().length())));
         }
         views.sort(Comparator.comparing(PcfFileView::month));

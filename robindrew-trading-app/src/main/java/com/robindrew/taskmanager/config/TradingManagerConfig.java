@@ -1,5 +1,6 @@
 package com.robindrew.taskmanager.config;
 
+import com.robindrew.taskmanager.controller.ChartController;
 import com.robindrew.taskmanager.controller.HomeController;
 import com.robindrew.taskmanager.controller.PcfController;
 import com.robindrew.taskmanager.controller.PtfController;
@@ -43,5 +44,10 @@ public class TradingManagerConfig {
     @Bean
     public PcfController pcfController(ReloadablePcfFileManager pcfFileManager) {
         return new PcfController(pcfFileManager);
+    }
+
+    @Bean
+    public ChartController chartController(ReloadablePcfFileManager pcfFileManager) {
+        return new ChartController(pcfFileManager);
     }
 }
