@@ -11,7 +11,6 @@
 <!-- JavaScript -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js"></script>
-<script src="https://www.gstatic.com/charts/loader.js"></script>
 
 <style>
 body { padding-top: 10px; }
@@ -61,9 +60,13 @@ a:link, a:visited a:link:active, a:visited:active {
 .chart-controls .form-group {
     margin-right: 15px;
 }
-#Chart_Div {
+#CandleChart_Canvas {
     width: 100%;
     height: 500px;
+    display: block;
+    background: #ffffff;
+    border: 1px solid #ddd;
+    cursor: ew-resize;
 }
 </style>
 
@@ -101,7 +104,7 @@ a:link, a:visited a:link:active, a:visited:active {
 <li role="presentation" class="active"><a href="#Home_Tab" role="tab" data-toggle="tab">Home</a></li>
 <li role="presentation"><a href="#PTF_Tab" role="tab" data-toggle="tab">PTF</a></li>
 <li role="presentation"><a href="#PCF_Tab" role="tab" data-toggle="tab">PCF</a></li>
-<li role="presentation"><a href="#Chart_Tab" role="tab" data-toggle="tab">Chart</a></li>
+<li role="presentation"><a href="#CandleChart_Tab" role="tab" data-toggle="tab">Candle Chart</a></li>
 </ul>
 
 <div class="tab-content">
@@ -257,16 +260,16 @@ Convert to PCF
 
 </div>
 
-<!-- CHART TAB -->
-<div role="tabpanel" class="tab-pane" id="Chart_Tab">
+<!-- CANDLE CHART TAB -->
+<div role="tabpanel" class="tab-pane" id="CandleChart_Tab">
 
 <div class="home-cards">
 
-<form class="form-inline chart-controls" id="Chart_Form">
+<form class="form-inline chart-controls" id="CandleChart_Form">
 
 <div class="form-group">
-<label for="Chart_Instrument_Select">Instrument</label><br/>
-<select id="Chart_Instrument_Select" class="form-control">
+<label for="CandleChart_Instrument_Select">Instrument</label><br/>
+<select id="CandleChart_Instrument_Select" class="form-control">
 <option value="">-- Select an instrument --</option>
 #foreach($provider in $pcfProviders)
 <optgroup label="${provider.getProvider()}">
@@ -279,16 +282,32 @@ Convert to PCF
 </div>
 
 <div class="form-group">
-<label for="Chart_From">From</label><br/>
+<label>From</label><br/>
 <div class="input-group">
 <span class="input-group-btn">
-<button type="button" id="Chart_Back_Button" class="btn btn-default" disabled title="Back half the candle range">
+<button type="button" id="CandleChart_Back_Button" class="btn btn-default" disabled title="Back 50 candles">
 <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
 </button>
 </span>
-<input type="text" id="Chart_From" class="form-control" placeholder="YYYY-MM-DD HH:mm" pattern="\d{4}-\d{2}-\d{2} \d{2}:\d{2}">
+<select id="CandleChart_Year" class="form-control" style="width:90px;" disabled></select>
+<select id="CandleChart_Month" class="form-control" style="width:70px;" disabled>
+<option value="1">Jan</option>
+<option value="2">Feb</option>
+<option value="3">Mar</option>
+<option value="4">Apr</option>
+<option value="5">May</option>
+<option value="6">Jun</option>
+<option value="7">Jul</option>
+<option value="8">Aug</option>
+<option value="9">Sep</option>
+<option value="10">Oct</option>
+<option value="11">Nov</option>
+<option value="12">Dec</option>
+</select>
+<select id="CandleChart_Day" class="form-control" style="width:65px;" disabled></select>
+<input type="time" id="CandleChart_Time" class="form-control" style="width:100px;" step="60" disabled>
 <span class="input-group-btn">
-<button type="button" id="Chart_Forward_Button" class="btn btn-default" disabled title="Forward half the candle range">
+<button type="button" id="CandleChart_Forward_Button" class="btn btn-default" disabled title="Forward 50 candles">
 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
 </button>
 </span>
@@ -296,30 +315,34 @@ Convert to PCF
 </div>
 
 <div class="form-group">
-<label for="Chart_Resolution_Amount">Resolution</label><br/>
-<input type="number" id="Chart_Resolution_Amount" class="form-control" style="width:80px;display:inline-block;" min="1" value="1">
-<select id="Chart_Resolution_Unit" class="form-control" style="width:110px;display:inline-block;">
-<option value="MINUTES">Minutes</option>
-<option value="HOURS" selected>Hours</option>
-<option value="DAYS">Days</option>
+<label for="CandleChart_Resolution">Resolution</label><br/>
+<select id="CandleChart_Resolution" class="form-control" style="width:100px;">
+<option value="1">1m</option>
+<option value="5">5m</option>
+<option value="10">10m</option>
+<option value="15">15m</option>
+<option value="20">20m</option>
+<option value="30">30m</option>
+<option value="60" selected>1h</option>
+<option value="120">2h</option>
+<option value="240">4h</option>
+<option value="360">6h</option>
+<option value="720">12h</option>
+<option value="1440">1d</option>
+<option value="10080">1w</option>
 </select>
 </div>
 
 <div class="form-group">
-<label for="Chart_Candle_Count">Candles</label><br/>
-<input type="number" id="Chart_Candle_Count" class="form-control" style="width:80px;" min="1" value="24">
-</div>
-
-<div class="form-group">
 <label>&nbsp;</label><br/>
-<button type="submit" id="Chart_Load_Button" class="btn btn-primary" disabled>Load Chart</button>
+<button type="submit" id="CandleChart_Load_Button" class="btn btn-primary" disabled>Load Chart</button>
 </div>
 
 </form>
 
-<div id="Chart_Message" class="text-danger" style="display:none;"></div>
+<div id="CandleChart_Message" class="text-danger" style="display:none;"></div>
 
-<div id="Chart_Div"></div>
+<canvas id="CandleChart_Canvas"></canvas>
 
 </div>
 
@@ -429,43 +452,12 @@ $(document).ready(function () {
             });
     });
 
-    // CHART TAB
-
-    var chart = null;
-    var chartsReady = false;
-    var wheelLoadTimer = null;
-
-    google.charts.load("current", { packages: ["corechart"] });
-    google.charts.setOnLoadCallback(function () {
-        chartsReady = true;
-        $("#Chart_Instrument_Select").prop("disabled", false);
-    });
-
-    $("#Chart_Instrument_Select").prop("disabled", true);
-
-    var DATE_TIME_LOCAL_PATTERN = /^(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2})$/;
-
-    function toDateTimeLocalValue(isoDateTime) {
-        // "2024-05-01T00:00:00" -> "2024-05-01 00:00"
-        return isoDateTime.substring(0, 10) + " " + isoDateTime.substring(11, 16);
-    }
-
+    // Shared date helpers (also used by the Candle Chart tab below) - "From" values round-trip as a
+    // naive wall-clock string with no timezone, matching the UTC-based candle times the server
+    // returns.
     function toIsoDateTime(dateTimeLocalValue) {
         // "2024-05-01 00:00" -> "2024-05-01T00:00:00"
         return dateTimeLocalValue.replace(" ", "T") + ":00";
-    }
-
-    var MILLIS_PER_UNIT = { MINUTES: 60 * 1000, HOURS: 60 * 60 * 1000, DAYS: 24 * 60 * 60 * 1000 };
-
-    // "Chart_From" is a naive wall-clock value with no timezone (matches the UTC-based candle times
-    // returned by the server), so this parses/formats via the UTC getters/Date.UTC rather than the
-    // local-timezone Date constructor, to avoid shifting the value by the browser's DST offset.
-    function parseDateTimeLocalAsUtcMillis(dateTimeLocalValue) {
-        var match = DATE_TIME_LOCAL_PATTERN.exec(dateTimeLocalValue);
-        if (!match) {
-            return NaN;
-        }
-        return Date.UTC(+match[1], +match[2] - 1, +match[3], +match[4], +match[5]);
     }
 
     function formatUtcMillisAsDateTimeLocal(millis) {
@@ -486,47 +478,40 @@ $(document).ready(function () {
         );
     }
 
-    function setChartControlsEnabled(enabled) {
-        $("#Chart_Load_Button, #Chart_Back_Button, #Chart_Forward_Button").prop("disabled", !enabled);
-    }
+    // CANDLE CHART TAB (hand-rolled HTML5 canvas rendering - no charting library)
 
-    // Shifts "From" by directionSign * units resolution-steps (each step = amount * unit), updating
-    // the field only - the caller decides whether/when to reload the chart. Returns false (and leaves
-    // the field untouched) if "From" or the resolution isn't currently valid.
-    function shiftFromValue(directionSign, units) {
-        var value = $("#Chart_From").val();
-        var amount = parseFloat($("#Chart_Resolution_Amount").val());
-        var unit = $("#Chart_Resolution_Unit").val();
+    var CANDLE_CHART_COUNT = 100;
+    var CANDLE_CHART_BUFFER_COUNT = CANDLE_CHART_COUNT * 3;
+    var candleChartPoints = null;
+    var candleChartLayout = null;
+    var candleChartHoverIndex = -1;
+    var candleChartWheelTimer = null;
+    var candleChartFetchTimer = null;
 
-        var startMillis = parseDateTimeLocalAsUtcMillis(value);
-        if (isNaN(startMillis) || !amount || !units) {
-            return false;
-        }
+    // A wider window of candles than is displayed (>= 3x: one page before, the displayed page, one
+    // page after) at the CURRENT resolution, fetched from a "from" a page earlier than whatever was
+    // last requested. Panning/zooming within this range renders instantly by slicing it client-side,
+    // with no network round trip; candleChartMaybePrefetch keeps it topped up in the background as the
+    // displayed window nears either edge, so continuous scrolling/dragging doesn't hit a network wait.
+    var candleChartBuffer = null;
+    var candleChartPrefetching = false;
 
-        var shiftMillis = directionSign * units * amount * MILLIS_PER_UNIT[unit];
-        $("#Chart_From").val(formatUtcMillisAsDateTimeLocal(startMillis + shiftMillis));
-        return true;
-    }
+    // While one or more wheel-zoom ticks are pending a (debounced) reload, candleChartLayout still
+    // reflects the OLD resolution's candles - a rapid scroll gesture (very common on trackpads, which
+    // fire many wheel events per gesture) can easily produce a second tick before the first has
+    // rendered. Chaining zoom steps off this pending anchor/resolution, rather than re-deriving from
+    // the still-stale candleChartLayout each time, keeps rapid ticks consistent with each other; it's
+    // cleared once a render actually catches up, so the next fresh gesture re-derives from real data.
+    var candleChartZoomPendingAnchorMillis = NaN;
+    var candleChartResolutionMinutes = 60;
 
-    function shiftFrom(directionSign, units) {
-        if (!shiftFromValue(directionSign, units)) {
-            showChartMessage("From must be in YYYY-MM-DD HH:mm format.");
-            return;
-        }
-        loadChart();
-    }
+    var candleChartDragging = false;
+    var candleChartDragMoved = false;
+    var candleChartDragStartX = 0;
+    var candleChartDragStartFromMillis = NaN;
 
-    function showChartMessage(message) {
-        $("#Chart_Message").text(message).show();
-    }
-
-    function showChartError(xhr) {
-        var message = xhr.responseText && xhr.responseText.length < 300 ? xhr.responseText : "Failed to load chart data.";
-        showChartMessage(message);
-    }
-
-    function currentInstrumentSelection() {
-        var value = $("#Chart_Instrument_Select").val();
+    function candleChartSelection() {
+        var value = $("#CandleChart_Instrument_Select").val();
         if (!value) {
             return null;
         }
@@ -534,135 +519,777 @@ $(document).ready(function () {
         return { provider: parts[0], instrument: parts[1] };
     }
 
-    // Clears the chart container and drops the chart instance so the next drawChart() call starts
-    // fresh. Only call this when NOT about to call chart.draw() - emptying the container out from
-    // under an existing chart instance and then calling draw() on it again silently fails, since
-    // Google Charts expects to manage/reuse its own previously rendered DOM.
-    function clearChart() {
-        $("#Chart_Div").empty();
-        chart = null;
+    function candleChartSetControlsEnabled(enabled) {
+        $("#CandleChart_Load_Button, #CandleChart_Back_Button, #CandleChart_Forward_Button, " +
+            "#CandleChart_Year, #CandleChart_Month, #CandleChart_Day, #CandleChart_Time"
+        ).prop("disabled", !enabled);
     }
 
-    function drawChart(candles) {
-        if (!candles.length) {
-            clearChart();
-            showChartMessage("No candle data available for the selected range/resolution.");
+    function candleChartShowMessage(message) {
+        $("#CandleChart_Message").text(message).show();
+    }
+
+    function candleChartShowError(xhr) {
+        var message = xhr.responseText && xhr.responseText.length < 300 ? xhr.responseText : "Failed to load chart data.";
+        candleChartShowMessage(message);
+    }
+
+    function candleChartClear() {
+        candleChartPoints = null;
+        candleChartLayout = null;
+        candleChartHoverIndex = -1;
+        candleChartBuffer = null;
+        var canvas = document.getElementById("CandleChart_Canvas");
+        var ctx = canvas.getContext("2d");
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    // Fetches CANDLE_CHART_BUFFER_COUNT candles starting one display-page before fromMillis, and
+    // replaces candleChartBuffer with the result.
+    function candleChartRequestBuffer(fromMillis, resolutionMinutes) {
+        var selection = candleChartSelection();
+        if (!selection) {
+            return $.Deferred().reject().promise();
+        }
+        var bufferFromMillis = fromMillis - CANDLE_CHART_COUNT * resolutionMinutes * 60 * 1000;
+        return $.getJSON("/candlechart/" + selection.provider + "/" + selection.instrument + "/candles", {
+            from: toIsoDateTime(formatUtcMillisAsDateTimeLocal(bufferFromMillis)),
+            resolutionMinutes: resolutionMinutes,
+            count: CANDLE_CHART_BUFFER_COUNT
+        }).done(function (points) {
+            candleChartBuffer = { points: points, resolutionMinutes: resolutionMinutes };
+        });
+    }
+
+    // Slices CANDLE_CHART_COUNT candles (plus any interleaved gap markers) out of the buffer starting
+    // at/after fromMillis, or null if the buffer doesn't cover this (wrong resolution, fromMillis
+    // before/after its range, or not enough candles left before running out). With allowPartial, a
+    // short run at the end of the buffer's data is returned as-is instead of being rejected - used
+    // once a fresh fetch has confirmed that's genuinely the end of the data, not just the buffer.
+    function candleChartSliceBuffer(fromMillis, count, allowPartial) {
+        if (!candleChartBuffer || candleChartBuffer.resolutionMinutes !== candleChartResolutionMinutes) {
+            return null;
+        }
+        var points = candleChartBuffer.points;
+        var startIndex = -1;
+        for (var i = 0; i < points.length; i++) {
+            if (points[i].type === "CANDLE" && new Date(points[i].time + "Z").getTime() >= fromMillis) {
+                startIndex = i;
+                break;
+            }
+        }
+        if (startIndex === -1) {
+            return null;
+        }
+
+        var sliced = [];
+        var candleCount = 0;
+        for (var j = startIndex; j < points.length && candleCount < count; j++) {
+            sliced.push(points[j]);
+            if (points[j].type === "CANDLE") {
+                candleCount++;
+            }
+        }
+        if (candleCount === count || (allowPartial && candleCount > 0)) {
+            return sliced;
+        }
+        return null;
+    }
+
+    // How many buffered candles fall before/at-or-after fromMillis - used to decide whether the
+    // buffer is running low on either side of the displayed window.
+    function candleChartBufferMargins(fromMillis) {
+        var before = 0;
+        var after = 0;
+        if (candleChartBuffer && candleChartBuffer.resolutionMinutes === candleChartResolutionMinutes) {
+            $.each(candleChartBuffer.points, function (i, point) {
+                if (point.type !== "CANDLE") {
+                    return;
+                }
+                if (new Date(point.time + "Z").getTime() < fromMillis) {
+                    before++;
+                } else {
+                    after++;
+                }
+            });
+        }
+        return { before: before, after: after };
+    }
+
+    // Tops the buffer back up (re-centred on fromMillis) in the background once it's running low on
+    // either side of the displayed window, so continued scrolling/dragging keeps rendering instantly
+    // instead of eventually outrunning the buffer and hitting a network wait.
+    function candleChartMaybePrefetch(fromMillis) {
+        if (candleChartPrefetching) {
+            return;
+        }
+        var margins = candleChartBufferMargins(fromMillis);
+        var lowBefore = margins.before < CANDLE_CHART_COUNT / 2;
+        var lowAfter = margins.after < CANDLE_CHART_COUNT * 1.5;
+        if (!lowBefore && !lowAfter) {
             return;
         }
 
-        var rows = [["Date", "low", "open", "close", "high"]];
-        $.each(candles, function (index, candle) {
-            rows.push([new Date(candle.time + "Z"), candle.low, candle.open, candle.close, candle.high]);
+        candleChartPrefetching = true;
+        candleChartRequestBuffer(fromMillis, candleChartResolutionMinutes).always(function () {
+            candleChartPrefetching = false;
         });
+    }
 
-        var data = google.visualization.arrayToDataTable(rows);
-        var options = {
-            legend: "none",
-            candlestick: {
-                fallingColor: { strokeWidth: 0, fill: "#a52714" },
-                risingColor: { strokeWidth: 0, fill: "#0f9d58" }
+    // Renders the window starting at fromMillis: instantly from the buffer when it's covered, else
+    // fetches a fresh buffer centred here. That fetch is debounced only when a buffer already exists
+    // (a fast gesture has outrun it, so more ticks are likely about to follow) - a genuinely fresh
+    // load (no buffer yet, e.g. just selected an instrument) fetches immediately.
+    function candleChartShowFrom(fromMillis) {
+        var slice = candleChartSliceBuffer(fromMillis, CANDLE_CHART_COUNT, false);
+        if (slice) {
+            $("#CandleChart_Message").hide();
+            candleChartPoints = slice;
+            candleChartZoomPendingAnchorMillis = NaN;
+            renderCandleChart();
+            candleChartMaybePrefetch(fromMillis);
+            return;
+        }
+
+        var fetchNow = function () {
+            var selection = candleChartSelection();
+            if (!selection) {
+                return;
             }
+            $("#CandleChart_Message").hide();
+            candleChartRequestBuffer(fromMillis, candleChartResolutionMinutes)
+                .done(function () {
+                    candleChartPoints = candleChartSliceBuffer(fromMillis, CANDLE_CHART_COUNT, true) || [];
+                    candleChartZoomPendingAnchorMillis = NaN;
+                    renderCandleChart();
+                })
+                .fail(function (xhr) {
+                    candleChartClear();
+                    candleChartShowError(xhr);
+                });
         };
 
-        if (!chart) {
-            chart = new google.visualization.CandlestickChart(document.getElementById("Chart_Div"));
+        clearTimeout(candleChartFetchTimer);
+        if (candleChartBuffer) {
+            candleChartFetchTimer = setTimeout(fetchNow, 100);
+        } else {
+            fetchNow();
         }
-        chart.draw(data, options);
     }
 
-    function loadChart() {
-        if (!chartsReady) {
+    // Last day of "month" (1-12) in "year" - relies on the JS Date engine's own leap-year handling
+    // rather than hand-rolled rules (day 0 of the following month = the last day of this one).
+    function candleChartDaysInMonth(year, month) {
+        return new Date(Date.UTC(year, month, 0)).getUTCDate();
+    }
+
+    // Rebuilds the Day dropdown for the currently selected Year/Month, keeping the current day
+    // selected if it's still valid for the new month, otherwise moving it down to the new last day
+    // (e.g. 31 Jan -> 28/29 Feb, leap-year aware via candleChartDaysInMonth).
+    function candleChartRebuildDayOptions(preferredDay) {
+        var year = parseInt($("#CandleChart_Year").val(), 10);
+        var month = parseInt($("#CandleChart_Month").val(), 10);
+        if (!year || !month) {
             return;
         }
-        var selection = currentInstrumentSelection();
-        if (!selection) {
-            return;
+
+        var currentDay = preferredDay || parseInt($("#CandleChart_Day").val(), 10) || 1;
+        var maxDay = candleChartDaysInMonth(year, month);
+        var newDay = Math.min(currentDay, maxDay);
+
+        var select = $("#CandleChart_Day");
+        select.empty();
+        for (var day = 1; day <= maxDay; day++) {
+            select.append($("<option></option>").val(day).text(day));
+        }
+        select.val(newDay);
+    }
+
+    // Reads the Year/Month/Day/Time controls as UTC millis, or NaN if any control is empty/unset.
+    function candleChartGetFromMillis() {
+        var year = parseInt($("#CandleChart_Year").val(), 10);
+        var month = parseInt($("#CandleChart_Month").val(), 10);
+        var day = parseInt($("#CandleChart_Day").val(), 10);
+        var time = $("#CandleChart_Time").val();
+
+        if (!year || !month || !day || !time) {
+            return NaN;
+        }
+        var timeParts = time.split(":");
+        return Date.UTC(year, month - 1, day, +timeParts[0], +timeParts[1]);
+    }
+
+    // Sets the Year/Month/Day/Time controls from UTC millis - adding the year as an option first if
+    // navigation (pan/zoom) has moved outside the instrument's normal "available years" range.
+    function candleChartSetFromMillis(millis) {
+        var date = new Date(millis);
+        var year = date.getUTCFullYear();
+        var month = date.getUTCMonth() + 1;
+        var day = date.getUTCDate();
+
+        if (!$("#CandleChart_Year option[value='" + year + "']").length) {
+            $("#CandleChart_Year").append($("<option></option>").val(year).text(year));
+        }
+        $("#CandleChart_Year").val(year);
+        $("#CandleChart_Month").val(month);
+        candleChartRebuildDayOptions(day);
+
+        function pad(number) {
+            return (number < 10 ? "0" : "") + number;
+        }
+        $("#CandleChart_Time").val(pad(date.getUTCHours()) + ":" + pad(date.getUTCMinutes()));
+    }
+
+    function candleChartShiftFromValue(directionSign, units) {
+        var startMillis = candleChartGetFromMillis();
+        if (isNaN(startMillis) || !units) {
+            return false;
         }
 
-        var fromValue = $("#Chart_From").val();
-        if (!DATE_TIME_LOCAL_PATTERN.test(fromValue)) {
-            $("#Chart_Div").empty();
-            showChartMessage("From must be in YYYY-MM-DD HH:mm format.");
+        var shiftMillis = directionSign * units * candleChartResolutionMinutes * 60 * 1000;
+        candleChartSetFromMillis(startMillis + shiftMillis);
+        return true;
+    }
+
+    function candleChartShiftFrom(directionSign, units) {
+        if (!candleChartShiftFromValue(directionSign, units)) {
+            candleChartShowMessage("Select an instrument first.");
             return;
         }
+        loadCandleChart();
+    }
 
-        var from = toIsoDateTime(fromValue);
-        var amount = $("#Chart_Resolution_Amount").val();
-        var unit = $("#Chart_Resolution_Unit").val();
-        var count = $("#Chart_Candle_Count").val();
+    function formatCandleAxisLabel(isoDateTime) {
+        // "2018-02-01T00:00:00[.nnn]" -> "02-01 00:00"
+        return isoDateTime.substring(5, 10) + " " + isoDateTime.substring(11, 16);
+    }
 
-        $("#Chart_Message").hide();
+    var CANDLE_CHART_MONTH_NAMES = [
+        "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    ];
 
-        $.getJSON("/chart/" + selection.provider + "/" + selection.instrument + "/candles", {
-            from: from,
-            amount: amount,
-            unit: unit,
-            count: count
-        })
-            .done(function (candles) {
-                drawChart(candles);
-            })
-            .fail(function (xhr) {
-                clearChart();
-                showChartError(xhr);
+    // 12-hour clock, no leading zero, minutes only shown when non-zero (e.g. "4am", "4:05am") - every
+    // candle's time is already a multiple of the resolution, so these are always resolution-aligned.
+    function formatCandleTimeLabel(date) {
+        var hours = date.getUTCHours();
+        var minutes = date.getUTCMinutes();
+        var period = hours < 12 ? "am" : "pm";
+        var hour12 = hours % 12;
+        if (hour12 === 0) {
+            hour12 = 12;
+        }
+        return minutes === 0 ? hour12 + period : hour12 + ":" + (minutes < 10 ? "0" : "") + minutes + period;
+    }
+
+    function candleChartDrawTick(ctx, x, top, bottom) {
+        ctx.beginPath();
+        ctx.moveTo(x, top);
+        ctx.lineTo(x, bottom);
+        ctx.stroke();
+    }
+
+    // Must match the <option> values in the "CandleChart_Resolution" select, ascending.
+    var CANDLE_CHART_RESOLUTIONS = [1, 5, 10, 15, 20, 30, 60, 120, 240, 360, 720, 1440, 10080];
+
+    // The next/previous resolution in CANDLE_CHART_RESOLUTIONS from "minutes" (clamped at the ends),
+    // for wheel-zoom to step through.
+    function candleChartAdjacentResolution(minutes, zoomingOut) {
+        var index = CANDLE_CHART_RESOLUTIONS.indexOf(minutes);
+        if (index === -1) {
+            index = 0;
+            var smallestDiff = Infinity;
+            $.each(CANDLE_CHART_RESOLUTIONS, function (i, candidate) {
+                var diff = Math.abs(candidate - minutes);
+                if (diff < smallestDiff) {
+                    smallestDiff = diff;
+                    index = i;
+                }
             });
+        }
+        var newIndex = Math.max(0, Math.min(CANDLE_CHART_RESOLUTIONS.length - 1, index + (zoomingOut ? 1 : -1)));
+        return CANDLE_CHART_RESOLUTIONS[newIndex];
     }
 
-    $("#Chart_Instrument_Select").change(function () {
-        var selection = currentInstrumentSelection();
-        $("#Chart_Message").hide();
-        clearChart();
+    function candleChartSyncResolutionSelect() {
+        $("#CandleChart_Resolution").val(candleChartResolutionMinutes);
+    }
 
-        if (!selection) {
-            setChartControlsEnabled(false);
+    // Redraws entirely from candleChartPoints/candleChartHoverIndex - called on load, resize, tab
+    // shown and hover, so those are the only state this needs to read.
+    function renderCandleChart() {
+        if (!candleChartPoints) {
             return;
         }
 
-        $.getJSON("/chart/" + selection.provider + "/" + selection.instrument + "/default-from")
-            .done(function (range) {
-                $("#Chart_From").val(toDateTimeLocalValue(range.from));
-                setChartControlsEnabled(true);
-                loadChart();
+        var candles = [];
+        var gapBeforeIndices = [];
+        $.each(candleChartPoints, function (index, point) {
+            if (point.type === "CANDLE") {
+                candles.push(point);
+            } else {
+                gapBeforeIndices.push(candles.length);
+            }
+        });
+
+        var canvas = document.getElementById("CandleChart_Canvas");
+        var ratio = window.devicePixelRatio || 1;
+        var cssWidth = canvas.clientWidth || 600;
+        var cssHeight = canvas.clientHeight || 500;
+        canvas.width = Math.round(cssWidth * ratio);
+        canvas.height = Math.round(cssHeight * ratio);
+
+        var ctx = canvas.getContext("2d");
+        ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+        ctx.clearRect(0, 0, cssWidth, cssHeight);
+
+        if (!candles.length) {
+            candleChartLayout = null;
+            candleChartShowMessage("No candle data available for the selected range/resolution.");
+            return;
+        }
+
+        // X axis is up to 4 stacked rows: time (nearest the plot, skipped for day/week resolutions
+        // where it wouldn't add anything), day-of-month, month, then year (furthest from the plot).
+        var showTimeRow = candleChartResolutionMinutes < 1440;
+        var axisRowHeight = 14;
+        var axisRows = showTimeRow ? 4 : 3;
+
+        var marginLeft = 64;
+        var marginRight = 12;
+        var marginTop = 10;
+        var marginBottom = 8 + axisRowHeight * axisRows;
+        var plotWidth = cssWidth - marginLeft - marginRight;
+        var plotHeight = cssHeight - marginTop - marginBottom;
+
+        var low = Infinity;
+        var high = -Infinity;
+        $.each(candles, function (index, candle) {
+            low = Math.min(low, candle.low);
+            high = Math.max(high, candle.high);
+        });
+        if (low === high) {
+            low -= 1;
+            high += 1;
+        }
+        var pricePad = (high - low) * 0.05;
+        low -= pricePad;
+        high += pricePad;
+
+        function priceToY(price) {
+            return marginTop + plotHeight * (1 - (price - low) / (high - low));
+        }
+
+        var slotWidth = plotWidth / candles.length;
+        function slotLeft(index) {
+            return marginLeft + slotWidth * index;
+        }
+
+        // Price gridlines/labels
+        ctx.strokeStyle = "#eee";
+        ctx.fillStyle = "#666";
+        ctx.font = "11px sans-serif";
+        ctx.textAlign = "right";
+        ctx.textBaseline = "middle";
+        var gridLines = 5;
+        for (var g = 0; g <= gridLines; g++) {
+            var price = low + ((high - low) * g) / gridLines;
+            var y = priceToY(price);
+            ctx.beginPath();
+            ctx.moveTo(marginLeft, y);
+            ctx.lineTo(marginLeft + plotWidth, y);
+            ctx.stroke();
+            ctx.fillText(price.toFixed(5), marginLeft - 6, y);
+        }
+
+        // Gap markers - an hour or more of missed ticks, whether within a day or spanning many
+        // (e.g. a weekend)
+        ctx.strokeStyle = "#ccc";
+        ctx.lineWidth = 1.5;
+        $.each(gapBeforeIndices, function (i, index) {
+            var x = slotLeft(index);
+            ctx.beginPath();
+            ctx.moveTo(x, marginTop);
+            ctx.lineTo(x, marginTop + plotHeight);
+            ctx.stroke();
+        });
+        ctx.lineWidth = 1;
+
+        // Candles
+        var bodyWidth = Math.max(1, slotWidth * 0.6);
+        $.each(candles, function (index, candle) {
+            var xCenter = slotLeft(index) + slotWidth / 2;
+            var color = candle.close >= candle.open ? "#0f9d58" : "#a52714";
+            ctx.strokeStyle = color;
+            ctx.fillStyle = color;
+
+            ctx.beginPath();
+            ctx.moveTo(xCenter, priceToY(candle.high));
+            ctx.lineTo(xCenter, priceToY(candle.low));
+            ctx.stroke();
+
+            var openY = priceToY(candle.open);
+            var closeY = priceToY(candle.close);
+            var bodyTop = Math.min(openY, closeY);
+            var bodyHeight = Math.max(1, Math.abs(closeY - openY));
+            ctx.fillRect(xCenter - bodyWidth / 2, bodyTop, bodyWidth, bodyHeight);
+        });
+
+        // X axis: up to 3 stacked rows (time, day, month). Each row gets a vertical tick at its own
+        // boundaries - month row at month changes, day row at day changes, and the time row ALSO at
+        // day changes (not hour changes, which would be one per candle). A label is skipped (its tick
+        // is still drawn) if it would overlap the previously drawn label in that row - without this,
+        // day labels can collide right around a gap (e.g. a weekend), where the last candle before it
+        // and the first candle after end up in adjacent, narrow slots despite being days apart.
+        ctx.textAlign = "left";
+        ctx.textBaseline = "top";
+        var axisRowIndex = 0;
+        var axisTop = marginTop + plotHeight + 6;
+        var axisLabelClearance = 3;
+
+        var dayBoundaries = [];
+        var monthBoundaries = [];
+        var yearBoundaries = [];
+        var lastDayKey = null;
+        var lastMonthKey = null;
+        var lastYearKey = null;
+        $.each(candles, function (index, candle) {
+            var date = new Date(candle.time + "Z");
+            var dayKey = date.getUTCFullYear() + "-" + date.getUTCMonth() + "-" + date.getUTCDate();
+            var monthKey = date.getUTCFullYear() + "-" + date.getUTCMonth();
+            var yearKey = date.getUTCFullYear();
+            if (dayKey !== lastDayKey) {
+                dayBoundaries.push({ x: slotLeft(index), date: date });
+                lastDayKey = dayKey;
+            }
+            if (monthKey !== lastMonthKey) {
+                monthBoundaries.push({ x: slotLeft(index), date: date });
+                lastMonthKey = monthKey;
+            }
+            if (yearKey !== lastYearKey) {
+                yearBoundaries.push({ x: slotLeft(index), date: date });
+                lastYearKey = yearKey;
+            }
+        });
+
+        // Draws "text" left-aligned a few pixels clear of "tickX" (its boundary's vertical line), so
+        // the tick and the label never touch. Skips the label (keeping lastRight as-is) if it would
+        // start before lastRight + clearance, so consecutive labels in a row stay clear of each other
+        // too - the tick is always drawn regardless of whether the label was skipped.
+        function drawAxisLabel(text, tickX, y, lastRight) {
+            var labelX = tickX + axisLabelClearance;
+            if (labelX < lastRight + axisLabelClearance) {
+                return lastRight;
+            }
+            ctx.fillStyle = "#666";
+            ctx.fillText(text, labelX, y);
+            return labelX + ctx.measureText(text).width;
+        }
+
+        if (showTimeRow) {
+            var timeRowTop = axisTop + axisRowIndex * axisRowHeight;
+            var timeRowBottom = timeRowTop + axisRowHeight;
+
+            ctx.strokeStyle = "#ddd";
+            ctx.lineWidth = 1;
+            $.each(dayBoundaries, function (i, boundary) {
+                candleChartDrawTick(ctx, boundary.x, timeRowTop, timeRowBottom);
+            });
+
+            var maxLabels = Math.max(2, Math.floor(plotWidth / 60));
+            var labelStep = Math.max(1, Math.ceil(candles.length / maxLabels));
+            var lastTimeLabelRight = -Infinity;
+            for (var t = 0; t < candles.length; t += labelStep) {
+                var timeDate = new Date(candles[t].time + "Z");
+                lastTimeLabelRight = drawAxisLabel(
+                    formatCandleTimeLabel(timeDate), slotLeft(t), timeRowTop, lastTimeLabelRight);
+            }
+            axisRowIndex++;
+        }
+
+        var dayRowTop = axisTop + axisRowIndex * axisRowHeight;
+        var dayRowBottom = dayRowTop + axisRowHeight;
+        ctx.strokeStyle = "#ccc";
+        ctx.lineWidth = 1;
+        var lastDayLabelRight = -Infinity;
+        $.each(dayBoundaries, function (i, boundary) {
+            candleChartDrawTick(ctx, boundary.x, dayRowTop, dayRowBottom);
+            lastDayLabelRight = drawAxisLabel(
+                String(boundary.date.getUTCDate()), boundary.x, dayRowTop, lastDayLabelRight);
+        });
+        axisRowIndex++;
+
+        var monthRowTop = axisTop + axisRowIndex * axisRowHeight;
+        var monthRowBottom = monthRowTop + axisRowHeight;
+        ctx.strokeStyle = "#ccc";
+        ctx.lineWidth = 1;
+        var lastMonthLabelRight = -Infinity;
+        $.each(monthBoundaries, function (i, boundary) {
+            candleChartDrawTick(ctx, boundary.x, monthRowTop, monthRowBottom);
+            lastMonthLabelRight = drawAxisLabel(
+                CANDLE_CHART_MONTH_NAMES[boundary.date.getUTCMonth()], boundary.x, monthRowTop, lastMonthLabelRight);
+        });
+        axisRowIndex++;
+
+        var yearRowTop = axisTop + axisRowIndex * axisRowHeight;
+        var yearRowBottom = yearRowTop + axisRowHeight;
+        ctx.strokeStyle = "#ccc";
+        ctx.lineWidth = 1;
+        var lastYearLabelRight = -Infinity;
+        $.each(yearBoundaries, function (i, boundary) {
+            candleChartDrawTick(ctx, boundary.x, yearRowTop, yearRowBottom);
+            lastYearLabelRight = drawAxisLabel(
+                String(boundary.date.getUTCFullYear()), boundary.x, yearRowTop, lastYearLabelRight);
+        });
+
+        candleChartLayout = { candles: candles, marginLeft: marginLeft, slotWidth: slotWidth, marginTop: marginTop, plotHeight: plotHeight };
+
+        // Hover crosshair + OHLC tooltip
+        if (candleChartHoverIndex >= 0 && candleChartHoverIndex < candles.length) {
+            var hovered = candles[candleChartHoverIndex];
+            var hoverX = slotLeft(candleChartHoverIndex) + slotWidth / 2;
+
+            ctx.strokeStyle = "#888";
+            ctx.setLineDash([4, 3]);
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(hoverX, marginTop);
+            ctx.lineTo(hoverX, marginTop + plotHeight);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            var label =
+                formatCandleAxisLabel(hovered.time) +
+                "  O:" + hovered.open.toFixed(5) +
+                " H:" + hovered.high.toFixed(5) +
+                " L:" + hovered.low.toFixed(5) +
+                " C:" + hovered.close.toFixed(5);
+
+            ctx.font = "12px sans-serif";
+            var textWidth = ctx.measureText(label).width;
+            var boxX = Math.min(Math.max(hoverX - textWidth / 2 - 6, marginLeft), marginLeft + plotWidth - textWidth - 6);
+
+            ctx.fillStyle = "rgba(255,255,255,0.9)";
+            ctx.fillRect(boxX, marginTop, textWidth + 12, 18);
+            ctx.strokeStyle = "#ccc";
+            ctx.strokeRect(boxX, marginTop, textWidth + 12, 18);
+
+            ctx.fillStyle = "#333";
+            ctx.textAlign = "left";
+            ctx.textBaseline = "middle";
+            ctx.fillText(label, boxX + 6, marginTop + 9);
+        }
+    }
+
+    function loadCandleChart() {
+        var selection = candleChartSelection();
+        if (!selection) {
+            return;
+        }
+
+        var fromMillis = candleChartGetFromMillis();
+        if (isNaN(fromMillis)) {
+            candleChartClear();
+            candleChartShowMessage("Select a year, month, day and time.");
+            return;
+        }
+
+        candleChartShowFrom(fromMillis);
+    }
+
+    $("#CandleChart_Instrument_Select").change(function () {
+        var selection = candleChartSelection();
+        $("#CandleChart_Message").hide();
+        candleChartClear();
+
+        if (!selection) {
+            candleChartSetControlsEnabled(false);
+            return;
+        }
+
+        var yearsRequest = $.getJSON("/chart/" + selection.provider + "/" + selection.instrument + "/years");
+        var defaultFromRequest = $.getJSON("/chart/" + selection.provider + "/" + selection.instrument + "/default-from");
+
+        $.when(yearsRequest, defaultFromRequest)
+            .done(function (yearsResponse, defaultFromResponse) {
+                var years = yearsResponse[0];
+                var range = defaultFromResponse[0];
+
+                var yearSelect = $("#CandleChart_Year");
+                yearSelect.empty();
+                $.each(years, function (index, year) {
+                    yearSelect.append($("<option></option>").val(year).text(year));
+                });
+
+                candleChartSetFromMillis(new Date(range.from + "Z").getTime());
+                candleChartSetControlsEnabled(true);
+                loadCandleChart();
             })
             .fail(function (xhr) {
-                setChartControlsEnabled(false);
-                showChartError(xhr);
+                candleChartSetControlsEnabled(false);
+                candleChartShowError(xhr);
             });
     });
 
-    $("#Chart_Form").submit(function (event) {
+    $("#CandleChart_Form").submit(function (event) {
         event.preventDefault();
-        loadChart();
+        loadCandleChart();
     });
 
-    $("#Chart_Back_Button").click(function () {
-        shiftFrom(-1, parseFloat($("#Chart_Candle_Count").val()) / 2);
+    $("#CandleChart_Year, #CandleChart_Month").change(function () {
+        candleChartRebuildDayOptions();
+        loadCandleChart();
     });
 
-    $("#Chart_Forward_Button").click(function () {
-        shiftFrom(1, parseFloat($("#Chart_Candle_Count").val()) / 2);
+    $("#CandleChart_Day, #CandleChart_Time").change(function () {
+        loadCandleChart();
     });
 
-    // Scrolling over the chart pages it through time by one resolution unit at a time, rather than
-    // scrolling the page - reloading on every wheel tick would flood the server during a fast scroll
-    // gesture, so the actual reload is debounced until scrolling pauses.
-    $("#Chart_Div").on("wheel", function (event) {
-        if (!currentInstrumentSelection()) {
+    $("#CandleChart_Resolution").on("change", function () {
+        candleChartResolutionMinutes = parseInt($(this).val(), 10);
+        if (candleChartSelection()) {
+            loadCandleChart();
+        }
+    });
+
+    $("#CandleChart_Back_Button").click(function () {
+        candleChartShiftFrom(-1, CANDLE_CHART_COUNT / 2);
+    });
+
+    $("#CandleChart_Forward_Button").click(function () {
+        candleChartShiftFrom(1, CANDLE_CHART_COUNT / 2);
+    });
+
+    // Scrolling over the canvas zooms the resolution in/out (wheel up = in, wheel down = out),
+    // stepping through CANDLE_CHART_RESOLUTIONS, while keeping the candle under the mouse (tracked by
+    // the hover handler below) in the same slot:
+    //  - Zooming IN subdivides that candle into several new, finer candles - the MIDDLE one of those
+    //    (the new candle containing the old candle's midpoint) is the one that lands under the mouse.
+    //  - Zooming OUT merges several old candles into one new, coarser candle - the mouse stays on
+    //    whichever new candle CONTAINS the one it was over (the new candle starting at/before the old
+    //    one's open time).
+    // The reload is debounced rather than fired per wheel tick since a scroll gesture fires many.
+    $("#CandleChart_Canvas").on("wheel", function (event) {
+        if (!candleChartSelection() || !candleChartLayout) {
             return;
         }
         var deltaY = event.originalEvent.deltaY;
         if (!deltaY) {
             return;
         }
-
-        var directionSign = deltaY < 0 ? 1 : -1;
-        if (!shiftFromValue(directionSign, 1)) {
-            return;
-        }
         event.preventDefault();
 
-        clearTimeout(wheelLoadTimer);
-        wheelLoadTimer = setTimeout(loadChart, 200);
+        var zoomingOut = deltaY > 0;
+        var newResolutionMinutes = candleChartAdjacentResolution(candleChartResolutionMinutes, zoomingOut);
+        if (newResolutionMinutes === candleChartResolutionMinutes) {
+            return;
+        }
+
+        var pivotIndex = candleChartHoverIndex >= 0 ? candleChartHoverIndex : 0;
+        var oldCandleStart = !isNaN(candleChartZoomPendingAnchorMillis)
+            ? candleChartZoomPendingAnchorMillis
+            : new Date(candleChartLayout.candles[pivotIndex].time + "Z").getTime();
+        var oldResolutionMillis = candleChartResolutionMinutes * 60 * 1000;
+        var newResolutionMillis = newResolutionMinutes * 60 * 1000;
+
+        var anchorMillis = zoomingOut
+            ? Math.floor(oldCandleStart / newResolutionMillis) * newResolutionMillis
+            : Math.floor((oldCandleStart + oldResolutionMillis / 2) / newResolutionMillis) * newResolutionMillis;
+
+        candleChartZoomPendingAnchorMillis = anchorMillis;
+        candleChartResolutionMinutes = newResolutionMinutes;
+        candleChartSyncResolutionSelect();
+        candleChartSetFromMillis(anchorMillis - pivotIndex * newResolutionMillis);
+
+        clearTimeout(candleChartWheelTimer);
+        candleChartWheelTimer = setTimeout(loadCandleChart, 150);
+    });
+
+    // Click-and-drag pans the chart: dragging left moves forward in time, dragging right moves
+    // backward - mousemove/mouseup are bound to the document (not the canvas) so a fast drag that
+    // briefly leaves the canvas is still tracked.
+    $("#CandleChart_Canvas").on("mousedown", function (event) {
+        if (!candleChartSelection() || !candleChartLayout) {
+            return;
+        }
+        var startMillis = candleChartGetFromMillis();
+        if (isNaN(startMillis)) {
+            return;
+        }
+
+        candleChartDragging = true;
+        candleChartDragMoved = false;
+        candleChartDragStartX = event.clientX;
+        candleChartDragStartFromMillis = startMillis;
+        $(this).css("cursor", "grabbing");
+        event.preventDefault();
+    });
+
+    $(document).on("mousemove", function (event) {
+        if (!candleChartDragging || !candleChartLayout) {
+            return;
+        }
+        var deltaX = event.clientX - candleChartDragStartX;
+        if (!deltaX) {
+            return;
+        }
+        candleChartDragMoved = true;
+        event.preventDefault();
+
+        var millisPerPixel = (candleChartResolutionMinutes * 60 * 1000) / candleChartLayout.slotWidth;
+        var newFromMillis = candleChartDragStartFromMillis - deltaX * millisPerPixel;
+        candleChartSetFromMillis(newFromMillis);
+
+        // Renders instantly from the buffer while dragging stays within it (the common case, since
+        // it's kept topped up in the background) - only falls back to a debounced network fetch if
+        // the drag outruns it.
+        candleChartShowFrom(newFromMillis);
+    });
+
+    $(document).on("mouseup", function () {
+        if (!candleChartDragging) {
+            return;
+        }
+        candleChartDragging = false;
+        $("#CandleChart_Canvas").css("cursor", "ew-resize");
+        if (candleChartDragMoved) {
+            var finalFromMillis = candleChartGetFromMillis();
+            if (!isNaN(finalFromMillis)) {
+                clearTimeout(candleChartFetchTimer);
+                candleChartShowFrom(finalFromMillis);
+            }
+        }
+    });
+
+    $("#CandleChart_Canvas").on("mousemove", function (event) {
+        if (!candleChartLayout) {
+            return;
+        }
+        var rect = this.getBoundingClientRect();
+        var mouseX = event.clientX - rect.left;
+        var index = Math.floor((mouseX - candleChartLayout.marginLeft) / candleChartLayout.slotWidth);
+        if (index < 0 || index >= candleChartLayout.candles.length) {
+            index = -1;
+        }
+        if (index !== candleChartHoverIndex) {
+            candleChartHoverIndex = index;
+            renderCandleChart();
+        }
+    });
+
+    $("#CandleChart_Canvas").on("mouseleave", function () {
+        if (candleChartHoverIndex !== -1) {
+            candleChartHoverIndex = -1;
+            renderCandleChart();
+        }
+    });
+
+    $(window).on("resize", function () {
+        renderCandleChart();
+    });
+
+    $('a[href="#CandleChart_Tab"]').on("shown.bs.tab", function () {
+        renderCandleChart();
     });
 
 });
