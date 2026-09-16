@@ -1,6 +1,5 @@
 package com.robindrew.taskmanager.config;
 
-import com.robindrew.taskmanager.cache.PcfCandleCache;
 import com.robindrew.taskmanager.controller.CandleChartController;
 import com.robindrew.taskmanager.controller.ChartController;
 import com.robindrew.taskmanager.controller.HomeController;
@@ -54,13 +53,7 @@ public class TradingManagerConfig {
     }
 
     @Bean
-    public PcfCandleCache pcfCandleCache(ReloadablePcfFileManager pcfFileManager) {
-        return new PcfCandleCache(pcfFileManager);
-    }
-
-    @Bean
-    public CandleChartController candleChartController(
-            ReloadablePcfFileManager pcfFileManager, PcfCandleCache pcfCandleCache) {
-        return new CandleChartController(pcfFileManager, pcfCandleCache);
+    public CandleChartController candleChartController(ReloadablePcfFileManager pcfFileManager) {
+        return new CandleChartController(pcfFileManager);
     }
 }

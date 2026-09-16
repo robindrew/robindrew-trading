@@ -1,13 +1,13 @@
 package com.robindrew.taskmanager.controller;
 
-import com.robindrew.common.date.Dates;
-import com.robindrew.taskmanager.cache.PcfCandleCache;
 import com.robindrew.trading.IInstrument;
 import com.robindrew.trading.price.candle.IPriceCandle;
 import com.robindrew.trading.price.candle.PriceCandles;
 import com.robindrew.trading.price.candle.format.pcf.source.IPcfSourceProviderManager;
+import com.robindrew.trading.price.candle.format.pcf.source.IPcfSourceSet;
 import com.robindrew.trading.price.candle.format.pcf.source.file.IPcfFileManager;
 import com.robindrew.trading.price.candle.interval.TimeUnitInterval;
+import com.robindrew.trading.price.candle.io.stream.source.IPriceCandleStreamSource;
 import com.robindrew.trading.provider.TradingProvider;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -27,11 +27,9 @@ public class CandleChartController {
     private static final long GAP_THRESHOLD_MILLIS = TimeUnit.HOURS.toMillis(1);
 
     private final IPcfFileManager pcfFileManager;
-    private final PcfCandleCache candleCache;
 
-    public CandleChartController(IPcfFileManager pcfFileManager, PcfCandleCache candleCache) {
+    public CandleChartController(IPcfFileManager pcfFileManager) {
         this.pcfFileManager = pcfFileManager;
-        this.candleCache = candleCache;
     }
 
     @GetMapping("/candlechart/{provider}/{instrument}/candles")
@@ -52,37 +50,40 @@ public class CandleChartController {
         TradingProvider tradingProvider = TradingProvider.valueOf(provider);
         IPcfSourceProviderManager providerManager = pcfFileManager.getProvider(tradingProvider);
         IInstrument resolved = providerManager.getInstrument(instrument);
+        IPcfSourceSet sourceSet = providerManager.getSourceSet(resolved);
 
-        // All of this instrument's PCF candles, cached in memory after the first request.
-        List<IPriceCandle> candles = candleCache.getCandles(tradingProvider, resolved);
+        // Exactly the span the chart will render - resolutionMinutes * count, the same window the
+        // client computed the request from - so only the PCF month file(s) that window actually
+        // touches are read, rather than every candle the instrument has ever had.
+        LocalDateTime to = from.plusMinutes((long) resolutionMinutes * count);
 
         TimeUnitInterval interval = new TimeUnitInterval(resolutionMinutes, TimeUnit.MINUTES);
-        return buildChartPoints(candles, from, interval, count);
+        try (IPriceCandleStreamSource source = sourceSet.asStreamSource(from, to)) {
+            return buildChartPoints(source, interval, count);
+        }
     }
 
-    // Aggregates raw 1-minute candles from "from" onward into "resolution" candles, skipping any gap
-    // of GAP_THRESHOLD_MILLIS or more between consecutive raw candles that ALSO crosses into a new
-    // resolution period (rather than rendering an empty stretch of chart for it) and recording a GAP
-    // point in its place. A gap that stays within the same period (e.g. a weekend inside one weekly,
-    // or even daily, candle) does not fragment or mark it - only merging matters there, exactly as if
-    // there were no gap - since the candle covers that whole period regardless of what's missing
-    // inside it. "count" bounds the number of CANDLE points only - GAP points are extra, so the chart
-    // always ends up with exactly "count" candles (data permitting) regardless of how many gaps fall
-    // within the range. Without that distinction, a GAP eating into the same budget as candles would
-    // make the returned candle count fluctuate between requests, which visibly rescales/shifts the
-    // whole chart client-side.
+    // Aggregates raw 1-minute candles from the (already from/to bounded) stream into "resolution"
+    // candles, skipping any gap of GAP_THRESHOLD_MILLIS or more between consecutive raw candles that
+    // ALSO crosses into a new resolution period (rather than rendering an empty stretch of chart for
+    // it) and recording a GAP point in its place. A gap that stays within the same period (e.g. a
+    // weekend inside one weekly, or even daily, candle) does not fragment or mark it - only merging
+    // matters there, exactly as if there were no gap - since the candle covers that whole period
+    // regardless of what's missing inside it. "count" bounds the number of CANDLE points only - GAP
+    // points are extra, so the chart always ends up with exactly "count" candles (data permitting)
+    // regardless of how many gaps fall within the range. Without that distinction, a GAP eating into
+    // the same budget as candles would make the returned candle count fluctuate between requests,
+    // which visibly rescales/shifts the whole chart client-side.
     private List<ChartPointView> buildChartPoints(
-            List<IPriceCandle> candles, LocalDateTime from, TimeUnitInterval interval, int count) {
-        int startIndex = findStartIndex(candles, Dates.toMillis(from));
-
+            IPriceCandleStreamSource source, TimeUnitInterval interval, int count) {
         List<ChartPointView> points = new ArrayList<>();
         int candleCount = 0;
         Long lastCandleCloseTime = null;
         Long currentPeriod = null;
         IPriceCandle currentAggregate = null;
 
-        for (int i = startIndex; i < candles.size() && candleCount < count; i++) {
-            IPriceCandle candle = candles.get(i);
+        IPriceCandle candle;
+        while (candleCount < count && (candle = source.getNextCandle()) != null) {
             long period = interval.getTimePeriod(candle);
 
             if (currentPeriod != null && period == currentPeriod) {
@@ -113,21 +114,6 @@ public class CandleChartController {
         }
 
         return points;
-    }
-
-    // Candles are sorted ascending by open time - binary search for the first one at/after "from".
-    private int findStartIndex(List<IPriceCandle> candles, long fromMillis) {
-        int low = 0;
-        int high = candles.size();
-        while (low < high) {
-            int mid = (low + high) >>> 1;
-            if (candles.get(mid).getOpenTime() < fromMillis) {
-                low = mid + 1;
-            } else {
-                high = mid;
-            }
-        }
-        return low;
     }
 
     public record ChartPointView(
