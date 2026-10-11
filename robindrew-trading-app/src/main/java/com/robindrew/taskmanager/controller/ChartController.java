@@ -5,6 +5,8 @@ import com.robindrew.trading.price.candle.format.pcf.source.IPcfSourceProviderMa
 import com.robindrew.trading.price.candle.format.pcf.source.IPcfSourceSet;
 import com.robindrew.trading.price.candle.format.pcf.source.file.IPcfFileManager;
 import com.robindrew.trading.provider.TradingProvider;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@Tag(name = "Chart", description = "Metadata for initialising price charts")
 public class ChartController {
 
     private final IPcfFileManager pcfFileManager;
@@ -24,7 +27,11 @@ public class ChartController {
     }
 
     @GetMapping("/chart/{provider}/{instrument}/default-from")
-    public FromView getDefaultFrom(@PathVariable String provider, @PathVariable String instrument) {
+    @Operation(
+            summary = "Get default chart start",
+            description = "Returns the start of the most recent month with PCF data for the instrument")
+    public FromView getDefaultFrom(
+            @PathVariable(name = "provider") String provider, @PathVariable(name = "instrument") String instrument) {
         IPcfSourceSet sourceSet = getSourceSet(provider, instrument);
 
         SortedSet<LocalDate> months = sourceSet.getMonths();
@@ -36,7 +43,11 @@ public class ChartController {
     }
 
     @GetMapping("/chart/{provider}/{instrument}/years")
-    public List<Integer> getAvailableYears(@PathVariable String provider, @PathVariable String instrument) {
+    @Operation(
+            summary = "Get available years",
+            description = "Returns the years for which PCF data is available for the instrument")
+    public List<Integer> getAvailableYears(
+            @PathVariable(name = "provider") String provider, @PathVariable(name = "instrument") String instrument) {
         IPcfSourceSet sourceSet = getSourceSet(provider, instrument);
 
         SortedSet<LocalDate> months = sourceSet.getMonths();

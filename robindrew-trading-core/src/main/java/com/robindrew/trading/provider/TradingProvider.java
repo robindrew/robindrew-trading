@@ -11,5 +11,6 @@ public enum TradingProvider implements ITradingProvider {
     CMCMARKETS,
     INTERTRADER,
     ACTIVETICK,
+    DUKASCOPY,
     BACKTEST;
 }

@@ -9,6 +9,8 @@ import com.robindrew.trading.price.candle.format.pcf.source.file.IPcfFileManager
 import com.robindrew.trading.price.candle.interval.TimeUnitInterval;
 import com.robindrew.trading.price.candle.io.stream.source.IPriceCandleStreamSource;
 import com.robindrew.trading.provider.TradingProvider;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@Tag(name = "Candle Chart", description = "Aggregated candle data for rendering price charts")
 public class CandleChartController {
 
     // A gap of an hour or more of missed ticks (whether within a day or spanning many, e.g. a
@@ -33,12 +36,16 @@ public class CandleChartController {
     }
 
     @GetMapping("/candlechart/{provider}/{instrument}/candles")
+    @Operation(
+            summary = "Get chart candles",
+            description =
+                    "Returns up to count candles at the given resolution starting from the given time, with GAP points marking periods of missing data")
     public List<ChartPointView> getCandles(
-            @PathVariable String provider,
-            @PathVariable String instrument,
-            @RequestParam LocalDateTime from,
-            @RequestParam int resolutionMinutes,
-            @RequestParam(defaultValue = "100") int count) {
+            @PathVariable(name = "provider") String provider,
+            @PathVariable(name = "instrument") String instrument,
+            @RequestParam(name = "from") LocalDateTime from,
+            @RequestParam(name = "resolutionMinutes") int resolutionMinutes,
+            @RequestParam(name = "count", defaultValue = "100") int count) {
 
         if (resolutionMinutes <= 0) {
             throw new IllegalArgumentException("resolutionMinutes must be positive: " + resolutionMinutes);

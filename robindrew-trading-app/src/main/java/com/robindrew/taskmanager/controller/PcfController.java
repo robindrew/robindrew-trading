@@ -7,6 +7,8 @@ import com.robindrew.trading.price.candle.format.pcf.source.IPcfSourceProviderMa
 import com.robindrew.trading.price.candle.format.pcf.source.file.IPcfFile;
 import com.robindrew.trading.price.candle.format.pcf.source.file.IPcfFileManager;
 import com.robindrew.trading.provider.TradingProvider;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@Tag(name = "PCF", description = "Price candle format (PCF) files")
 public class PcfController {
 
     private static final DateTimeFormatter MONTH_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM");
@@ -27,7 +30,9 @@ public class PcfController {
     }
 
     @GetMapping("/pcf/{provider}/{instrument}/files")
-    public List<PcfFileView> getFiles(@PathVariable String provider, @PathVariable String instrument) {
+    @Operation(summary = "List PCF files", description = "Returns the monthly PCF files available for the instrument")
+    public List<PcfFileView> getFiles(
+            @PathVariable(name = "provider") String provider, @PathVariable(name = "instrument") String instrument) {
         IPcfSourceProviderManager providerManager = pcfFileManager.getProvider(TradingProvider.valueOf(provider));
         IInstrument resolved = providerManager.getInstrument(instrument);
 

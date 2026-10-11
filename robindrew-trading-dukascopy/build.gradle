@@ -1,0 +1,25 @@
+// IMPORT JAVA LIBRARY CONFIG
+apply from: "$rootDir/gradle/java-library.gradle"
+
+// DEPENDENCIES (Which JAR files to download and host locally)
+dependencies {
+
+	// ROBINDREW
+	api project(":robindrew-trading-core")
+
+	// COMMON
+	implementation "org.tukaani:xz:$version_xz"
+	implementation "io.swagger.core.v3:swagger-annotations-jakarta:$version_swagger_annotations"
+	implementation "com.robindrew:robindrew-common-spring:${version_robindrew_core}"
+
+	// SPRING BOM
+	implementation "org.slf4j:slf4j-api"
+	implementation "org.springframework:spring-context"
+	implementation "org.springframework:spring-web"
+	implementation "com.fasterxml.jackson.core:jackson-databind"
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+	// TESTING
+	testImplementation "org.springframework.boot:spring-boot-starter-test"
+
+}

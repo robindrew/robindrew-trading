@@ -11,6 +11,8 @@ import com.robindrew.trading.price.candle.format.ptf.source.file.IPtfFile;
 import com.robindrew.trading.price.candle.format.ptf.source.file.IPtfFileManager;
 import com.robindrew.trading.price.candle.format.ptf.source.file.IPtfFileProviderManager;
 import com.robindrew.trading.provider.TradingProvider;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -25,6 +27,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@Tag(name = "PTF", description = "Price tick format (PTF) files and their conversion to PCF")
 public class PtfController {
 
     private final IPtfFileManager ptfFileManager;
@@ -36,7 +39,9 @@ public class PtfController {
     }
 
     @GetMapping("/ptf/{provider}/{instrument}/files")
-    public List<PtfFileView> getFiles(@PathVariable String provider, @PathVariable String instrument) {
+    @Operation(summary = "List PTF files", description = "Returns the daily PTF files available for the instrument")
+    public List<PtfFileView> getFiles(
+            @PathVariable(name = "provider") String provider, @PathVariable(name = "instrument") String instrument) {
         IPtfSourceProviderManager providerManager = ptfFileManager.getProvider(TradingProvider.valueOf(provider));
         IInstrument resolved = providerManager.getInstrument(instrument);
 
@@ -53,7 +58,11 @@ public class PtfController {
     }
 
     @PostMapping("/ptf/{provider}/{instrument}/convert")
-    public ConvertResponse convertToPcf(@PathVariable String provider, @PathVariable String instrument) {
+    @Operation(
+            summary = "Convert instrument to PCF",
+            description = "Converts the PTF files for the instrument into PCF files")
+    public ConvertResponse convertToPcf(
+            @PathVariable(name = "provider") String provider, @PathVariable(name = "instrument") String instrument) {
         TradingProvider tradingProvider = TradingProvider.valueOf(provider);
 
         IPtfFileProviderManager ptfProvider = (IPtfFileProviderManager) ptfFileManager.getProvider(tradingProvider);
@@ -70,6 +79,9 @@ public class PtfController {
     }
 
     @PostMapping("/ptf/convert-all")
+    @Operation(
+            summary = "Convert all instruments to PCF",
+            description = "Converts every instrument that does not yet have PCF data from PTF to PCF")
     public ConvertAllResponse convertAll() {
         List<Callable<Boolean>> tasks = new ArrayList<>();
 
