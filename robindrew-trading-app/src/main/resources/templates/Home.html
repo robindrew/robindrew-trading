@@ -87,6 +87,7 @@ a:link, a:visited a:link:active, a:visited:active {
 </div>
 <ul class="nav navbar-nav">
 <li class="active"><a href="/">Home</a></li>
+<li><a href="/swagger-ui.html" target="_swagger">Swagger</a></li>
 </ul>
 </div><!-- /.container-fluid -->
 </nav>
@@ -492,6 +493,9 @@ $(document).ready(function () {
     // CANDLE CHART TAB (hand-rolled HTML5 canvas rendering - no charting library)
 
     var candleChartPoints = null;
+    // The window (per candleChartWindowForAnchor) candleChartPoints was loaded for - the chart lays
+    // out one slot per resolution period in it, so periods without a candle still take up space.
+    var candleChartWindow = null;
     var candleChartLayout = null;
     var candleChartHoverIndex = -1;
 
@@ -526,6 +530,7 @@ $(document).ready(function () {
 
     function candleChartClear() {
         candleChartPoints = null;
+        candleChartWindow = null;
         candleChartLayout = null;
         candleChartHoverIndex = -1;
         var canvas = document.getElementById("CandleChart_Canvas");
@@ -744,20 +749,40 @@ $(document).ready(function () {
         return false;
     }
 
-    // Redraws entirely from candleChartPoints/candleChartHoverIndex - called on load, resize, tab
-    // shown and hover, so those are the only state this needs to read.
+    // One slot per resolution period across the whole window, each holding the candle (if any) whose
+    // time falls in that period - so a period with no data keeps its place on the x axis (rendered as
+    // a shaded column) rather than being compressed out. GAP points are ignored: the empty slots
+    // already show exactly where data is missing.
+    function candleChartBuildSlots(points, chartWindow) {
+        var resolutionMillis = chartWindow.resolutionMinutes * 60 * 1000;
+        var slots = [];
+        for (var i = 0; i < chartWindow.count; i++) {
+            slots.push({ date: new Date(chartWindow.startMillis + i * resolutionMillis), candle: null });
+        }
+        $.each(points, function (index, point) {
+            if (point.type !== "CANDLE") {
+                return;
+            }
+            var slotIndex = Math.floor((new Date(point.time + "Z").getTime() - chartWindow.startMillis) / resolutionMillis);
+            if (slotIndex >= 0 && slotIndex < slots.length) {
+                slots[slotIndex].candle = point;
+            }
+        });
+        return slots;
+    }
+
+    // Redraws entirely from candleChartPoints/candleChartWindow/candleChartHoverIndex - called on load,
+    // resize, tab shown and hover, so those are the only state this needs to read.
     function renderCandleChart() {
-        if (!candleChartPoints) {
+        if (!candleChartPoints || !candleChartWindow) {
             return;
         }
 
-        var candles = [];
-        var gapBeforeIndices = [];
-        $.each(candleChartPoints, function (index, point) {
-            if (point.type === "CANDLE") {
-                candles.push(point);
-            } else {
-                gapBeforeIndices.push(candles.length);
+        var slots = candleChartBuildSlots(candleChartPoints, candleChartWindow);
+        var hasData = false;
+        $.each(slots, function (index, slot) {
+            if (slot.candle) {
+                hasData = true;
             }
         });
 
@@ -771,12 +796,6 @@ $(document).ready(function () {
         var ctx = canvas.getContext("2d");
         ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
         ctx.clearRect(0, 0, cssWidth, cssHeight);
-
-        if (!candles.length) {
-            candleChartLayout = null;
-            candleChartShowMessage("No candle data available for the selected range/resolution.");
-            return;
-        }
 
         // X axis is up to 4 stacked rows: time (nearest the plot; only meaningful for Hourly/Daily,
         // whose candles are finer than what the day row already shows), day-of-month (skipped for
@@ -796,9 +815,11 @@ $(document).ready(function () {
 
         var low = Infinity;
         var high = -Infinity;
-        $.each(candles, function (index, candle) {
-            low = Math.min(low, candle.low);
-            high = Math.max(high, candle.high);
+        $.each(slots, function (index, slot) {
+            if (slot.candle) {
+                low = Math.min(low, slot.candle.low);
+                high = Math.max(high, slot.candle.high);
+            }
         });
         if (low === high) {
             low -= 1;
@@ -812,48 +833,59 @@ $(document).ready(function () {
             return marginTop + plotHeight * (1 - (price - low) / (high - low));
         }
 
-        var slotWidth = plotWidth / candles.length;
+        var slotWidth = plotWidth / slots.length;
         function slotLeft(index) {
             return marginLeft + slotWidth * index;
         }
 
-        // Price gridlines/labels
-        ctx.strokeStyle = "#eee";
-        ctx.fillStyle = "#666";
-        ctx.font = "11px sans-serif";
-        ctx.textAlign = "right";
-        ctx.textBaseline = "middle";
-        var gridLines = 5;
-        for (var g = 0; g <= gridLines; g++) {
-            var price = low + ((high - low) * g) / gridLines;
-            var y = priceToY(price);
-            ctx.beginPath();
-            ctx.moveTo(marginLeft, y);
-            ctx.lineTo(marginLeft + plotWidth, y);
-            ctx.stroke();
-            ctx.fillText(price.toFixed(5), marginLeft - 6, y);
+        // No-data shading - each run of consecutive empty slots is filled as a single rectangle (rather
+        // than one per slot) so no hairline seams show between adjacent empty periods. With no data at
+        // all this covers the whole plot area, in a darker grey to grey the entire chart out.
+        ctx.fillStyle = hasData ? "#f4f4f4" : "#e6e6e6";
+        var runStart = -1;
+        for (var s = 0; s <= slots.length; s++) {
+            var empty = s < slots.length && !slots[s].candle;
+            if (empty && runStart === -1) {
+                runStart = s;
+            } else if (!empty && runStart !== -1) {
+                ctx.fillRect(slotLeft(runStart), marginTop, slotWidth * (s - runStart), plotHeight);
+                runStart = -1;
+            }
         }
 
-        // Gap markers - an hour or more of missed ticks, whether within a day or spanning many
-        // (e.g. a weekend). Skipped on the Yearly chart: at daily resolution a gap marker falls on
-        // every weekend/holiday, which over a full year is enough vertical lines to make the chart
-        // unreadable, without actually conveying anything the missing candles' absence doesn't already.
-        if (period !== "YEARLY") {
-            ctx.strokeStyle = "#ccc";
-            ctx.lineWidth = 1.5;
-            $.each(gapBeforeIndices, function (i, index) {
-                var x = slotLeft(index);
+        // Price gridlines/labels - skipped with no data, since there's no price range to label.
+        ctx.font = "11px sans-serif";
+        if (hasData) {
+            ctx.strokeStyle = "#eee";
+            ctx.fillStyle = "#666";
+            ctx.textAlign = "right";
+            ctx.textBaseline = "middle";
+            var gridLines = 5;
+            for (var g = 0; g <= gridLines; g++) {
+                var price = low + ((high - low) * g) / gridLines;
+                var y = priceToY(price);
                 ctx.beginPath();
-                ctx.moveTo(x, marginTop);
-                ctx.lineTo(x, marginTop + plotHeight);
+                ctx.moveTo(marginLeft, y);
+                ctx.lineTo(marginLeft + plotWidth, y);
                 ctx.stroke();
-            });
-            ctx.lineWidth = 1;
+                ctx.fillText(price.toFixed(5), marginLeft - 6, y);
+            }
+        } else {
+            ctx.fillStyle = "#888";
+            ctx.font = "bold 24px sans-serif";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillText("NO DATA", marginLeft + plotWidth / 2, marginTop + plotHeight / 2);
+            ctx.font = "11px sans-serif";
         }
 
         // Candles
         var bodyWidth = Math.max(1, slotWidth * 0.6);
-        $.each(candles, function (index, candle) {
+        $.each(slots, function (index, slot) {
+            var candle = slot.candle;
+            if (!candle) {
+                return;
+            }
             var xCenter = slotLeft(index) + slotWidth / 2;
             var color = candle.close >= candle.open ? "#0f9d58" : "#a52714";
             ctx.strokeStyle = color;
@@ -890,8 +922,8 @@ $(document).ready(function () {
         var lastDayKey = null;
         var lastMonthKey = null;
         var lastYearKey = null;
-        $.each(candles, function (index, candle) {
-            var date = new Date(candle.time + "Z");
+        $.each(slots, function (index, slot) {
+            var date = slot.date;
             var dayKey = date.getUTCFullYear() + "-" + date.getUTCMonth() + "-" + date.getUTCDate();
             var monthKey = date.getUTCFullYear() + "-" + date.getUTCMonth();
             var yearKey = date.getUTCFullYear();
@@ -934,8 +966,8 @@ $(document).ready(function () {
             });
 
             var lastTimeLabelRight = -Infinity;
-            $.each(candles, function (t, candle) {
-                var timeDate = new Date(candle.time + "Z");
+            $.each(slots, function (t, slot) {
+                var timeDate = slot.date;
                 if (!candleChartIsTimeLabelBoundary(timeDate, period)) {
                     return;
                 }
@@ -982,11 +1014,11 @@ $(document).ready(function () {
                 String(boundary.date.getUTCFullYear()), boundary.x, yearRowTop, lastYearLabelRight);
         });
 
-        candleChartLayout = { candles: candles, marginLeft: marginLeft, slotWidth: slotWidth, marginTop: marginTop, plotHeight: plotHeight };
+        candleChartLayout = { slots: slots, marginLeft: marginLeft, slotWidth: slotWidth, marginTop: marginTop, plotHeight: plotHeight };
 
-        // Hover crosshair + OHLC tooltip
-        if (candleChartHoverIndex >= 0 && candleChartHoverIndex < candles.length) {
-            var hovered = candles[candleChartHoverIndex];
+        // Hover crosshair + OHLC tooltip - only over a slot that actually has a candle.
+        if (candleChartHoverIndex >= 0 && candleChartHoverIndex < slots.length && slots[candleChartHoverIndex].candle) {
+            var hovered = slots[candleChartHoverIndex].candle;
             var hoverX = slotLeft(candleChartHoverIndex) + slotWidth / 2;
 
             ctx.strokeStyle = "#888";
@@ -1070,6 +1102,7 @@ $(document).ready(function () {
         })
             .done(function (points) {
                 candleChartPoints = points;
+                candleChartWindow = chartWindow;
                 renderCandleChart();
             })
             .fail(function (xhr) {
@@ -1190,7 +1223,7 @@ $(document).ready(function () {
         var rect = this.getBoundingClientRect();
         var mouseX = event.clientX - rect.left;
         var index = Math.floor((mouseX - candleChartLayout.marginLeft) / candleChartLayout.slotWidth);
-        if (index < 0 || index >= candleChartLayout.candles.length) {
+        if (index < 0 || index >= candleChartLayout.slots.length) {
             index = -1;
         }
         if (index !== candleChartHoverIndex) {
