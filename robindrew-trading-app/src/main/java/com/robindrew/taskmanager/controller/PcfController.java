@@ -29,7 +29,7 @@ public class PcfController {
         this.pcfFileManager = pcfFileManager;
     }
 
-    @GetMapping("/pcf/{provider}/{instrument}/files")
+    @GetMapping("/api/v1/pcf/{provider}/{instrument}/files")
     @Operation(summary = "List PCF files", description = "Returns the monthly PCF files available for the instrument")
     public List<PcfFileView> getFiles(
             @PathVariable(name = "provider") String provider, @PathVariable(name = "instrument") String instrument) {

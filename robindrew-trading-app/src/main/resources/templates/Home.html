@@ -1,8 +1,8 @@
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 
 
 <head>
-<title>${title}</title>
+<title th:text="${title}">Title</title>
 
 <!-- CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -111,7 +111,7 @@ a:link, a:visited a:link:active, a:visited:active {
 <!-- HOME TAB -->
 <div role="tabpanel" class="tab-pane active" id="Home_Tab">
 <div class="home-cards">
-<p>Welcome to the Trading Manager service, ${serviceName} #${serviceInstance}.</p>
+<p>Welcome to the Trading Manager service, [[${serviceName}]] #[[${serviceInstance}]].</p>
 </div>
 </div>
 
@@ -126,7 +126,7 @@ a:link, a:visited a:link:active, a:visited:active {
 <table class="table small table-hover table-striped table-bordered">
 <tr>
 <th>Name</th>
-<td>${ptfFormatName}</td>
+<td th:text="${ptfFormatName}"></td>
 </tr>
 <tr>
 <th>Description</th>
@@ -134,36 +134,35 @@ a:link, a:visited a:link:active, a:visited:active {
 </tr>
 <tr>
 <th>Root Directory</th>
-<td>${ptfRootDirectory}</td>
+<td th:text="${ptfRootDirectory}"></td>
 </tr>
-#if($pcfHasUnconvertedInstruments)
-<tr>
+<tr th:if="${pcfHasUnconvertedInstruments}">
 <th></th>
 <td><button id="PTF_ConvertAll_Button" type="button" class="btn btn-primary">Convert All</button></td>
 </tr>
-#end
 </table>
 </div>
 
-#foreach($provider in $ptfProviders)
-<div class="panel panel-info">
-<div class="panel-heading">${provider.getProvider()}</div>
+<div class="panel panel-info" th:each="provider : ${ptfProviders}">
+<div class="panel-heading" th:text="${provider.getProvider()}"></div>
 <table class="table small table-hover table-striped table-bordered">
 <tr>
 <th>Instrument</th>
 <th>Type</th>
 <th>PCF</th>
 </tr>
-#foreach($instrument in $provider.getInstruments())
-<tr class="ptf-instrument-row" data-provider="${provider.getProvider()}" data-instrument="${instrument.getName()}" data-pcf="$pcfFileManager.hasInstrument($provider.getProvider(), $instrument)">
-<td>${instrument.getName()}</td>
-<td>${instrument.getType()}</td>
-<td>#if($pcfFileManager.hasInstrument($provider.getProvider(), $instrument))<span class="text-success">Yes</span>#else<span class="text-danger">No</span>#end</td>
+<tr class="ptf-instrument-row"
+    th:each="instrument : ${provider.getInstruments()}"
+    th:with="hasPcf=${pcfFileManager.hasInstrument(provider.getProvider(), instrument)}"
+    th:data-provider="${provider.getProvider()}"
+    th:data-instrument="${instrument.getName()}"
+    th:data-pcf="${hasPcf}">
+<td th:text="${instrument.getName()}"></td>
+<td th:text="${instrument.getType()}"></td>
+<td><span th:if="${hasPcf}" class="text-success">Yes</span><span th:unless="${hasPcf}" class="text-danger">No</span></td>
 </tr>
-#end
 </table>
 </div>
-#end
 
 </div>
 
@@ -204,7 +203,7 @@ Convert to PCF
 <table class="table small table-hover table-striped table-bordered">
 <tr>
 <th>Name</th>
-<td>${pcfFormatName}</td>
+<td th:text="${pcfFormatName}"></td>
 </tr>
 <tr>
 <th>Description</th>
@@ -212,28 +211,27 @@ Convert to PCF
 </tr>
 <tr>
 <th>Root Directory</th>
-<td>${pcfRootDirectory}</td>
+<td th:text="${pcfRootDirectory}"></td>
 </tr>
 </table>
 </div>
 
-#foreach($provider in $pcfProviders)
-<div class="panel panel-info">
-<div class="panel-heading">${provider.getProvider()}</div>
+<div class="panel panel-info" th:each="provider : ${pcfProviders}">
+<div class="panel-heading" th:text="${provider.getProvider()}"></div>
 <table class="table small table-hover table-striped table-bordered">
 <tr>
 <th>Instrument</th>
 <th>Type</th>
 </tr>
-#foreach($instrument in $provider.getInstruments())
-<tr class="pcf-instrument-row" data-provider="${provider.getProvider()}" data-instrument="${instrument.getName()}">
-<td>${instrument.getName()}</td>
-<td>${instrument.getType()}</td>
+<tr class="pcf-instrument-row"
+    th:each="instrument : ${provider.getInstruments()}"
+    th:data-provider="${provider.getProvider()}"
+    th:data-instrument="${instrument.getName()}">
+<td th:text="${instrument.getName()}"></td>
+<td th:text="${instrument.getType()}"></td>
 </tr>
-#end
 </table>
 </div>
-#end
 
 </div>
 
@@ -270,13 +268,11 @@ Convert to PCF
 <label for="CandleChart_Instrument_Select">Instrument</label><br/>
 <select id="CandleChart_Instrument_Select" class="form-control">
 <option value="">-- Select an instrument --</option>
-#foreach($provider in $pcfProviders)
-<optgroup label="${provider.getProvider()}">
-#foreach($instrument in $provider.getInstruments())
-<option value="${provider.getProvider()}|${instrument.getName()}">${instrument.getName()} (${instrument.getType()})</option>
-#end
+<optgroup th:each="provider : ${pcfProviders}" th:label="${provider.getProvider()}">
+<option th:each="instrument : ${provider.getInstruments()}"
+        th:value="${provider.getProvider() + '|' + instrument.getName()}"
+        th:text="${instrument.getName() + ' (' + instrument.getType() + ')'}"></option>
 </optgroup>
-#end
 </select>
 </div>
 
@@ -389,7 +385,7 @@ $(document).ready(function () {
         $("#PTF_Detail_Body").empty();
         $("#PTF_Convert_Button").prop("disabled", false).text("Convert to PCF").toggle(!currentRow.data("pcf"));
 
-        $.getJSON("/ptf/" + currentProvider + "/" + currentInstrument + "/files", function (files) {
+        $.getJSON("/api/v1/ptf/" + currentProvider + "/" + currentInstrument + "/files", function (files) {
             $.each(files, function (index, file) {
                 var row = $("<tr>");
                 row.append($("<td>").text(file.filename));
@@ -412,7 +408,7 @@ $(document).ready(function () {
         var button = $(this);
         button.prop("disabled", true).text("Converting...");
 
-        $.post("/ptf/" + currentProvider + "/" + currentInstrument + "/convert")
+        $.post("/api/v1/ptf/" + currentProvider + "/" + currentInstrument + "/convert")
             .done(function (result) {
                 button.text(result.converted ? "Converted" : "Already Converted").hide();
                 if (currentRow) {
@@ -432,7 +428,7 @@ $(document).ready(function () {
         $("#PCF_Detail_Header").text(provider + " / " + instrument);
         $("#PCF_Detail_Body").empty();
 
-        $.getJSON("/pcf/" + provider + "/" + instrument + "/files", function (files) {
+        $.getJSON("/api/v1/pcf/" + provider + "/" + instrument + "/files", function (files) {
             $.each(files, function (index, file) {
                 var row = $("<tr>");
                 row.append($("<td>").text(file.filename));
@@ -455,7 +451,7 @@ $(document).ready(function () {
         var button = $(this);
         button.prop("disabled", true).text("Converting All...");
 
-        $.post("/ptf/convert-all")
+        $.post("/api/v1/ptf/convert-all")
             .done(function (result) {
                 button.text("Converted " + result.converted + " Instrument(s)");
                 setTimeout(function () {
@@ -1067,7 +1063,7 @@ $(document).ready(function () {
         candleChartUpdateHash(selection, period, anchorMillis);
 
         $("#CandleChart_Message").hide();
-        $.getJSON("/candlechart/" + selection.provider + "/" + selection.instrument + "/candles", {
+        $.getJSON("/api/v1/candlechart/" + selection.provider + "/" + selection.instrument + "/candles", {
             from: toIsoDateTime(formatUtcMillisAsDateTimeLocal(chartWindow.startMillis)),
             resolutionMinutes: chartWindow.resolutionMinutes,
             count: chartWindow.count
@@ -1098,8 +1094,8 @@ $(document).ready(function () {
             return;
         }
 
-        var yearsRequest = $.getJSON("/chart/" + selection.provider + "/" + selection.instrument + "/years");
-        var defaultFromRequest = $.getJSON("/chart/" + selection.provider + "/" + selection.instrument + "/default-from");
+        var yearsRequest = $.getJSON("/api/v1/chart/" + selection.provider + "/" + selection.instrument + "/years");
+        var defaultFromRequest = $.getJSON("/api/v1/chart/" + selection.provider + "/" + selection.instrument + "/default-from");
 
         $.when(yearsRequest, defaultFromRequest)
             .done(function (yearsResponse, defaultFromResponse) {

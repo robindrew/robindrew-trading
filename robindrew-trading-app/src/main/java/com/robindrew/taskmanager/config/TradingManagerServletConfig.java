@@ -3,7 +3,7 @@ package com.robindrew.taskmanager.config;
 import static com.robindrew.common.http.Bootstrap.*;
 
 import com.robindrew.spring.config.admin.AdminServletConfig;
-import com.robindrew.spring.config.velocity.VelocityTemplateConfig;
+import com.robindrew.spring.config.thymeleaf.ThymeleafTemplateConfig;
 import com.robindrew.spring.security.BasicAuthSecurityConfig;
 import com.robindrew.spring.web.template.admin.index.IndexLinkMap;
 import com.robindrew.taskmanager.servlet.HomeServlet;
@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 @Configuration
-@Import({AdminServletConfig.class, VelocityTemplateConfig.class, BasicAuthSecurityConfig.class})
+@Import({AdminServletConfig.class, ThymeleafTemplateConfig.class, BasicAuthSecurityConfig.class})
 @ServletComponentScan(basePackageClasses = HomeServlet.class)
 public class TradingManagerServletConfig {
 

@@ -26,7 +26,7 @@ public class ChartController {
         this.pcfFileManager = pcfFileManager;
     }
 
-    @GetMapping("/chart/{provider}/{instrument}/default-from")
+    @GetMapping("/api/v1/chart/{provider}/{instrument}/default-from")
     @Operation(
             summary = "Get default chart start",
             description = "Returns the start of the most recent month with PCF data for the instrument")
@@ -42,7 +42,7 @@ public class ChartController {
         return new FromView(months.last().atStartOfDay());
     }
 
-    @GetMapping("/chart/{provider}/{instrument}/years")
+    @GetMapping("/api/v1/chart/{provider}/{instrument}/years")
     @Operation(
             summary = "Get available years",
             description = "Returns the years for which PCF data is available for the instrument")

@@ -9,6 +9,7 @@ dependencies {
 	implementation project(":robindrew-trading-core")
 	implementation project(":robindrew-trading-dukascopy")
 	implementation "com.robindrew:robindrew-common:${version_robindrew_core}"
+	implementation "com.robindrew:robindrew-common-spring:${version_robindrew_core}"
 	implementation "com.google.guava:guava:${version_guava}"
 	implementation "org.apache.commons:commons-lang3"
 

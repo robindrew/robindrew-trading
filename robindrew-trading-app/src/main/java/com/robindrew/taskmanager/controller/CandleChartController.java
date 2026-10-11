@@ -35,7 +35,7 @@ public class CandleChartController {
         this.pcfFileManager = pcfFileManager;
     }
 
-    @GetMapping("/candlechart/{provider}/{instrument}/candles")
+    @GetMapping("/api/v1/candlechart/{provider}/{instrument}/candles")
     @Operation(
             summary = "Get chart candles",
             description =

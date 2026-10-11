@@ -38,7 +38,7 @@ public class PtfController {
         this.pcfFileManager = pcfFileManager;
     }
 
-    @GetMapping("/ptf/{provider}/{instrument}/files")
+    @GetMapping("/api/v1/ptf/{provider}/{instrument}/files")
     @Operation(summary = "List PTF files", description = "Returns the daily PTF files available for the instrument")
     public List<PtfFileView> getFiles(
             @PathVariable(name = "provider") String provider, @PathVariable(name = "instrument") String instrument) {
@@ -57,7 +57,7 @@ public class PtfController {
         return views;
     }
 
-    @PostMapping("/ptf/{provider}/{instrument}/convert")
+    @PostMapping("/api/v1/ptf/{provider}/{instrument}/convert")
     @Operation(
             summary = "Convert instrument to PCF",
             description = "Converts the PTF files for the instrument into PCF files")
@@ -78,7 +78,7 @@ public class PtfController {
         return new ConvertResponse(converted);
     }
 
-    @PostMapping("/ptf/convert-all")
+    @PostMapping("/api/v1/ptf/convert-all")
     @Operation(
             summary = "Convert all instruments to PCF",
             description = "Converts every instrument that does not yet have PCF data from PTF to PCF")

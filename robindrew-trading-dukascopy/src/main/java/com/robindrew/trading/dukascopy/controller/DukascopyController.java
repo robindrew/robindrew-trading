@@ -22,7 +22,7 @@ public class DukascopyController {
         this.downloadService = downloadService;
     }
 
-    @GetMapping("/dukascopy/symbols")
+    @GetMapping("/api/v1/dukascopy/symbols")
     @Operation(
             summary = "List symbols",
             description = "Returns the Dukascopy symbols, optionally filtered by instrument type")
@@ -37,7 +37,7 @@ public class DukascopyController {
     }
 
     // Mirrors the datafeed path: /datafeed/{INSTRUMENT}/{YEAR}/{MONTH_0_INDEXED}/{DAY}/{HOUR}h_ticks.bi5
-    @GetMapping("/dukascopy/datafeed/{instrument}/{year}/{month}/{day}/{hour}h_ticks.bi5")
+    @GetMapping("/api/v1/dukascopy/datafeed/{instrument}/{year}/{month}/{day}/{hour}h_ticks.bi5")
     @Operation(
             summary = "Download hour ticks",
             description =
