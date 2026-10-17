@@ -1,10 +1,8 @@
-package com.robindrew.trading.dukascopy.download;
+package com.robindrew.trading.dukascopy.download.client;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.robindrew.trading.InstrumentType;
-import com.robindrew.trading.dukascopy.download.client.DukascopySymbol;
-import com.robindrew.trading.dukascopy.download.client.DukascopySymbolDownloader;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 

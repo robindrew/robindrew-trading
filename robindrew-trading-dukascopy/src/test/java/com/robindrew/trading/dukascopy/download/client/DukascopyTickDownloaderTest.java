@@ -1,13 +1,10 @@
-package com.robindrew.trading.dukascopy.download;
+package com.robindrew.trading.dukascopy.download.client;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.robindrew.trading.InstrumentType;
-import com.robindrew.trading.dukascopy.download.client.DukascopyHourRequest;
-import com.robindrew.trading.dukascopy.download.client.DukascopySymbol;
-import com.robindrew.trading.dukascopy.download.client.DukascopyTickDownloader;
 import com.robindrew.trading.price.candle.format.ptf.PtfFormat;
 import com.robindrew.trading.price.candle.format.ptf.source.file.PtfFile;
 import com.robindrew.trading.price.candle.tick.ITickPriceCandle;
